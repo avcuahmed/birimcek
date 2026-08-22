@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Birimçek - Akıllı Birim Fiyat Karşılaştırma</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Supabase CDN Güncellendi -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #f4f6f9; color: #333; padding-bottom: 50px; }
@@ -70,104 +71,107 @@
   </div>
 
   <script>
-    const SUPABASE_URL = "https://uuvldmikiiqtutisrhjg.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dmxkbWlraWlxdHV0aXNyaGpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczOTU0NjIsImV4cCI6MjEwMjk3MTQ2Mn0.RWeP1HAjIw1m0zv4ZAPEaoovyMS2-ckhCmqtl0xLDEU";
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    document.addEventListener("DOMContentLoaded", function() {
+      const SUPABASE_URL = "https://uuvldmikiiqtutisrhjg.supabase.co";
+      const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dmxkbWlraWlxdHV0aXNyaGpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczOTU0NjIsImV4cCI6MjEwMjk3MTQ2Mn0.RWeP1HAjIw1m0zv4ZAPEaoovyMS2-ckhCmqtl0xLDEU";
+      
+      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    let popupInterval;
+      let popupInterval;
 
-    function sortByUnitPrice() {
-      showPopup();
-      fetchProducts();
-    }
+      window.sortByUnitPrice = function() {
+        showPopup();
+        fetchProducts();
+      };
 
-    function showPopup() {
-      const popupElem = document.getElementById("unitPricePopup");
-      const timerElem = document.getElementById("timerSec");
-      let timeLeft = 15;
-      timerElem.innerText = timeLeft;
-      popupElem.style.display = "flex";
-
-      clearInterval(popupInterval);
-      popupInterval = setInterval(() => {
-        timeLeft--;
+      window.showPopup = function() {
+        const popupElem = document.getElementById("unitPricePopup");
+        const timerElem = document.getElementById("timerSec");
+        let timeLeft = 15;
         timerElem.innerText = timeLeft;
-        if (timeLeft <= 0) closePopup();
-      }, 1000);
-    }
+        popupElem.style.display = "flex";
 
-    function closePopup() {
-      clearInterval(popupInterval);
-      document.getElementById("unitPricePopup").style.display = "none";
-    }
+        clearInterval(popupInterval);
+        popupInterval = setInterval(() => {
+          timeLeft--;
+          timerElem.innerText = timeLeft;
+          if (timeLeft <= 0) closePopup();
+        }, 1000);
+      };
 
-    async function fetchProducts() {
-      const container = document.getElementById("productList");
-      container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Yükleniyor...</p>`;
+      window.closePopup = function() {
+        clearInterval(popupInterval);
+        document.getElementById("unitPricePopup").style.display = "none";
+      };
 
-      try {
-        const { data: pricesData, error: pricesError } = await supabaseClient.from('prices').select('*');
-        const { data: productsData, error: productsError } = await supabaseClient.from('products').select('*');
-        const { data: marketsData, error: marketsError } = await supabaseClient.from('markets').select('*');
+      async function fetchProducts() {
+        const container = document.getElementById("productList");
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Yükleniyor...</p>`;
 
-        if (pricesError || productsError || marketsError) {
-          const err = pricesError || productsError || marketsError;
-          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red; padding: 40px;">Veritabanı Hatası: ${err.message}</p>`;
-          return;
-        }
+        try {
+          const { data: pricesData, error: pricesError } = await supabaseClient.from('prices').select('*');
+          const { data: productsData, error: productsError } = await supabaseClient.from('products').select('*');
+          const { data: marketsData, error: marketsError } = await supabaseClient.from('markets').select('*');
 
-        if (!pricesData || pricesData.length === 0) {
-          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #d9534f; padding: 40px; font-weight: bold;">Veritabanında henüz hiç fiyat kaydı yok. Lütfen Supabase SQL Editor'den veritabanına test verisi ekleyin.</p>`;
-          return;
-        }
+          if (pricesError || productsError || marketsError) {
+            const err = pricesError || productsError || marketsError;
+            container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red; padding: 40px;">Veritabanı Hatası: ${err.message}</p>`;
+            return;
+          }
 
-        const combined = pricesData.map(price => {
-          const product = productsData ? productsData.find(p => p.id === price.product_id) : {};
-          const market = marketsData ? marketsData.find(m => m.id === price.market_id) : {};
-          const netQty = (product && product.net_quantity) ? product.net_quantity : 1;
-          const unitPrice = price.net_price / netQty;
+          if (!pricesData || pricesData.length === 0) {
+            container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #d9534f; padding: 40px; font-weight: bold;">Veritabanında henüz ürün fiyatı yok.</p>`;
+            return;
+          }
 
-          return {
-            ...price,
-            product: product || {},
-            market: market || {},
-            unitPrice
-          };
-        }).sort((a, b) => a.unitPrice - b.unitPrice);
+          const combined = pricesData.map(price => {
+            const product = productsData ? productsData.find(p => p.id === price.product_id) : {};
+            const market = marketsData ? marketsData.find(m => m.id === price.market_id) : {};
+            const netQty = (product && product.net_quantity) ? product.net_quantity : 1;
+            const unitPrice = price.net_price / netQty;
 
-        container.innerHTML = "";
-        combined.forEach(item => {
-          const prod = item.product;
-          const market = item.market;
-          const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
+            return {
+              ...price,
+              product: product || {},
+              market: market || {},
+              unitPrice
+            };
+          }).sort((a, b) => a.unitPrice - b.unitPrice);
 
-          container.innerHTML += `
-            <div class="product-card">
-              <img src="${prod.image_url || defaultImg}" class="product-img" alt="${prod.title || 'Ürün'}">
-              <div class="product-info">
-                <div class="product-brand">${prod.brand || 'Genel'} • ${market.name || ''}</div>
-                <div class="product-title">${prod.title || 'Ürün'} (${prod.net_quantity || ''} ${prod.unit_type || ''})</div>
-                <div class="price-box">
-                  <div class="unit-price">
-                    <span>Birim Fiyat</span>
-                    ${item.unitPrice.toFixed(2)} ₺ / ${prod.unit_type || 'adet'}
-                  </div>
-                  <div class="net-price">
-                    <span style="font-size:0.75rem; color:#888; display:block;">Paket Fiyatı</span>
-                    <strong>${Number(item.net_price).toFixed(2)} ₺</strong>
+          container.innerHTML = "";
+          combined.forEach(item => {
+            const prod = item.product;
+            const market = item.market;
+            const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
+
+            container.innerHTML += `
+              <div class="product-card">
+                <img src="${prod.image_url || defaultImg}" class="product-img" alt="${prod.title || 'Ürün'}">
+                <div class="product-info">
+                  <div class="product-brand">${prod.brand || 'Genel'} • ${market.name || ''}</div>
+                  <div class="product-title">${prod.title || 'Ürün'} (${prod.net_quantity || ''} ${prod.unit_type || ''})</div>
+                  <div class="price-box">
+                    <div class="unit-price">
+                      <span>Birim Fiyat</span>
+                      ${item.unitPrice.toFixed(2)} ₺ / ${prod.unit_type || 'adet'}
+                    </div>
+                    <div class="net-price">
+                      <span style="font-size:0.75rem; color:#888; display:block;">Paket Fiyatı</span>
+                      <strong>${Number(item.net_price).toFixed(2)} ₺</strong>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          `;
-        });
+            `;
+          });
 
-      } catch (e) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red; padding: 40px;">Beklenmeyen Hata: ${e.message}</p>`;
+        } catch (e) {
+          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red; padding: 40px;">Beklenmeyen Hata: ${e.message}</p>`;
+        }
       }
-    }
 
-    fetchProducts();
+      fetchProducts();
+    });
   </script>
 </body>
 </html>

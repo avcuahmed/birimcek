@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Electshop - Birimçek Entegrasyonu</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary-color: #439cae;
@@ -18,27 +17,38 @@
     body { background-color: #ffffff; color: var(--text-color); }
 
     /* Top Bar */
-    .top-bar { background: #ffffff; border-bottom: 1px solid var(--border-color); font-size: 0.8rem; text-align: center; padding: 8px; color: #555; }
+    .top-bar { background: #ffffff; border-bottom: 1px solid var(--border-color); font-size: 0.82rem; text-align: center; padding: 8px 10px; color: #444; }
 
     /* Header */
     header { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
     .header-left { display: flex; align-items: center; gap: 15px; }
-    .hamburger { font-size: 1.2rem; cursor: pointer; color: var(--text-color); }
-    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: #1e293b; letter-spacing: -0.5px; }
-    .logo-icon { color: var(--primary-color); font-size: 1.6rem; }
+    
+    .hamburger { cursor: pointer; display: flex; align-items: center; }
+    .hamburger svg { width: 22px; height: 22px; stroke: #222; stroke-width: 2; }
 
-    .header-actions { display: flex; align-items: center; gap: 20px; color: var(--text-color); }
-    .action-icon { position: relative; font-size: 1.2rem; cursor: pointer; color: #333; text-decoration: none; }
-    .badge { position: absolute; top: -8px; right: -8px; background: var(--primary-color); color: white; font-size: 0.65rem; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 2rem; font-weight: 800; color: #1e293b; letter-spacing: -0.5px; }
+    .logo-icon { width: 32px; height: 32px; fill: var(--primary-color); }
+
+    .header-actions { display: flex; align-items: center; gap: 18px; }
+    .action-icon { position: relative; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; color: #222; width: 28px; height: 28px; }
+    .action-icon svg { width: 24px; height: 24px; stroke: #222; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    
+    .badge { position: absolute; top: -6px; right: -8px; background: var(--primary-color); color: white; font-size: 0.65rem; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1.5px solid #fff; }
 
     /* Search Bar */
     .search-container { max-width: 1200px; margin: 0 auto 20px; padding: 0 20px; }
     .search-box { display: flex; border: 1.5px solid var(--primary-color); border-radius: 4px; overflow: hidden; height: 42px; }
-    .category-select { background: #fff; border: none; border-right: 1px solid var(--border-color); padding: 0 15px; font-size: 0.85rem; color: #555; outline: none; cursor: pointer; }
+    
+    .category-select-wrapper { position: relative; display: flex; align-items: center; }
+    .category-select { background: #fff; border: none; border-right: 1px solid var(--border-color); padding: 0 35px 0 15px; font-size: 0.85rem; color: #444; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; height: 100%; }
+    .select-arrow { position: absolute; right: 12px; pointer-events: none; width: 12px; height: 12px; stroke: #666; stroke-width: 2; fill: none; }
+
     .search-input { flex: 1; border: none; padding: 0 15px; outline: none; font-size: 0.88rem; color: #333; }
-    .search-input::placeholder { color: #aaa; }
-    .search-btn { background: var(--primary-color); border: none; color: white; width: 50px; cursor: pointer; font-size: 1rem; transition: background 0.2s; }
+    .search-input::placeholder { color: #888; }
+    
+    .search-btn { background: var(--primary-color); border: none; color: white; width: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
     .search-btn:hover { background: var(--primary-dark); }
+    .search-btn svg { width: 18px; height: 18px; stroke: white; stroke-width: 2.5; fill: none; }
 
     /* Hero Banner Slider */
     .hero-container { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; }
@@ -51,6 +61,7 @@
     .shop-btn { background: var(--primary-color); color: white; border: none; padding: 10px 22px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
     .shop-btn:hover { background: var(--primary-dark); }
     .hero-image { max-width: 450px; height: auto; object-fit: contain; z-index: 1; }
+    
     .slider-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 3; }
     .dot { width: 8px; height: 8px; border-radius: 50%; background: #2b2b2b; opacity: 0.3; cursor: pointer; }
     .dot.active { background: var(--primary-color); opacity: 1; }
@@ -73,19 +84,20 @@
     .net-price-val { font-size: 0.78rem; color: #666; margin-top: 2px; }
 
     /* Live Chat Button */
-    .chat-widget { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #5c18ea; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 999; }
+    .chat-widget { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #5c18ea; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 999; }
+    .chat-widget svg { width: 24px; height: 24px; stroke: white; fill: white; }
 
     @media (max-width: 768px) {
       .hero-banner { flex-direction: column; text-align: center; padding: 25px 15px; }
       .hero-title { font-size: 1.5rem; }
       .hero-image { max-width: 100%; height: 160px; margin-top: 15px; }
-      .category-select { display: none; }
+      .category-select-wrapper { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Announcement -->
+  <!-- Top Announcement Bar -->
   <div class="top-bar">
     We ship nationwide. Free standard shipping on orders over $99.
   </div>
@@ -93,30 +105,68 @@
   <!-- Header -->
   <header>
     <div class="header-left">
-      <i class="fa-solid fa-bars hamburger"></i>
+      <!-- Hamburger Menu Icon -->
+      <div class="hamburger">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </div>
+      <!-- Logo & Electshop Circuit Icon -->
       <a href="#" class="logo">
-        <i class="fa-solid fa-microchip logo-icon"></i>Electshop
+        <svg class="logo-icon" viewBox="0 0 100 100">
+          <path d="M50,10 L85,30 L85,70 L50,90 L15,70 L15,30 Z" fill="none" stroke="#439cae" stroke-width="8"/>
+          <circle cx="50" cy="30" r="6"/>
+          <circle cx="35" cy="55" r="6"/>
+          <circle cx="65" cy="55" r="6"/>
+          <path d="M50,30 L35,55 M50,30 L65,55 M35,55 L65,55" stroke="#439cae" stroke-width="6"/>
+        </svg>
+        Electshop
       </a>
     </div>
+
+    <!-- Header Actions (Exact SVG Icons) -->
     <div class="header-actions">
-      <a href="#" class="action-icon"><i class="fa-regular fa-user"></i></a>
-      <a href="#" class="action-icon"><i class="fa-solid fa-rotate-left"></i><span class="badge">0</span></a>
-      <a href="#" class="action-icon"><i class="fa-regular fa-heart"></i><span class="badge">0</span></a>
-      <a href="#" class="action-icon"><i class="fa-solid fa-basket-shopping"></i><span class="badge">0</span></a>
+      <!-- User Profile -->
+      <a href="#" class="action-icon" title="Hesabım">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+
+      <!-- Compare / Refresh -->
+      <a href="#" class="action-icon" title="Karşılaştır">
+        <svg viewBox="0 0 24 24"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+        <span class="badge">0</span>
+      </a>
+
+      <!-- Wishlist / Heart -->
+      <a href="#" class="action-icon" title="Favoriler">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span class="badge">0</span>
+      </a>
+
+      <!-- Shopping Cart -->
+      <a href="#" class="action-icon" title="Sepet">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="badge">0</span>
+      </a>
     </div>
   </header>
 
   <!-- Search Bar -->
   <div class="search-container">
     <div class="search-box">
-      <select class="category-select" id="categorySelect" onchange="filterProducts()">
-        <option value="Tümü">All Categories</option>
-        <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
-        <option value="Temel Gıda">Temel Gıda</option>
-        <option value="Deterjan & Ev Temizliği">Deterjan & Temizlik</option>
-      </select>
+      <div class="category-select-wrapper">
+        <select class="category-select" id="categorySelect" onchange="filterProducts()">
+          <option value="Tümü">All Categories</option>
+          <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
+          <option value="Temel Gıda">Temel Gıda</option>
+          <option value="Deterjan & Ev Temizliği">Deterjan & Temizlik</option>
+        </select>
+        <svg class="select-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+
       <input type="text" class="search-input" id="searchInput" placeholder="Search product here..." oninput="filterProducts()">
-      <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      
+      <button class="search-btn" title="Ara">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
     </div>
   </div>
 
@@ -142,13 +192,13 @@
   <div class="main-container">
     <h3 class="section-header">Birim Fiyat Karşılaştırma Listesi</h3>
     <div class="product-grid" id="productList">
-      <p style="grid-column: 1/-1; text-align: center; color: #666; padding: 40px;">Yükleniyor...</p>
+      <p style="grid-column: 1/-1; text-align: center; color: #666; padding: 40px;">Veriler yükleniyor...</p>
     </div>
   </div>
 
   <!-- Floating Chat Icon -->
-  <div class="chat-widget">
-    <i class="fa-regular fa-comment-dots"></i>
+  <div class="chat-widget" title="Canlı Destek">
+    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
   </div>
 
   <!-- Supabase Integration -->

@@ -26,21 +26,21 @@
     
     .search-box { flex: 1; max-width: 600px; position: relative; }
     .search-box input { width: 100%; padding: 12px 20px; border-radius: 8px; border: none; outline: none; font-size: 0.95rem; }
-    
-    /* Kategori Barı Kesin Görünüm */
-    .nav-categories { background: #ffffff; border-bottom: 2px solid var(--border); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .nav-container { max-width: 1250px; margin: 0 auto; padding: 0 15px; display: flex; gap: 8px; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
-    .nav-container::-webkit-scrollbar { height: 4px; }
-    .nav-container::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
-    
-    .nav-item { padding: 12px 16px; font-size: 0.88rem; font-weight: 600; color: #444; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; display: inline-block; flex-shrink: 0; user-select: none; }
-    .nav-item:hover, .nav-item.active { color: var(--primary); border-bottom-color: var(--primary); background: #fff8f5; }
 
-    .main-layout { max-width: 1250px; margin: 20px auto; padding: 0 20px; display: grid; grid-template-columns: 240px 1fr; gap: 20px; }
+    .main-layout { max-width: 1250px; margin: 20px auto; padding: 0 20px; display: grid; grid-template-columns: 260px 1fr; gap: 20px; }
     
     .sidebar { background: white; padding: 20px; border-radius: 8px; border: 1px solid var(--border); height: fit-content; }
     .filter-group { margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; }
+    .filter-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .filter-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: var(--secondary); }
+    
+    /* Sol Menü Kategori Tasarımı */
+    .category-list { display: flex; flex-direction: column; gap: 4px; max-height: 300px; overflow-y: auto; padding-right: 5px; }
+    .category-list::-webkit-scrollbar { width: 4px; }
+    .category-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+    .category-item { padding: 8px 10px; font-size: 0.88rem; color: #444; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 500; }
+    .category-item:hover, .category-item.active { background: #fff8f5; color: var(--primary); font-weight: 700; }
+
     .filter-option { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #555; margin-bottom: 8px; cursor: pointer; }
     .price-range { display: flex; gap: 8px; }
     .price-range input { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; }
@@ -82,7 +82,7 @@
 
     @media (max-width: 768px) {
       .main-layout { grid-template-columns: 1fr; }
-      .sidebar { display: none; }
+      .sidebar { width: 100%; }
     }
   </style>
 </head>
@@ -97,33 +97,37 @@
     </div>
   </header>
 
-  <!-- Kategori Üst Barı (Sabit HTML) -->
-  <nav class="nav-categories">
-    <div class="nav-container" id="topNavCategories">
-      <div class="nav-item active" onclick="selectNavCategory('Tümü', this)">Tümü</div>
-      <div class="nav-item" onclick="selectNavCategory('Meyve & Sebze', this)">Meyve & Sebze</div>
-      <div class="nav-item" onclick="selectNavCategory('Et, Balık & Şarküteri', this)">Et, Balık & Şarküteri</div>
-      <div class="nav-item" onclick="selectNavCategory('Süt & Kahvaltılık', this)">Süt & Kahvaltılık</div>
-      <div class="nav-item" onclick="selectNavCategory('Temel Gıda', this)">Temel Gıda</div>
-      <div class="nav-item" onclick="selectNavCategory('Atıştırmalıklar', this)">Atıştırmalıklar</div>
-      <div class="nav-item" onclick="selectNavCategory('İçecekler', this)">İçecekler</div>
-      <div class="nav-item" onclick="selectNavCategory('Fırın & Pastane', this)">Fırın & Pastane</div>
-      <div class="nav-item" onclick="selectNavCategory('Dondurulmuş Gıdalar', this)">Dondurulmuş Gıdalar</div>
-      <div class="nav-item" onclick="selectNavCategory('Deterjan & Ev Temizliği', this)">Deterjan & Ev Temizliği</div>
-      <div class="nav-item" onclick="selectNavCategory('Kişisel Bakım & Hijyen', this)">Kişisel Bakım & Hijyen</div>
-      <div class="nav-item" onclick="selectNavCategory('Kağıt Ürünleri', this)">Kağıt Ürünleri</div>
-      <div class="nav-item" onclick="selectNavCategory('Bebek Dünyası', this)">Bebek Dünyası</div>
-      <div class="nav-item" onclick="selectNavCategory('Evcil Dostlar', this)">Evcil Dostlar</div>
-      <div class="nav-item" onclick="selectNavCategory('Ev & Yaşam', this)">Ev & Yaşam</div>
-    </div>
-  </nav>
-
   <div class="main-layout">
+    <!-- Sol Sidebar -->
     <aside class="sidebar">
+      
+      <!-- Sol Taraf Kategori Filtresi -->
+      <div class="filter-group">
+        <div class="filter-title">Kategoriler</div>
+        <div class="category-list" id="sidebarCategoryList">
+          <div class="category-item active" onclick="selectNavCategory('Tümü', this)">Tümü</div>
+          <div class="category-item" onclick="selectNavCategory('Meyve & Sebze', this)">Meyve & Sebze</div>
+          <div class="category-item" onclick="selectNavCategory('Et, Balık & Şarküteri', this)">Et, Balık & Şarküteri</div>
+          <div class="category-item" onclick="selectNavCategory('Süt & Kahvaltılık', this)">Süt & Kahvaltılık</div>
+          <div class="category-item" onclick="selectNavCategory('Temel Gıda', this)">Temel Gıda</div>
+          <div class="category-item" onclick="selectNavCategory('Atıştırmalıklar', this)">Atıştırmalıklar</div>
+          <div class="category-item" onclick="selectNavCategory('İçecekler', this)">İçecekler</div>
+          <div class="category-item" onclick="selectNavCategory('Fırın & Pastane', this)">Fırın & Pastane</div>
+          <div class="category-item" onclick="selectNavCategory('Dondurulmuş Gıdalar', this)">Dondurulmuş Gıdalar</div>
+          <div class="category-item" onclick="selectNavCategory('Deterjan & Ev Temizliği', this)">Deterjan & Ev Temizliği</div>
+          <div class="category-item" onclick="selectNavCategory('Kişisel Bakım & Hijyen', this)">Kişisel Bakım & Hijyen</div>
+          <div class="category-item" onclick="selectNavCategory('Kağıt Ürünleri', this)">Kağıt Ürünleri</div>
+          <div class="category-item" onclick="selectNavCategory('Bebek Dünyası', this)">Bebek Dünyası</div>
+          <div class="category-item" onclick="selectNavCategory('Evcil Dostlar', this)">Evcil Dostlar</div>
+          <div class="category-item" onclick="selectNavCategory('Ev & Yaşam', this)">Ev & Yaşam</div>
+        </div>
+      </div>
+
       <div class="filter-group">
         <div class="filter-title">Marketler</div>
         <div id="marketFilters"></div>
       </div>
+
       <div class="filter-group">
         <div class="filter-title">Fiyat Aralığı (₺)</div>
         <div class="price-range">
@@ -133,6 +137,7 @@
       </div>
     </aside>
 
+    <!-- Sağ İçerik Alanı -->
     <main>
       <div class="content-header">
         <span id="productCount" style="font-size:0.85rem; color:#666; font-weight:600;">0 Ürün Bulundu</span>
@@ -161,7 +166,6 @@
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
     const SUPABASE_URL = "https://uuvldmikiiqtutisrhjg.supabase.co";
-    // Supabase Key Düzeltildi
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dmxkbWlraWlxdHV0aXNyaGpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczOTU0NjIsImV4cCI6MjE0MzYzMTQ2Mn0.RWeP1HAjIw1m0zv4ZAPEaoovyMS2-ckhCmqtl0xLDEU";
     
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -199,7 +203,7 @@
     }
 
     window.selectNavCategory = function(cat, el) {
-      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
       if(el) el.classList.add('active');
       selectedCategory = cat;
       filterProducts();

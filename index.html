@@ -19,7 +19,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
     body { background-color: var(--bg); color: var(--text-main); padding-bottom: 60px; }
     
-    /* Header & Navbar */
     header { background: var(--secondary); color: white; padding: 15px 0; border-bottom: 3px solid var(--primary); }
     .header-container { max-width: 1250px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
     .logo { font-size: 1.8rem; font-weight: 900; color: white; text-decoration: none; }
@@ -28,16 +27,13 @@
     .search-box { flex: 1; max-width: 600px; position: relative; }
     .search-box input { width: 100%; padding: 12px 20px; border-radius: 8px; border: none; outline: none; font-size: 0.95rem; }
     
-    /* Kategori Barı */
     .nav-categories { background: white; border-bottom: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
     .nav-container { max-width: 1250px; margin: 0 auto; padding: 0 20px; display: flex; gap: 15px; overflow-x: auto; scrollbar-width: none; }
     .nav-item { padding: 12px 16px; font-size: 0.9rem; font-weight: 600; color: #444; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.2s; }
     .nav-item:hover, .nav-item.active { color: var(--primary); border-bottom-color: var(--primary); }
 
-    /* Ana Düzen (Sidebar + Content) */
     .main-layout { max-width: 1250px; margin: 20px auto; padding: 0 20px; display: grid; grid-template-columns: 240px 1fr; gap: 20px; }
     
-    /* Sol Filtre Paneli */
     .sidebar { background: white; padding: 20px; border-radius: 8px; border: 1px solid var(--border); height: fit-content; }
     .filter-group { margin-bottom: 20px; border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; }
     .filter-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: var(--secondary); }
@@ -45,7 +41,6 @@
     .price-range { display: flex; gap: 8px; }
     .price-range input { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.85rem; }
 
-    /* İçerik Başlığı ve Görünüm Değiştirici */
     .content-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: white; padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border); flex-wrap: wrap; gap: 10px; }
     .header-controls { display: flex; align-items: center; gap: 12px; }
     .sort-select { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); outline: none; font-size: 0.85rem; }
@@ -55,7 +50,7 @@
     .view-btn { border: none; background: transparent; padding: 6px 12px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #666; transition: all 0.2s; }
     .view-btn.active { background: var(--secondary); color: white; }
 
-    /* 1. IZGARA (GRID) GÖRÜNÜMÜ */
+    /* Izgara Görünümü */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
     .product-card { background: white; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; transition: box-shadow 0.2s; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
     .product-card:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
@@ -71,7 +66,7 @@
     .unit-price span { font-size: 0.7rem; color: #666; font-weight: normal; }
     .net-price { font-size: 0.8rem; color: #666; margin-top: 2px; }
 
-    /* 2. TABLO / LİSTE GÖRÜNÜMÜ */
+    /* Tablo Görünümü */
     .product-list-view { display: flex; flex-direction: column; gap: 10px; }
     .table-container { background: white; border-radius: 8px; border: 1px solid var(--border); overflow-x: auto; }
     .custom-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
@@ -128,7 +123,6 @@
             <option value="price_asc">Paket Fiyatı: Düşükten Yükseğe</option>
           </select>
 
-          <!-- Görünüm Değiştirici Butonlar -->
           <div class="view-toggle">
             <button class="view-btn active" id="btnGridView" onclick="switchView('grid')">Izgara ▦</button>
             <button class="view-btn" id="btnTableView" onclick="switchView('table')">Tablo ☰</button>
@@ -136,7 +130,6 @@
         </div>
       </div>
 
-      <!-- Ürün Alanı -->
       <div id="productList" class="product-grid">
         <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Yükleniyor...</p>
       </div>
@@ -154,7 +147,7 @@
     let allProductsCombined = [];
     let currentFiltered = [];
     let selectedCategory = 'Tümü';
-    let currentViewMode = 'grid'; // 'grid' veya 'table'
+    let currentViewMode = 'grid';
     
     const mainCategories = [
       'Tümü', 'Süt & Şarküteri', 'Temel Gıda', 'Meyve & Sebze', 

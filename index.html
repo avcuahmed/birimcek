@@ -27,10 +27,14 @@
     .search-box { flex: 1; max-width: 600px; position: relative; }
     .search-box input { width: 100%; padding: 12px 20px; border-radius: 8px; border: none; outline: none; font-size: 0.95rem; }
     
+    /* Kategori Barı Düzenlemesi */
     .nav-categories { background: white; border-bottom: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-    .nav-container { max-width: 1250px; margin: 0 auto; padding: 0 20px; display: flex; gap: 15px; overflow-x: auto; scrollbar-width: none; }
-    .nav-item { padding: 12px 16px; font-size: 0.9rem; font-weight: 600; color: #444; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.2s; }
-    .nav-item:hover, .nav-item.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .nav-container { max-width: 1250px; margin: 0 auto; padding: 5px 20px; display: flex; gap: 10px; overflow-x: auto; white-space: nowrap; }
+    .nav-container::-webkit-scrollbar { height: 3px; }
+    .nav-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+    
+    .nav-item { padding: 10px 14px; font-size: 0.85rem; font-weight: 600; color: #444; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; display: inline-block; }
+    .nav-item:hover, .nav-item.active { color: var(--primary); border-bottom-color: var(--primary); background: #fff8f5; }
 
     .main-layout { max-width: 1250px; margin: 20px auto; padding: 0 20px; display: grid; grid-template-columns: 240px 1fr; gap: 20px; }
     
@@ -45,7 +49,7 @@
     .header-controls { display: flex; align-items: center; gap: 12px; }
     .sort-select { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); outline: none; font-size: 0.85rem; }
     
-    /* Görünüm Değiştirme Butonları */
+    /* Görünüm Değiştirici Butonlar */
     .view-toggle { display: flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: #f8f9fa; }
     .view-btn { border: none; background: transparent; padding: 6px 12px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #666; transition: all 0.2s; }
     .view-btn.active { background: var(--secondary); color: white; }
@@ -93,6 +97,7 @@
     </div>
   </header>
 
+  <!-- Kategori Üst Barı -->
   <nav class="nav-categories">
     <div class="nav-container" id="topNavCategories"></div>
   </nav>
@@ -149,7 +154,6 @@
     let selectedCategory = 'Tümü';
     let currentViewMode = 'grid';
     
-    // Güncellenmiş Kategori Listesi
     const mainCategories = [
       'Tümü',
       'Meyve & Sebze',
@@ -170,6 +174,8 @@
 
     async function loadData() {
       try {
+        renderTopCategories(); // Kategorileri veri beklemeden anında ekrana bas
+
         const { data: prices } = await supabase.from('prices').select('*');
         const { data: products } = await supabase.from('products').select('*');
         const { data: markets } = await supabase.from('markets').select('*');
@@ -184,7 +190,6 @@
           return { ...price, product: prod || {}, market: market || {}, unitPrice };
         });
 
-        renderTopCategories();
         renderMarketFilters(markets || []);
         filterProducts();
 
@@ -195,20 +200,25 @@
 
     function renderTopCategories() {
       const container = document.getElementById("topNavCategories");
+      if (!container) return;
+      
       container.innerHTML = mainCategories.map(cat => `
-        <div class="nav-item ${cat === selectedCategory ? 'active' : ''}" onclick="window.selectNavCategory('${cat}', this)">${cat}</div>
+        <div class="nav-item ${cat === selectedCategory ? 'active' : ''}" onclick="window.selectNavCategory('${cat}', this)">
+          ${cat}
+        </div>
       `).join('');
     }
 
     window.selectNavCategory = function(cat, el) {
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      el.classList.add('active');
+      if(el) el.classList.add('active');
       selectedCategory = cat;
       filterProducts();
     };
 
     function renderMarketFilters(markets) {
       const container = document.getElementById("marketFilters");
+      if(!container) return;
       container.innerHTML = markets.map(m => `
         <label class="filter-option">
           <input type="checkbox" value="${m.name}" onchange="filterProducts()" class="market-checkbox"> ${m.name}
@@ -225,12 +235,19 @@
 
       currentFiltered = allProductsCombined.filter(item => {
         const prod = item.product;
-        const matchesCat = selectedCategory === 'Tümü' || prod.category === selectedCategory;
+        
+        // Esnek kategori kontrolü
+        let matchesCat = selectedCategory === 'Tümü';
+        if (!matchesCat && prod.category) {
+          matchesCat = prod.category.toLowerCase().includes(selectedCategory.toLowerCase()) || 
+                     selectedCategory.toLowerCase().includes(prod.category.toLowerCase());
+        }
+
         const matchesSearch = (prod.title || '').toLowerCase().includes(searchTerm) || (prod.brand || '').toLowerCase().includes(searchTerm);
         const matchesMarket = selectedMarkets.length === 0 || selectedMarkets.includes(item.market.name);
         const matchesPrice = item.net_price >= minP && item.net_price <= maxP;
 
-        return matchesCat && matchesSearch && matchesMarket && matchesPrice;
+        return (matchesCat || selectedCategory === 'Tümü') && matchesSearch && matchesMarket && matchesPrice;
       });
 
       if (sortType === 'unit_asc') currentFiltered.sort((a, b) => a.unitPrice - b.unitPrice);

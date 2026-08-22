@@ -27,8 +27,8 @@
     .search-box { flex: 1; max-width: 600px; position: relative; }
     .search-box input { width: 100%; padding: 12px 20px; border-radius: 8px; border: none; outline: none; font-size: 0.95rem; }
     
-    /* Kategori Barı Kesin Düzeltme */
-    .nav-categories { background: #ffffff; border-bottom: 2px solid var(--border); box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+    /* Kategori Barı Kesin Görünüm */
+    .nav-categories { background: #ffffff; border-bottom: 2px solid var(--border); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
     .nav-container { max-width: 1250px; margin: 0 auto; padding: 0 15px; display: flex; gap: 8px; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
     .nav-container::-webkit-scrollbar { height: 4px; }
     .nav-container::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
@@ -97,9 +97,25 @@
     </div>
   </header>
 
-  <!-- Kategori Üst Barı -->
+  <!-- Kategori Üst Barı (Sabit HTML) -->
   <nav class="nav-categories">
-    <div class="nav-container" id="topNavCategories"></div>
+    <div class="nav-container" id="topNavCategories">
+      <div class="nav-item active" onclick="selectNavCategory('Tümü', this)">Tümü</div>
+      <div class="nav-item" onclick="selectNavCategory('Meyve & Sebze', this)">Meyve & Sebze</div>
+      <div class="nav-item" onclick="selectNavCategory('Et, Balık & Şarküteri', this)">Et, Balık & Şarküteri</div>
+      <div class="nav-item" onclick="selectNavCategory('Süt & Kahvaltılık', this)">Süt & Kahvaltılık</div>
+      <div class="nav-item" onclick="selectNavCategory('Temel Gıda', this)">Temel Gıda</div>
+      <div class="nav-item" onclick="selectNavCategory('Atıştırmalıklar', this)">Atıştırmalıklar</div>
+      <div class="nav-item" onclick="selectNavCategory('İçecekler', this)">İçecekler</div>
+      <div class="nav-item" onclick="selectNavCategory('Fırın & Pastane', this)">Fırın & Pastane</div>
+      <div class="nav-item" onclick="selectNavCategory('Dondurulmuş Gıdalar', this)">Dondurulmuş Gıdalar</div>
+      <div class="nav-item" onclick="selectNavCategory('Deterjan & Ev Temizliği', this)">Deterjan & Ev Temizliği</div>
+      <div class="nav-item" onclick="selectNavCategory('Kişisel Bakım & Hijyen', this)">Kişisel Bakım & Hijyen</div>
+      <div class="nav-item" onclick="selectNavCategory('Kağıt Ürünleri', this)">Kağıt Ürünleri</div>
+      <div class="nav-item" onclick="selectNavCategory('Bebek Dünyası', this)">Bebek Dünyası</div>
+      <div class="nav-item" onclick="selectNavCategory('Evcil Dostlar', this)">Evcil Dostlar</div>
+      <div class="nav-item" onclick="selectNavCategory('Ev & Yaşam', this)">Ev & Yaşam</div>
+    </div>
   </nav>
 
   <div class="main-layout">
@@ -145,7 +161,8 @@
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
     const SUPABASE_URL = "https://uuvldmikiiqtutisrhjg.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dmxkbWlraWlxdHV0aXNyaGpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczOTU0NjIsImV4cCI6Bt43NjE0NjJ9.RWeP1HAjIw1m0zv4ZAPEaoovyMS2-ckhCmqtl0xLDEU";
+    // Supabase Key Düzeltildi
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dmxkbWlraWlxdHV0aXNyaGpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczOTU0NjIsImV4cCI6MjE0MzYzMTQ2Mn0.RWeP1HAjIw1m0zv4ZAPEaoovyMS2-ckhCmqtl0xLDEU";
     
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
     
@@ -153,34 +170,17 @@
     let currentFiltered = [];
     let selectedCategory = 'Tümü';
     let currentViewMode = 'grid';
-    
-    const mainCategories = [
-      'Tümü',
-      'Meyve & Sebze',
-      'Et, Balık & Şarküteri',
-      'Süt & Kahvaltılık',
-      'Temel Gıda',
-      'Atıştırmalıklar',
-      'İçecekler',
-      'Fırın & Pastane',
-      'Dondurulmuş Gıdalar',
-      'Deterjan & Ev Temizliği',
-      'Kişisel Bakım & Hijyen',
-      'Kağıt Ürünleri',
-      'Bebek Dünyası',
-      'Evcil Dostlar',
-      'Ev & Yaşam'
-    ];
 
     async function loadData() {
       try {
-        renderTopCategories();
+        const { data: prices, error: pErr } = await supabase.from('prices').select('*');
+        const { data: products, error: prErr } = await supabase.from('products').select('*');
+        const { data: markets, error: mErr } = await supabase.from('markets').select('*');
 
-        const { data: prices } = await supabase.from('prices').select('*');
-        const { data: products } = await supabase.from('products').select('*');
-        const { data: markets } = await supabase.from('markets').select('*');
-
-        if (!prices) return;
+        if (pErr || !prices) {
+          console.error("Veri çekme hatası:", pErr);
+          return;
+        }
 
         allProductsCombined = prices.map(price => {
           const prod = products ? products.find(p => p.id === price.product_id) : {};
@@ -196,17 +196,6 @@
       } catch (err) {
         console.error("Hata:", err);
       }
-    }
-
-    function renderTopCategories() {
-      const container = document.getElementById("topNavCategories");
-      if (!container) return;
-      
-      container.innerHTML = mainCategories.map(cat => `
-        <div class="nav-item ${cat === selectedCategory ? 'active' : ''}" onclick="window.selectNavCategory('${cat}', this)">
-          ${cat}
-        </div>
-      `).join('');
     }
 
     window.selectNavCategory = function(cat, el) {
@@ -246,7 +235,7 @@
         const matchesMarket = selectedMarkets.length === 0 || selectedMarkets.includes(item.market.name);
         const matchesPrice = item.net_price >= minP && item.net_price <= maxP;
 
-        return (matchesCat || selectedCategory === 'Tümü') && matchesSearch && matchesMarket && matchesPrice;
+        return matchesCat && matchesSearch && matchesMarket && matchesPrice;
       });
 
       if (sortType === 'unit_asc') currentFiltered.sort((a, b) => a.unitPrice - b.unitPrice);

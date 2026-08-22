@@ -116,7 +116,7 @@
 
     <h3 class="section-title">En Uygun Birim Fiyatlı Ürünler</h3>
     <div class="product-grid" id="productList">
-      <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Yükleniyor...</p>
+      <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Veriler yükleniyor...</p>
     </div>
   </div>
 
@@ -124,8 +124,7 @@
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
     const SUPABASE_URL = "https://lejkdyhensjyauburrxk.supabase.co";
-  
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlamtkeWhlbnNqeWF1YnVycnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MjE1MDQsImV4cCI6MjEwMjk5NzUwNH0.7aVdxtM-1BFVmwVcc0eqLZospU2XkfDhLHr77HMI_2Y";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlamtkeWhlbnNqeWF1YnVycnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MjE1MDQsImV4cCI6MjE0Mjk5NzUwNH0.7aVdxtM-1BFVmwVcc0eqLZospU2XkfDhLHr77HMI_2Y";
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -140,7 +139,7 @@
 
         if (pErr || !prices) {
           console.error("Veri hatası:", pErr);
-          document.getElementById("productList").innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red; padding: 40px;">401 Yetkilendirme Hatası: Supabase API Key anahtarınızı güncelleyin.</p>`;
+          document.getElementById("productList").innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Henüz yeni veritabanınızda ürün bulunmuyor veya RLS izni kapalı.</p>`;
           return;
         }
 
@@ -191,7 +190,7 @@
       const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
 
       if (items.length === 0) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Aranan kriterlere uygun ürün bulunamadı.</p>`;
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Görüntülenecek ürün bulunamadı.</p>`;
         return;
       }
 

@@ -106,7 +106,6 @@
       container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Yükleniyor...</p>`;
 
       try {
-        // Doğrudan verileri çekme yöntemi
         const { data: pricesData, error: pricesError } = await supabaseClient.from('prices').select('*');
         const { data: productsData, error: productsError } = await supabaseClient.from('products').select('*');
         const { data: marketsData, error: marketsError } = await supabaseClient.from('markets').select('*');
@@ -122,17 +121,16 @@
           return;
         }
 
-        // Verileri manuel eşleştirme (İlişki hatasını sıfıra indirir)
         const combined = pricesData.map(price => {
-          const product = productsData.find(p => p.id === price.product_id) || {};
-          const market = marketsData.find(m => m.id === price.market_id) || {};
-          const netQty = product.net_quantity || 1;
+          const product = productsData ? productsData.find(p => p.id === price.product_id) : {};
+          const market = marketsData ? marketsData.find(m => m.id === price.market_id) : {};
+          const netQty = (product && product.net_quantity) ? product.net_quantity : 1;
           const unitPrice = price.net_price / netQty;
 
           return {
             ...price,
-            product,
-            market,
+            product: product || {},
+            market: market || {},
             unitPrice
           };
         }).sort((a, b) => a.unitPrice - b.unitPrice);

@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rafiyat - Akıllı Birim Fiyat Karşılaştırma</title>
+  <title>Birimçek - Akıllı Birim Fiyat Karşılaştırma</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #f4f6f9; color: #333; padding-bottom: 50px; }
     header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 25px 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    header h1 { font-size: 1.8rem; margin-bottom: 5px; }
-    header p { font-size: 0.9rem; opacity: 0.9; }
+    header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 5px; }
+    header p { font-size: 0.95rem; opacity: 0.9; }
     
     .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
     
@@ -50,8 +50,8 @@
 <body>
 
   <header>
-    <h1>Rafiyat</h1>
-    <p>En Ucuz Birim Fiyatı Anında Bulun</p>
+    <h1>Birimçek</h1>
+    <p>Rafları Çek, En Ucuz Birim Fiyatı Anında Bul</p>
   </header>
 
   <!-- Sıralama Esnasında Tetiklenen Pop-Up -->
@@ -68,7 +68,7 @@
     
     <!-- Filtreleme ve Sıralama Barı (Madde 7 & 8) -->
     <div class="filter-bar">
-      <span class="filter-title">Ürün Listesi</span>
+      <span class="filter-title">Güncel Ürünler</span>
       <div class="sort-buttons">
         <button class="btn-sort" onclick="fetchProducts('created_at')">Yeni Eklenenler</button>
         <button class="btn-sort active" id="btnSortUnit" onclick="sortByUnitPrice()">Birim Fiyata Göre Sırala 📊</button>

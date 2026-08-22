@@ -4,41 +4,153 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Birimçek - Akıllı Birim Fiyat Karşılaştırma</title>
-  <!-- Supabase CDN Güncellendi -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #f4f6f9; color: #333; padding-bottom: 50px; }
-    header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 25px 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 5px; }
-    header p { font-size: 0.95rem; opacity: 0.9; }
-    
-    .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
-    
-    .filter-bar { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
-    .filter-title { font-weight: 600; color: #444; }
-    .sort-buttons { display: flex; gap: 10px; }
-    .btn-sort { background: #eef4ff; color: #1e3c72; border: 1px solid #cbdcfd; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; }
-    .btn-sort:hover, .btn-sort.active { background: #1e3c72; color: white; }
+    :root {
+      --primary: #1e3c72;
+      --primary-light: #2a5298;
+      --accent: #10b981;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
 
-    .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 9999; }
-    .popup-card { background: white; padding: 25px; border-radius: 12px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; }
-    .popup-card h3 { color: #1e3c72; margin-bottom: 12px; font-size: 1.3rem; }
-    .popup-card p { font-size: 0.95rem; color: #555; line-height: 1.5; margin-bottom: 20px; }
-    .popup-timer { font-size: 0.8rem; color: #888; margin-top: 10px; }
-    .btn-close { background: #1e3c72; color: white; border: none; padding: 10px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
-    .product-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #eef0f4; }
-    .product-img { width: 100%; height: 180px; object-fit: cover; background: #eee; }
-    .product-info { padding: 15px; }
-    .product-brand { font-size: 0.8rem; color: #888; text-transform: uppercase; font-weight: bold; }
-    .product-title { font-size: 1.1rem; font-weight: 600; margin: 4px 0 10px; color: #222; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text-main); padding-bottom: 60px; }
     
-    .price-box { background: #eef4ff; padding: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
-    .unit-price { color: #d9534f; font-weight: bold; font-size: 1.1rem; }
-    .unit-price span { font-size: 0.75rem; color: #666; display: block; font-weight: normal; }
-    .net-price { text-align: right; font-size: 0.9rem; color: #555; }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      padding: 35px 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(30, 60, 114, 0.15);
+    }
+    header h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+    header p { font-size: 1rem; opacity: 0.9; font-weight: 300; }
+
+    .container { max-width: 1100px; margin: -20px auto 0; padding: 0 20px; position: relative; z-index: 10; }
+    
+    /* Arama ve Filtre Paneli */
+    .controls-panel {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 12px 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .search-bar:focus { border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1); }
+
+    .categories-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .categories-bar::-webkit-scrollbar { display: none; }
+
+    .cat-chip {
+      background: #f1f5f9;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .cat-chip:hover, .cat-chip.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Ürün Kartları Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+    }
+
+    .badge-best {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--accent);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+      z-index: 2;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      background: #f1f5f9;
+    }
+
+    .product-body { padding: 18px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+    .product-meta { font-size: 0.78rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+    .product-title { font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; line-height: 1.3; }
+
+    .price-container {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .unit-price-val { font-size: 1.15rem; font-weight: 800; color: #e11d48; }
+    .unit-price-lbl { font-size: 0.7rem; color: var(--text-muted); display: block; font-weight: 500; }
+    .net-price-val { text-align: right; font-size: 0.9rem; font-weight: 700; color: var(--text-main); }
+    .net-price-lbl { font-size: 0.7rem; color: var(--text-muted); display: block; font-weight: 500; }
+
+    /* Pop-up */
+    .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 9999; }
+    .popup-card { background: white; padding: 28px; border-radius: 20px; max-width: 420px; width: 90%; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+    .popup-card h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.25rem; }
+    .popup-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; }
+    .btn-close { background: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; }
   </style>
 </head>
 <body>
@@ -50,128 +162,141 @@
 
   <div id="unitPricePopup" class="popup-overlay">
     <div class="popup-card">
-      <h3>⚠️ Birim Fiyat Sıralaması</h3>
-      <p>Ürünler toplam paket fiyatına göre değil, <strong>1 kg / 1 Litre birim maliyetine</strong> göre en ucuzdan en pahalıya sıralanmıştır.</p>
-      <button class="btn-close" onclick="closePopup()">Anladım</button>
-      <div class="popup-timer"><span id="timerSec">15</span> saniye içinde kendiliğinden kapanacak.</div>
+      <h3>📊 Akıllı Birim Fiyat Sıralaması</h3>
+      <p>Sistemimiz paket fiyatına bakmaksızın ürünleri <strong>1 Kg / 1 Litre birim maliyetine</strong> göre otomatik sıralar.</p>
+      <button class="btn-close" onclick="document.getElementById('unitPricePopup').style.display='none'">Anladım</button>
     </div>
   </div>
 
   <div class="container">
-    <div class="filter-bar">
-      <span class="filter-title">Güncel Ürünler</span>
-      <div class="sort-buttons">
-        <button class="btn-sort active" id="btnSortUnit" onclick="sortByUnitPrice()">Birim Fiyata Göre Sırala 📊</button>
+    <div class="controls-panel">
+      <input type="text" id="searchInput" class="search-bar" placeholder="Ürün adı veya marka ara..." oninput="filterProducts()">
+      
+      <div class="categories-bar" id="categoryList">
+        <button class="cat-chip active" onclick="selectCategory('Tümü', this)">Tümü</button>
       </div>
     </div>
 
     <div id="productList" class="product-grid">
-      <p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Ürünler yükleniyor...</p>
+      <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Veriler yükleniyor...</p>
     </div>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const SUPABASE_URL = "https://uuvldmikiiqtutisrhjg.supabase.co";
-      const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dmxkbWlraWlxdHV0aXNyaGpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczOTU0NjIsImV4cCI6MjEwMjk3MTQ2Mn0.RWeP1HAjIw1m0zv4ZAPEaoovyMS2-ckhCmqtl0xLDEU";
-      
-      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-      let popupInterval;
+    const SUPABASE_URL = "https://uuvldmikiiqtutisrhjg.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dmxkbWlraWlxdHV0aXNyaGpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczOTU0NjIsImV4cCI6MjEwMjk3MTQ2Mn0.RWeP1HAjIw1m0zv4ZAPEaoovyMS2-ckhCmqtl0xLDEU";
+    
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    
+    let allProductsCombined = [];
+    let activeCategory = 'Tümü';
 
-      window.sortByUnitPrice = function() {
-        showPopup();
-        fetchProducts();
-      };
+    async function loadData() {
+      const container = document.getElementById("productList");
 
-      window.showPopup = function() {
-        const popupElem = document.getElementById("unitPricePopup");
-        const timerElem = document.getElementById("timerSec");
-        let timeLeft = 15;
-        timerElem.innerText = timeLeft;
-        popupElem.style.display = "flex";
+      try {
+        const { data: prices } = await supabase.from('prices').select('*');
+        const { data: products } = await supabase.from('products').select('*');
+        const { data: markets } = await supabase.from('markets').select('*');
 
-        clearInterval(popupInterval);
-        popupInterval = setInterval(() => {
-          timeLeft--;
-          timerElem.innerText = timeLeft;
-          if (timeLeft <= 0) closePopup();
-        }, 1000);
-      };
-
-      window.closePopup = function() {
-        clearInterval(popupInterval);
-        document.getElementById("unitPricePopup").style.display = "none";
-      };
-
-      async function fetchProducts() {
-        const container = document.getElementById("productList");
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Yükleniyor...</p>`;
-
-        try {
-          const { data: pricesData, error: pricesError } = await supabaseClient.from('prices').select('*');
-          const { data: productsData, error: productsError } = await supabaseClient.from('products').select('*');
-          const { data: marketsData, error: marketsError } = await supabaseClient.from('markets').select('*');
-
-          if (pricesError || productsError || marketsError) {
-            const err = pricesError || productsError || marketsError;
-            container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red; padding: 40px;">Veritabanı Hatası: ${err.message}</p>`;
-            return;
-          }
-
-          if (!pricesData || pricesData.length === 0) {
-            container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #d9534f; padding: 40px; font-weight: bold;">Veritabanında henüz ürün fiyatı yok.</p>`;
-            return;
-          }
-
-          const combined = pricesData.map(price => {
-            const product = productsData ? productsData.find(p => p.id === price.product_id) : {};
-            const market = marketsData ? marketsData.find(m => m.id === price.market_id) : {};
-            const netQty = (product && product.net_quantity) ? product.net_quantity : 1;
-            const unitPrice = price.net_price / netQty;
-
-            return {
-              ...price,
-              product: product || {},
-              market: market || {},
-              unitPrice
-            };
-          }).sort((a, b) => a.unitPrice - b.unitPrice);
-
-          container.innerHTML = "";
-          combined.forEach(item => {
-            const prod = item.product;
-            const market = item.market;
-            const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
-
-            container.innerHTML += `
-              <div class="product-card">
-                <img src="${prod.image_url || defaultImg}" class="product-img" alt="${prod.title || 'Ürün'}">
-                <div class="product-info">
-                  <div class="product-brand">${prod.brand || 'Genel'} • ${market.name || ''}</div>
-                  <div class="product-title">${prod.title || 'Ürün'} (${prod.net_quantity || ''} ${prod.unit_type || ''})</div>
-                  <div class="price-box">
-                    <div class="unit-price">
-                      <span>Birim Fiyat</span>
-                      ${item.unitPrice.toFixed(2)} ₺ / ${prod.unit_type || 'adet'}
-                    </div>
-                    <div class="net-price">
-                      <span style="font-size:0.75rem; color:#888; display:block;">Paket Fiyatı</span>
-                      <strong>${Number(item.net_price).toFixed(2)} ₺</strong>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            `;
-          });
-
-        } catch (e) {
-          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red; padding: 40px;">Beklenmeyen Hata: ${e.message}</p>`;
+        if (!prices || prices.length === 0) {
+          container.innerHTML = `<p style="text-align:center; grid-column:1/-1; color:var(--text-muted);">Henüz veritabanında ürün bulunmuyor.</p>`;
+          return;
         }
+
+        allProductsCombined = prices.map(price => {
+          const prod = products ? products.find(p => p.id === price.product_id) : {};
+          const market = markets ? markets.find(m => m.id === price.market_id) : {};
+          const unitPrice = price.net_price / (prod.net_quantity || 1);
+
+          return {
+            ...price,
+            product: prod || {},
+            market: market || {},
+            unitPrice: unitPrice
+          };
+        }).sort((a, b) => a.unitPrice - b.unitPrice);
+
+        setupCategories();
+        renderProducts(allProductsCombined);
+
+      } catch (err) {
+        container.innerHTML = `<p style="color:red; text-align:center; grid-column:1/-1;">Hata: ${err.message}</p>`;
+      }
+    }
+
+    function setupCategories() {
+      const catContainer = document.getElementById("categoryList");
+      const categories = ['Tümü', ...new Set(allProductsCombined.map(item => item.product.category).filter(Boolean))];
+      
+      catContainer.innerHTML = categories.map((cat, idx) => `
+        <button class="cat-chip ${idx === 0 ? 'active' : ''}" onclick="window.selectCategory('${cat}', this)">${cat}</button>
+      `).join('');
+    }
+
+    window.selectCategory = function(cat, element) {
+      document.querySelectorAll('.cat-chip').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+      activeCategory = cat;
+      filterProducts();
+    };
+
+    window.filterProducts = function() {
+      const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+      
+      const filtered = allProductsCombined.filter(item => {
+        const matchesCategory = activeCategory === 'Tümü' || item.product.category === activeCategory;
+        const matchesSearch = (item.product.title || '').toLowerCase().includes(searchTerm) || 
+                              (item.product.brand || '').toLowerCase().includes(searchTerm);
+        return matchesCategory && matchesSearch;
+      });
+
+      renderProducts(filtered);
+    };
+
+    function renderProducts(items) {
+      const container = document.getElementById("productList");
+      
+      if (items.length === 0) {
+        container.innerHTML = `<p style="text-align:center; grid-column:1/-1; color:var(--text-muted); padding:20px;">Aradığınız kriterlere uygun ürün bulunamadı.</p>`;
+        return;
       }
 
-      fetchProducts();
-    });
+      const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
+
+      container.innerHTML = items.map((item, index) => {
+        const prod = item.product;
+        const market = item.market;
+        const isBestValue = index === 0 && activeCategory === 'Tümü';
+
+        return `
+          <div class="product-card">
+            ${isBestValue ? `<div class="badge-best">🏆 En Avantajlı</div>` : ''}
+            <img src="${prod.image_url || defaultImg}" class="product-img" alt="${prod.title || 'Ürün'}">
+            <div class="product-body">
+              <div>
+                <div class="product-meta">${prod.brand || 'Genel'} • ${market.name || 'Market'}</div>
+                <div class="product-title">${prod.title || 'Ürün'} (${prod.net_quantity || ''} ${prod.unit_type || ''})</div>
+              </div>
+              <div class="price-container">
+                <div>
+                  <span class="unit-price-lbl">Birim Fiyat</span>
+                  <div class="unit-price-val">${item.unitPrice.toFixed(2)} ₺ <span style="font-size:0.7rem; font-weight:normal;">/ ${prod.unit_type || 'birim'}</span></div>
+                </div>
+                <div>
+                  <span class="net-price-lbl">Paket Fiyatı</span>
+                  <div class="net-price-val">${Number(item.net_price).toFixed(2)} ₺</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    loadData();
   </script>
 </body>
 </html>

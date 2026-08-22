@@ -34,7 +34,6 @@
     .filter-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .filter-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: var(--secondary); }
     
-    /* Sol Menü Kategori Tasarımı */
     .category-list { display: flex; flex-direction: column; gap: 4px; max-height: 300px; overflow-y: auto; padding-right: 5px; }
     .category-list::-webkit-scrollbar { width: 4px; }
     .category-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
@@ -49,7 +48,6 @@
     .header-controls { display: flex; align-items: center; gap: 12px; }
     .sort-select { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); outline: none; font-size: 0.85rem; }
     
-    /* Görünüm Değiştirici Butonlar */
     .view-toggle { display: flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: #f8f9fa; }
     .view-btn { border: none; background: transparent; padding: 6px 14px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #666; transition: all 0.2s; }
     .view-btn.active { background: var(--secondary); color: white; }
@@ -98,10 +96,7 @@
   </header>
 
   <div class="main-layout">
-    <!-- Sol Sidebar -->
     <aside class="sidebar">
-      
-      <!-- Sol Taraf Kategori Filtresi -->
       <div class="filter-group">
         <div class="filter-title">Kategoriler</div>
         <div class="category-list" id="sidebarCategoryList">
@@ -137,7 +132,6 @@
       </div>
     </aside>
 
-    <!-- Sağ İçerik Alanı -->
     <main>
       <div class="content-header">
         <span id="productCount" style="font-size:0.85rem; color:#666; font-weight:600;">0 Ürün Bulundu</span>
@@ -157,7 +151,7 @@
       </div>
 
       <div id="productList" class="product-grid">
-        <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Ürünler Yükleniyor...</p>
+        <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Veriler çekiliyor...</p>
       </div>
     </main>
   </div>
@@ -166,6 +160,7 @@
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
     const SUPABASE_URL = "https://uuvldmikiiqtutisrhjg.supabase.co";
+    // Tam ve doğru Supabase Anon Key
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dmxkbWlraWlxdHV0aXNyaGpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczOTU0NjIsImV4cCI6MjE0MzYzMTQ2Mn0.RWeP1HAjIw1m0zv4ZAPEaoovyMS2-ckhCmqtl0xLDEU";
     
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -183,22 +178,24 @@
 
         if (pErr || !prices) {
           console.error("Veri çekme hatası:", pErr);
+          document.getElementById("productList").innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red; padding: 40px;">Veritabanından ürün verisi alınamadı.</p>`;
           return;
         }
 
         allProductsCombined = prices.map(price => {
-          const prod = products ? products.find(p => p.id === price.product_id) : {};
-          const market = markets ? markets.find(m => m.id === price.market_id) : {};
-          const unitPrice = price.net_price / (prod.net_quantity || 1);
+          const prod = (products || []).find(p => p.id === price.product_id) || {};
+          const market = (markets || []).find(m => m.id === price.market_id) || {};
+          const qty = prod.net_quantity || 1;
+          const unitPrice = price.net_price ? (price.net_price / qty) : 0;
 
-          return { ...price, product: prod || {}, market: market || {}, unitPrice };
+          return { ...price, product: prod, market: market, unitPrice };
         });
 
         renderMarketFilters(markets || []);
         filterProducts();
 
       } catch (err) {
-        console.error("Hata:", err);
+        console.error("Bağlantı Hatası:", err);
       }
     }
 
@@ -220,14 +217,14 @@
     }
 
     window.filterProducts = function() {
-      const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+      const searchTerm = (document.getElementById("searchInput").value || '').toLowerCase();
       const sortType = document.getElementById("sortSelect").value;
       const minP = parseFloat(document.getElementById("minPrice").value) || 0;
       const maxP = parseFloat(document.getElementById("maxPrice").value) || Infinity;
       const selectedMarkets = Array.from(document.querySelectorAll('.market-checkbox:checked')).map(cb => cb.value);
 
       currentFiltered = allProductsCombined.filter(item => {
-        const prod = item.product;
+        const prod = item.product || {};
         
         let matchesCat = selectedCategory === 'Tümü';
         if (!matchesCat && prod.category) {
@@ -236,7 +233,7 @@
         }
 
         const matchesSearch = (prod.title || '').toLowerCase().includes(searchTerm) || (prod.brand || '').toLowerCase().includes(searchTerm);
-        const matchesMarket = selectedMarkets.length === 0 || selectedMarkets.includes(item.market.name);
+        const matchesMarket = selectedMarkets.length === 0 || (item.market && selectedMarkets.includes(item.market.name));
         const matchesPrice = item.net_price >= minP && item.net_price <= maxP;
 
         return matchesCat && matchesSearch && matchesMarket && matchesPrice;
@@ -262,7 +259,7 @@
 
       if (currentFiltered.length === 0) {
         container.className = "product-grid";
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Kritere uygun ürün bulunamadı.</p>`;
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Seçilen filtrelere uygun ürün bulunamadı. "Tümü" kategorisini seçip tekrar deneyebilirsiniz.</p>`;
         return;
       }
 
@@ -279,7 +276,8 @@
       const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
 
       container.innerHTML = items.map((item, index) => {
-        const prod = item.product;
+        const prod = item.product || {};
+        const market = item.market || {};
         const isBest = index === 0;
 
         return `
@@ -287,13 +285,13 @@
             ${isBest ? `<div class="badge-best">🏆 En Uygun Birim Fiyat</div>` : ''}
             <img src="${prod.image_url || defaultImg}" class="product-img" alt="${prod.title || 'Ürün'}">
             <div class="product-info">
-              <div class="product-brand">${prod.brand || 'Genel'} • ${item.market.name || ''}</div>
-              <div class="product-title">${prod.title || 'Ürün'} (${prod.net_quantity || ''} ${prod.unit_type || ''})</div>
+              <div class="product-brand">${prod.brand || 'Genel'} • ${market.name || ''}</div>
+              <div class="product-title">${prod.title || 'İsimsiz Ürün'} (${prod.net_quantity || ''} ${prod.unit_type || ''})</div>
               <div class="price-box">
                 <div class="unit-price">
-                  ${item.unitPrice.toFixed(2)} ₺ <span>/ ${prod.unit_type || 'birim'}</span>
+                  ${(item.unitPrice || 0).toFixed(2)} ₺ <span>/ ${prod.unit_type || 'birim'}</span>
                 </div>
-                <div class="net-price">Paket: <strong>${Number(item.net_price).toFixed(2)} ₺</strong></div>
+                <div class="net-price">Paket: <strong>${Number(item.net_price || 0).toFixed(2)} ₺</strong></div>
               </div>
             </div>
           </div>
@@ -305,7 +303,8 @@
       const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
 
       const rowsHtml = items.map((item, index) => {
-        const prod = item.product;
+        const prod = item.product || {};
+        const market = item.market || {};
         const isBest = index === 0;
 
         return `
@@ -314,15 +313,15 @@
               <div style="display:flex; align-items:center; gap:10px;">
                 <img src="${prod.image_url || defaultImg}" class="table-img" alt="">
                 <div>
-                  <strong>${prod.title || 'Ürün'}</strong> ${isBest ? `<span class="table-badge">En Uygun</span>` : ''}
+                  <strong>${prod.title || 'İsimsiz Ürün'}</strong> ${isBest ? `<span class="table-badge">En Uygun</span>` : ''}
                   <div style="font-size:0.75rem; color:#777;">${prod.brand || 'Genel'} • ${prod.net_quantity || ''} ${prod.unit_type || ''}</div>
                 </div>
               </div>
             </td>
-            <td><span style="font-weight:600; color:#444;">${item.market.name || 'Market'}</span></td>
+            <td><span style="font-weight:600; color:#444;">${market.name || 'Market'}</span></td>
             <td><span style="color:#666;">${prod.category || 'Genel'}</span></td>
-            <td><strong>${Number(item.net_price).toFixed(2)} ₺</strong></td>
-            <td><strong style="color:var(--primary); font-size:1.05rem;">${item.unitPrice.toFixed(2)} ₺</strong> <span style="font-size:0.75rem; color:#777;">/ ${prod.unit_type || 'birim'}</span></td>
+            <td><strong>${Number(item.net_price || 0).toFixed(2)} ₺</strong></td>
+            <td><strong style="color:var(--primary); font-size:1.05rem;">${(item.unitPrice || 0).toFixed(2)} ₺</strong> <span style="font-size:0.75rem; color:#777;">/ ${prod.unit_type || 'birim'}</span></td>
           </tr>
         `;
       }).join('');

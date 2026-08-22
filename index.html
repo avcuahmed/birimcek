@@ -21,7 +21,7 @@
     .btn-sort:hover, .btn-sort.active { background: #1e3c72; color: white; }
 
     .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 9999; }
-    .popup-card { background: white; padding: 25px; border-radius: 12px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; animation: fadeIn 0.3s ease; }
+    .popup-card { background: white; padding: 25px; border-radius: 12px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; }
     .popup-card h3 { color: #1e3c72; margin-bottom: 12px; font-size: 1.3rem; }
     .popup-card p { font-size: 0.95rem; color: #555; line-height: 1.5; margin-bottom: 20px; }
     .popup-timer { font-size: 0.8rem; color: #888; margin-top: 10px; }
@@ -38,8 +38,6 @@
     .unit-price { color: #d9534f; font-weight: bold; font-size: 1.1rem; }
     .unit-price span { font-size: 0.75rem; color: #666; display: block; font-weight: normal; }
     .net-price { text-align: right; font-size: 0.9rem; color: #555; }
-
-    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
   </style>
 </head>
 <body>
@@ -62,7 +60,6 @@
     <div class="filter-bar">
       <span class="filter-title">Güncel Ürünler</span>
       <div class="sort-buttons">
-        <button class="btn-sort" onclick="fetchProducts('created_at')">Yeni Eklenenler</button>
         <button class="btn-sort active" id="btnSortUnit" onclick="sortByUnitPrice()">Birim Fiyata Göre Sırala 📊</button>
       </div>
     </div>
@@ -73,7 +70,7 @@
   </div>
 
   <script>
-    const SUPABASE_URL = "https://uuvldmikiiqtutisrhjg.supabase.co/rest/v1/";
+    const SUPABASE_URL = "https://uuvldmikiiqtutisrhjg.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1dmxkbWlraWlxdHV0aXNyaGpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczOTU0NjIsImV4cCI6MjEwMjk3MTQ2Mn0.RWeP1HAjIw1m0zv4ZAPEaoovyMS2-ckhCmqtl0xLDEU";
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -81,7 +78,7 @@
 
     function sortByUnitPrice() {
       showPopup();
-      fetchProducts('net_price');
+      fetchProducts();
     }
 
     function showPopup() {
@@ -108,58 +105,68 @@
       const container = document.getElementById("productList");
       container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Yükleniyor...</p>`;
 
-      const { data, error } = await supabaseClient
-        .from('prices')
-        .select(`
-          net_price,
-          products ( title, brand, net_quantity, unit_type, image_url ),
-          markets ( name )
-        `);
+      try {
+        // Doğrudan verileri çekme yöntemi
+        const { data: pricesData, error: pricesError } = await supabaseClient.from('prices').select('*');
+        const { data: productsData, error: productsError } = await supabaseClient.from('products').select('*');
+        const { data: marketsData, error: marketsError } = await supabaseClient.from('markets').select('*');
 
-      if (error) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red; padding: 40px;">Hata oluştu: ${error.message}</p>`;
-        return;
-      }
+        if (pricesError || productsError || marketsError) {
+          const err = pricesError || productsError || marketsError;
+          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red; padding: 40px;">Veritabanı Hatası: ${err.message}</p>`;
+          return;
+        }
 
-      if (!data || data.length === 0) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Veritabanında ürün bulunamadı.</p>`;
-        return;
-      }
+        if (!pricesData || pricesData.length === 0) {
+          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #d9534f; padding: 40px; font-weight: bold;">Veritabanında henüz hiç fiyat kaydı yok. Lütfen Supabase SQL Editor'den veritabanına test verisi ekleyin.</p>`;
+          return;
+        }
 
-      // JavaScript tarafında Birim Fiyat (TL / Birim) Hesaplama ve En Ucuzdan Sıralama
-      const formattedData = data.map(item => {
-        const prod = item.products || {};
-        const netQty = prod.net_quantity || 1;
-        const calcUnitPrice = item.net_price / netQty;
-        return { ...item, computed_unit_price: calcUnitPrice };
-      }).sort((a, b) => a.computed_unit_price - b.computed_unit_price);
+        // Verileri manuel eşleştirme (İlişki hatasını sıfıra indirir)
+        const combined = pricesData.map(price => {
+          const product = productsData.find(p => p.id === price.product_id) || {};
+          const market = marketsData.find(m => m.id === price.market_id) || {};
+          const netQty = product.net_quantity || 1;
+          const unitPrice = price.net_price / netQty;
 
-      container.innerHTML = "";
-      formattedData.forEach(item => {
-        const prod = item.products || {};
-        const market = item.markets || {};
-        const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
+          return {
+            ...price,
+            product,
+            market,
+            unitPrice
+          };
+        }).sort((a, b) => a.unitPrice - b.unitPrice);
 
-        container.innerHTML += `
-          <div class="product-card">
-            <img src="${prod.image_url || defaultImg}" class="product-img" alt="${prod.title || 'Ürün'}">
-            <div class="product-info">
-              <div class="product-brand">${prod.brand || 'Genel'} • ${market.name || ''}</div>
-              <div class="product-title">${prod.title || 'Ürün'} (${prod.net_quantity || ''} ${prod.unit_type || ''})</div>
-              <div class="price-box">
-                <div class="unit-price">
-                  <span>Birim Fiyat</span>
-                  ${item.computed_unit_price.toFixed(2)} ₺ / ${prod.unit_type || 'adet'}
-                </div>
-                <div class="net-price">
-                  <span style="font-size:0.75rem; color:#888; display:block;">Paket Fiyatı</span>
-                  <strong>${Number(item.net_price).toFixed(2)} ₺</strong>
+        container.innerHTML = "";
+        combined.forEach(item => {
+          const prod = item.product;
+          const market = item.market;
+          const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
+
+          container.innerHTML += `
+            <div class="product-card">
+              <img src="${prod.image_url || defaultImg}" class="product-img" alt="${prod.title || 'Ürün'}">
+              <div class="product-info">
+                <div class="product-brand">${prod.brand || 'Genel'} • ${market.name || ''}</div>
+                <div class="product-title">${prod.title || 'Ürün'} (${prod.net_quantity || ''} ${prod.unit_type || ''})</div>
+                <div class="price-box">
+                  <div class="unit-price">
+                    <span>Birim Fiyat</span>
+                    ${item.unitPrice.toFixed(2)} ₺ / ${prod.unit_type || 'adet'}
+                  </div>
+                  <div class="net-price">
+                    <span style="font-size:0.75rem; color:#888; display:block;">Paket Fiyatı</span>
+                    <strong>${Number(item.net_price).toFixed(2)} ₺</strong>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        `;
-      });
+          `;
+        });
+
+      } catch (e) {
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red; padding: 40px;">Beklenmeyen Hata: ${e.message}</p>`;
+      }
     }
 
     fetchProducts();

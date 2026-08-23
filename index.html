@@ -65,7 +65,7 @@
     .section-title { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); }
     .section-link { color: var(--primary); font-size: 0.88rem; font-weight: 700; text-decoration: none; }
 
-    /* PRODUCT CARD */
+    /* ORVANA STYLE PRODUCT CARD */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; margin-bottom: 40px; }
     .card-product { border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; background: #ffffff; position: relative; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.25s ease; }
     .card-product:hover { border-color: var(--primary-light); box-shadow: 0 12px 24px rgba(0,0,0,0.06); transform: translateY(-3px); }
@@ -120,7 +120,7 @@
     .cart-total-row strong { font-size: 1.2rem; color: var(--primary); }
     .cart-checkout-btn { width: 100%; padding: 12px; background: var(--primary-light); color: var(--primary); border: none; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
 
-    /* MOBILE TOOLBAR BOTTOM */
+    /* ORVANA MOBILE TOOLBAR BOTTOM */
     .toolbar-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 10px 0; z-index: 900; }
     .toolbar-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--text-dark); font-size: 0.7rem; font-weight: 600; gap: 4px; background: none; border: none; cursor: pointer; }
     .toolbar-item i { font-size: 1.2rem; color: var(--primary); }
@@ -211,7 +211,7 @@
     </div>
   </div>
 
-  <!-- MOBILE TOOLBAR BOTTOM -->
+  <!-- ORVANA TOOLBAR BOTTOM (MOBIL ICON NAVIGATION) -->
   <div class="toolbar-bottom mobile-only">
     <a href="index.html" class="toolbar-item">
       <i class="fa-solid fa-house"></i>
@@ -349,7 +349,10 @@
     };
 
     window.executeSearch = (source) => {
-      const inputEl = document.getElementById("searchInputDesktop");
+      const inputEl = source === 'desktop' 
+        ? document.getElementById("searchInputDesktop") 
+        : document.getElementById("searchInputMobile");
+      
       const query = inputEl?.value.trim();
       if (query) {
         window.location.href = `urunler.html?q=${encodeURIComponent(query)}`;

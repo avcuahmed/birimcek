@@ -243,10 +243,10 @@
       <i class="fa-solid fa-leaf"></i>Birimçek
     </a>
 
-    <!-- Desktop Search Box (Tüm Kategoriler yerine getirildi) -->
+    <!-- Desktop Search Box -->
     <div class="search-box-desktop">
       <select class="search-category" id="categorySelectDesktop">
-        <option value="Tümü">Tüm Kategoriler</option>
+        <option value="Tümü">Kategori</option>
         <option value="Temel Gıda">Temel Gıda</option>
         <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
       </select>
@@ -513,7 +513,7 @@
     window.executeSearch = (type) => {
       const input = document.getElementById(type === 'desktop' ? 'searchInputDesktop' : 'searchInputMobile');
       const cat = document.getElementById(type === 'desktop' ? 'categorySelectDesktop' : 'categorySelectMobile');
-      alert(`Aranan: "${input?.value || ''}" (Kategori: ${cat?.value || 'Tümü'})`);
+      alert(`Aranan: "${input?.value || ''}" (Kategori: ${cat?.value || 'Kategori'})`);
     };
 
     window.handleProductSort = (sortValue) => {

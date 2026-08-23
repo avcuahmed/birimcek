@@ -1,102 +1,155 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Birimçek | Akıllı Market Fiyat Karşılaştırma</title>
-      
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birimçek - Akıllı Alışveriş & Fiyat Karşılaştırma Ağı</title>
+    
+    <!-- FontAwesome İkonları -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS Dosyası -->
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 
-  <!-- HEADER -->
-  <div id="header-container"></div>
+    <!-- JavaScript Header Alanını Buraya Otomatik Dolduracak -->
+    <div id="header-container"></div>
+    
+    <!-- Çekmeceler (Sepet, Menü, Modaller) Buraya Gelecek -->
+    <div id="drawers-container"></div>
 
-  <!-- ANA İÇERİK -->
-  <div class="main-container">
-    <div class="hero-banner">
-      <div class="hero-text">
-        <h2>Akıllı Sepet, Gerçek Tasarruf</h2>
-        <p>Reyon videoları veya alışveriş fişlerini yükle, yapay zeka denetimiyle anında puan kazan. Listeni oluşturup en az market gezerek en ucuz fiyata alışveriş yap.</p>
-        <div class="hero-btns">
-          <button class="hero-btn" onclick="window.toggleVideoModal()">
-            <i class="fa-solid fa-video"></i> Reyon Videosu Çek
-          </button>
-          <button class="hero-btn-alt" onclick="window.toggleReceiptModal()">
-            <i class="fa-solid fa-receipt"></i> Fiş Yükle & Puan Kazan
-          </button>
+    <!-- ANA İÇERİK -->
+    <main class="main-container">
+      
+      <!-- HERO BANNER -->
+      <section class="hero-banner">
+        <div class="hero-text">
+          <h2>Akıllı Sepet, Gerçek Tasarruf</h2>
+          <p>Reyon videoları veya alışveriş fişlerini yükle, yapay zeka denetimiyle anında puan kazan. Listeni oluşturup en az market gezerek en ucuz fiyata alışveriş yap.</p>
+          <div class="hero-btns">
+            <button class="hero-btn" onclick="window.toggleVideoModal()" type="button">
+              <i class="fa-solid fa-video"></i> Reyon Videosu Çek
+            </button>
+            <button class="hero-btn-alt" onclick="window.toggleReceiptModal()" type="button">
+              <i class="fa-solid fa-receipt"></i> Fiş Yükle & Puan Kazan
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- BİRİM FİYAT BİLGİLENDİRME ALANI -->
+      <div class="unit-info-popup active" id="unitInfoPopupMain">
+        <div class="unit-info-content">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Ürünler, hak geçmemesi için en küçük ortak birimlerine (Litre, Kilogram, Adet) dönüştürülerek sıralanmaktadır.</span>
         </div>
       </div>
-    </div>
 
-    <!-- İNDİRİM BOARDLARI -->
-    <div class="discount-board-section">
-      <div class="section-title-wrap">
-        <h3 class="section-title"><i class="fa-solid fa-bolt" style="color: #ef4444;"></i> Güncellenen Fiyatlar & İndirim Boardu</h3>
-        <span style="font-size: 0.82rem; color: var(--text-muted);">Yapay Zeka Afiş & Aktüel Taraması</span>
-      </div>
-      <div class="board-scroll" id="discountBoardList">
-        <div class="board-card">
-          <span class="board-badge">%25 İndirim</span>
-          <div class="board-left-group">
-            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&q=80" class="board-img" alt="Ürün">
-            <div class="board-info">
-              <h5>Ayçiçek Yağı 5L</h5>
-              <div class="board-prices">
-                <span class="old-price">245.00 ₺</span>
-                <span class="new-price">185.00 ₺</span>
+      <!-- GÜNCELLENEN FİYATLAR & İNDİRİM BOARDU -->
+      <section class="discount-board-section">
+        <div class="section-title-wrap">
+          <h3 class="section-title"><i class="fa-solid fa-bolt" style="color: #ef4444;"></i> Güncellenen Fiyatlar & İndirim Boardu</h3>
+          <select class="sort-select-box" onchange="window.handleProductSort(this.value)">
+            <option value="unit-asc">Birim Fiyata Göre (Artan)</option>
+            <option value="discount">En Çok İndirim Alanlar</option>
+            <option value="newest">En Son Güncellenenler</option>
+          </select>
+        </div>
+
+        <!-- BOARD KARTLARI KAYDIRMA ALANI -->
+        <div class="board-scroll">
+          <div class="board-card">
+            <span class="board-badge">%25 İndirim</span>
+            <div class="board-left-group">
+              <img src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=100" class="board-img" alt="Ürün">
+              <div class="board-info">
+                <h5>Günlük Süt 1L</h5>
+                <div class="board-prices">
+                  <span class="old-price">32.50 ₺</span>
+                  <span class="new-price">24.50 ₺</span>
+                </div>
+                <small style="font-size:0.7rem; color:var(--text-muted);">Migros • 12 dk önce</small>
               </div>
-              <span style="font-size:0.7rem; color:var(--primary); font-weight:700;">A101 • Birim: 37.00 ₺/L</span>
             </div>
+            <button class="add-to-cart-btn" style="width: auto; padding: 6px 12px;" onclick="window.addToCart('Günlük Süt 1L', 24.50, 'https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=100')" type="button">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+
+          <div class="board-card">
+            <span class="board-badge">%18 İndirim</span>
+            <div class="board-left-group">
+              <img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=100" class="board-img" alt="Ürün">
+              <div class="board-info">
+                <h5>Toz Şeker 1kg</h5>
+                <div class="board-prices">
+                  <span class="old-price">45.00 ₺</span>
+                  <span class="new-price">36.90 ₺</span>
+                </div>
+                <small style="font-size:0.7rem; color:var(--text-muted);">Bim • 25 dk önce</small>
+              </div>
+            </div>
+            <button class="add-to-cart-btn" style="width: auto; padding: 6px 12px;" onclick="window.addToCart('Toz Şeker 1kg', 36.90, 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=100')" type="button">
+              <i class="fa-solid fa-plus"></i>
+            </button>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- ÜRÜN LİSTESİ & SIRALAMA -->
-    <div class="section-title-wrap">
-      <h3 class="section-title">En Uygun Birim Fiyatlı Ürünler</h3>
-      <select class="sort-select-box" id="productSortSelect" onchange="window.handleProductSort(this.value)">
-        <option value="default">Sıralama Seçiniz</option>
-        <option value="unit_asc">Birim Fiyata Göre (En Düşük)</option>
-        <option value="unit_desc">Birim Fiyata Göre (En Yüksek)</option>
-        <option value="price_asc">Etiket Fiyatına Göre</option>
-      </select>
-    </div>
-
-    <div class="product-grid" id="productList">
-      <div class="card-product">
-        <div>
-          <div class="card-product-wrapper">
-            <span class="card-product-badge">%20 İndirim</span>
-            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&q=80" class="card-product-img" alt="Ürün">
-          </div>
-          <div class="card-product-info">
-            <span class="product-vendor">Migros</span>
-            <h4 class="product-title">Örnek Süt 1 Litre UHT</h4>
-            <div class="unit-price-box">
-              <span class="unit-price-val">24.50 ₺</span><small>/L</small>
-            </div>
-          </div>
+      <!-- ÖRNEK ÜRÜN LİSTESİ -->
+      <section>
+        <div class="section-title-wrap">
+          <h3 class="section-title"><i class="fa-solid fa-box-open" style="color: var(--primary);"></i> Öne Çıkan Ürünler</h3>
         </div>
-        <button class="add-to-cart-btn" onclick="window.addToCart('Örnek Süt 1 Litre UHT', 24.50, 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&q=80')">
-          <i class="fa-solid fa-plus"></i> Sepete Ekle
-        </button>
-      </div>
-    </div>
-  </div>
+        <div class="product-grid">
+          
+          <div class="card-product">
+            <div class="card-product-wrapper">
+              <span class="card-product-badge">En Uygun</span>
+              <img src="https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=200" class="card-product-img" alt="Süt">
+            </div>
+            <div class="card-product-info">
+              <span class="product-vendor">A101</span>
+              <div class="product-title">Tam Yağlı UHT Süt 1 Litre</div>
+              <div class="unit-price-box">
+                <span class="unit-price-val">22.50 ₺ / LT</span>
+              </div>
+            </div>
+            <button class="add-to-cart-btn" onclick="window.addToCart('Tam Yağlı UHT Süt 1 Litre', 22.50, 'https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=200')" type="button">
+              <i class="fa-solid fa-basket-shopping"></i> Sepete Ekle
+            </button>
+          </div>
 
-  <!-- SEPET, MENÜ VE MODALLAR -->
-  <div id="drawers-container"></div>
+          <div class="card-product">
+            <div class="card-product-wrapper">
+              <span class="card-product-badge" style="background:#e0f2fe; color:#0284c7;">Yeni Fiyat</span>
+              <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=200" class="card-product-img" alt="Patates">
+            </div>
+            <div class="card-product-info">
+              <span class="product-vendor">Şok Market</span>
+              <div class="product-title">Taze Patates (1 kg)</div>
+              <div class="unit-price-box">
+                <span class="unit-price-val">18.90 ₺ / KG</span>
+              </div>
+            </div>
+            <button class="add-to-cart-btn" onclick="window.addToCart('Taze Patates (1 kg)', 18.90, 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=200')" type="button">
+              <i class="fa-solid fa-basket-shopping"></i> Sepete Ekle
+            </button>
+          </div>
 
-  <!-- FOOTER -->
-  <div id="footer-container"></div>
+        </div>
+      </section>
 
-  <script type="module" src="js/main.js"></script>
+    </main>
+
+    <!-- Footer Alanı -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript Dosyası -->
+    <script type="module" src="./js/main.js"></script>
 </body>
 </html>

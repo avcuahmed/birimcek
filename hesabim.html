@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Hesabim & Puanlar | Birimçek</title>
+  <title>Hesabım & Puanlar | Birimçek</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,9 +14,82 @@
 </head>
 <body>
 
-  <div id="header-container"></div>
+  <!-- 1. STATİK DESKTOP & MOBİL HEADER -->
+  <header class="main-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-box">
+        <i class="fa-solid fa-scale-balanced" style="color: var(--primary); font-size: 1.5rem;"></i>
+        <span>Birimçek</span>
+      </a>
 
-  <div class="main-container">
+      <!-- DESKTOP SEARCH BAR -->
+      <div class="header-search-bar">
+        <div class="search-category-dropdown" onclick="window.toggleSearchCategoryDropdown()">
+          <span id="selectedCategoryText">Tümü</span>
+          <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted);"></i>
+          <div class="category-dropdown-menu" id="searchCategoryDropdownMenu">
+            <div onclick="window.selectSearchCategory('Tümü', 'Tümü')">Tümü</div>
+            <div onclick="window.selectSearchCategory('Meyve & Sebze', 'Meyve & Sebze')">Meyve & Sebze</div>
+            <div onclick="window.selectSearchCategory('Süt & Kahvaltılık', 'Süt & Kahvaltılık')">Süt & Kahvaltılık</div>
+          </div>
+        </div>
+        <input type="text" id="searchInputDesktop" class="search-input" placeholder="Ürün, marka veya kategori ara...">
+        <button class="search-btn-action" onclick="window.executeSearch('desktop')"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+
+      <!-- HEADER ACTIONS -->
+      <div class="header-actions">
+        <a href="firsatlar.html" class="action-btn-link" title="Aktüel & Fırsatlar">
+          <i class="fa-solid fa-bolt" style="color: #ef4444;"></i>
+          <span class="action-text">Fırsatlar</span>
+        </a>
+        <a href="marketler.html" class="action-btn-link" title="Marketler">
+          <i class="fa-solid fa-store"></i>
+          <span class="action-text">Marketler</span>
+        </a>
+        <button class="cart-trigger-btn" onclick="window.toggleCart()" title="Sepetim" type="button">
+          <i class="fa-solid fa-basket-shopping"></i>
+          <span class="action-text">Sepet</span>
+          <span class="cart-badge" id="cartBadgeDesktop">0</span>
+        </button>
+        <a href="hesabim.html" class="action-btn-link" title="Hesabım">
+          <i class="fa-regular fa-user"></i>
+          <span class="action-text">Hesabım</span>
+        </a>
+        <button class="menu-trigger-btn" onclick="window.toggleCategoryMenu()" title="Menü" type="button">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBİL ÜST SABİT HEADER -->
+  <div class="mobile-floating-header" id="mobileFloatingHeader">
+    <div class="mf-top-row">
+      <a href="index.html" class="logo-box">
+        <i class="fa-solid fa-scale-balanced" style="color: var(--primary);"></i>
+        <span>Birimçek</span>
+      </a>
+      <div class="mf-actions">
+        <button class="cart-trigger-btn" onclick="window.toggleCart()" type="button">
+          <i class="fa-solid fa-basket-shopping"></i>
+          <span class="cart-badge" id="cartBadgeMobile">0</span>
+        </button>
+        <button class="menu-trigger-btn" onclick="window.toggleCategoryMenu()" type="button">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    <div class="mf-search-row">
+      <div class="mf-search-box" onclick="window.openMobileSearch()">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>Ürün veya market ara...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ANA SAYFA İÇERİĞİ -->
+  <main class="main-container">
     <div class="section-title-wrap">
       <h3 class="section-title"><i class="fa-regular fa-user" style="color: var(--primary);"></i> Kullanıcı Profilim & Ödüller</h3>
     </div>
@@ -35,9 +108,9 @@
       <div class="unit-price-box" style="display: flex; justify-content: space-between; align-items: center; padding: 15px; margin-bottom: 20px;">
         <div>
           <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: block;">Toplam Puanın</span>
-          <span class="unit-price-val" style="font-size: 1.4rem;"><i class="fa-solid fa-star" style="color: var(--reward-color);"></i> 12 Puan</span>
+          <span class="unit-price-val" style="font-size: 1.4rem;"><i class="fa-solid fa-star" style="color: #eab308;"></i> 12 Puan</span>
         </div>
-        <button class="video-upload-btn" onclick="window.toggleVideoModal()">Puan Kazan</button>
+        <button class="add-to-cart-btn" style="width: auto; padding: 8px 16px;" onclick="window.toggleVideoModal()">Puan Kazan</button>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -46,10 +119,80 @@
         </button>
       </div>
     </div>
+  </main>
+
+  <!-- 3. ÇEKMECELER (DRAWER) VE MODALLER -->
+  <!-- Kategori Sol Menü Çekmecesi -->
+  <div class="drawer-overlay" id="categoryOverlay" onclick="window.toggleCategoryMenu()"></div>
+  <div class="side-drawer" id="categoryDrawer">
+    <div class="drawer-header">
+      <h3>Kategoriler & Menü</h3>
+      <button onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="drawer-body">
+      <div class="drawer-menu-item" onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-carrot"></i> Meyve & Sebze</div>
+      <div class="drawer-menu-item" onclick="window.goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cow"></i> Süt & Kahvaltılık</div>
+      <div class="drawer-menu-item" onclick="window.goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i> Temel Gıda</div>
+    </div>
   </div>
 
-  <div id="drawers-container"></div>
-  <div id="footer-container"></div>
+  <!-- Sağ Sepet Çekmecesi -->
+  <div class="drawer-overlay" id="cartOverlay" onclick="window.toggleCart()"></div>
+  <div class="side-drawer right-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3>Alışveriş Sepetim</h3>
+      <button onclick="window.toggleCart()"><Index><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="drawer-body" id="cartBody">
+      <!-- Sepet içeriği JS ile doldurulacak -->
+    </div>
+    <div class="drawer-footer">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 700;">
+        <span>Toplam:</span>
+        <span id="cartTotalPrice">0.00 ₺</span>
+      </div>
+      <button class="add-to-cart-btn" style="width:100%;" onclick="alert('Sepet onaylandı!')">Alışverişi Tamamla</button>
+    </div>
+  </div>
+
+  <!-- Video Yükleme Modalı -->
+  <div class="drawer-overlay" id="videoOverlay" onclick="window.toggleVideoModal()"></div>
+  <div class="custom-modal" id="videoModal">
+    <div class="modal-header">
+      <h3>Reyon Videosu Yükle</h3>
+      <button onclick="window.toggleVideoModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:15px;">Market reyonunu gösteren kısa bir video yükleyerek puan kazanabilirsin.</p>
+      <input type="file" accept="video/*" onchange="window.handleFileSelect(event, 'video')">
+      <div id="fileNameDisplay" style="margin-top:10px; font-size:0.85rem; font-weight:600; display:none;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="add-to-cart-btn" id="uploadSubmitBtn" style="display:none;" onclick="window.submitUpload('video')">Yükle ve Puan Kazan</button>
+    </div>
+  </div>
+
+  <!-- Fiş Yükleme Modalı -->
+  <div class="drawer-overlay" id="receiptOverlay" onclick="window.toggleReceiptModal()"></div>
+  <div class="custom-modal" id="receiptModal">
+    <div class="modal-header">
+      <h3>Fiş Yükle</h3>
+      <button onclick="window.toggleReceiptModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:15px;">Alışveriş fişinizin fotoğrafını yükleyin.</p>
+      <input type="file" accept="image/*" onchange="window.handleFileSelect(event, 'receipt')">
+      <div id="receiptNameDisplay" style="margin-top:10px; font-size:0.85rem; font-weight:600; display:none;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="add-to-cart-btn" id="receiptSubmitBtn" style="display:none;" onclick="window.submitUpload('receipt')">Fişi Gönder</button>
+    </div>
+  </div>
+
+  <!-- 4. FOOTER -->
+  <footer style="text-align: center; padding: 20px; font-size: 0.85rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 40px;">
+    <p>&copy; 2026 Birimçek - Tüm Hakları Saklıdır.</p>
+  </footer>
 
   <script type="module" src="js/main.js"></script>
 </body>

@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Özel Fırsatlar - Birimçek</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { --primary: #0b4d3c; --primary-light: #52e396; --text-dark: #1e293b; --text-muted: #64748b; --border-color: #e2e8f0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #f8faf9; color: var(--text-dark); }
+    header { background: var(--primary); padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: #ffffff; }
+    .logo i { color: var(--primary-light); }
+    nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; height: 50px; }
+    .nav-links { display: flex; gap: 25px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.88rem; font-weight: 600; }
+    .nav-links a.active { color: var(--primary); font-weight: 700; }
+    .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+    .page-title { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
+    .page-desc { color: var(--text-muted); margin-bottom: 30px; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+    .product-card { border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; background: #ffffff; position: relative; cursor: pointer; transition: transform 0.2s; }
+    .product-card:hover { transform: translateY(-3px); }
+    .discount-badge { position: absolute; top: 10px; right: 10px; background: #ef4444; color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; }
+    .product-img { width: 100%; height: 140px; object-fit: contain; margin-bottom: 10px; }
+    .unit-price-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 8px; border-radius: 6px; margin-top: 10px; }
+    .unit-price-val { color: var(--primary); font-weight: 800; font-size: 1.05rem; }
+  </style>
+</head>
+<body>
 
+  <header>
+    <a href="index.html" class="logo"><i class="fa-solid fa-leaf"></i>Birimçek</a>
+    <div style="color:white; font-size:0.9rem;"><a href="hesabim.html" style="color:white; text-decoration:none;"><i class="fa-regular fa-user"></i> Hesabım</a></div>
+  </header>
+
+  <nav>
+    <ul class="nav-links">
+      <li><a href="index.html">Ana Sayfa</a></li>
+      <li><a href="firsatlar.html" class="active">Fırsatlar</a></li>
+      <li><a href="marketler.html">Marketler</a></li>
+      <li><a href="urunler.html">Tüm Ürünler</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1 class="page-title">🔥 Haftanın Süper Fırsatları</h1>
+    <p class="page-desc">En yüksek birim fiyat avantajı sunan indirimli ürünler listelenmektedir.</p>
+
+    <div class="product-grid" id="firsatList">
+      <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Fırsatlar yükleniyor...</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    const supabase = createClient("https://lejkdyhensjyauburrxk.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlamtkeWhlbnNqeWF1YnVycnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MjE1MDQsImV4cCI6MjE0Mjk5NzUwNH0.7aVdxtM-1BFVmwVcc0eqLZospU2XkfDhLHr77HMI_2Y");
+
+    async function loadFirsatlar() {
+      const { data: prices } = await supabase.from('prices').select('*');
+      const { data: products } = await supabase.from('products').select('*');
+      const { data: markets } = await supabase.from('markets').select('*');
+
+      if (!prices || prices.length === 0) {
+        document.getElementById("firsatList").innerHTML = "<p>Şu anda fırsat ürünü bulunmuyor.</p>";
+        return;
+      }
+
+      const combined = prices.map(price => {
+        const prod = (products || []).find(p => p.id === price.product_id) || {};
+        const market = (markets || []).find(m => m.id === price.market_id) || {};
+        const qty = prod.net_quantity || 1;
+        return { ...price, product: prod, market: market, unitPrice: (price.net_price / qty) };
+      });
+
+      combined.sort((a, b) => a.unitPrice - b.unitPrice);
+
+      document.getElementById("firsatList").innerHTML = combined.map(item => `
+        <div class="product-card" onclick="location.href='urun-detay.html?id=${item.product.id}'">
+          <span class="discount-badge">Fırsat</span>
+          <img src="${item.product.image_url || 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80'}" class="product-img">
+          <div style="font-size:0.75rem; color:#64748b; font-weight:700;">${item.product.brand || 'Genel'} • ${item.market.name || ''}</div>
+          <div style="font-weight:600; margin:5px 0;">${item.product.title || 'Ürün'}</div>
+          <div class="unit-price-box">
+            <div class="unit-price-val">${item.unitPrice.toFixed(2)} ₺ / ${item.product.unit_type || 'birim'}</div>
+            <div style="font-size:0.78rem; color:#64748b;">Paket: ${Number(item.net_price).toFixed(2)} ₺</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    loadFirsatlar();
+  </script>
+</body>
+</html>

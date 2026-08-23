@@ -1,1 +1,425 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yeni Eklenen Ürünler - Birimçek</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0b4d3c;
+      --primary-light: #52e396;
+      --primary-hover: #07382b;
+      --bg-soft: #f4fbf7;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+    }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #ffffff; color: var(--text-dark); -webkit-tap-highlight-color: transparent; }
+
+    /* MASAÜSTÜ TOP BAR */
+    .top-bar { background: var(--primary); color: #ffffff; font-size: 0.78rem; padding: 6px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .top-bar-info { display: flex; gap: 20px; }
+    .top-bar-options { display: flex; gap: 15px; }
+
+    /* HEADER */
+    header { background: var(--primary); padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: #ffffff; }
+    .logo i { color: var(--primary-light); }
+
+    .search-box-desktop { flex: 1; max-width: 600px; display: flex; background: #ffffff; border-radius: 6px; overflow: hidden; height: 42px; }
+    .search-category { background: #f8fafc; border: none; border-right: 1px solid var(--border-color); padding: 0 15px; font-size: 0.85rem; color: #475569; outline: none; cursor: pointer; }
+    .search-input { flex: 1; border: none; padding: 0 15px; font-size: 0.88rem; outline: none; }
+    .search-btn { background: var(--primary-light); border: none; color: var(--primary); font-weight: 700; padding: 0 25px; cursor: pointer; transition: background 0.2s; }
+
+    .header-actions { display: flex; align-items: center; gap: 25px; color: #ffffff; font-size: 0.85rem; font-weight: 600; }
+    .action-item { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; color: #ffffff; background: none; border: none; font-size: 0.85rem; font-weight: 600; }
+    .action-item i { font-size: 1.1rem; }
+    .badge-icon { position: relative; }
+    .badge { position: absolute; top: -6px; right: -8px; background: var(--primary-light); color: var(--primary); font-size: 0.65rem; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+    /* NAV */
+    nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 50px; }
+    .nav-left { display: flex; align-items: center; gap: 30px; height: 100%; }
+    .category-btn { background: #ffffff; border: none; font-weight: 700; font-size: 0.9rem; color: var(--text-dark); display: flex; align-items: center; gap: 10px; cursor: pointer; height: 100%; }
+
+    .nav-links { display: flex; gap: 25px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.88rem; font-weight: 600; }
+    .nav-links a.active { color: var(--primary); font-weight: 800; }
+
+    /* CONTAINER & PAGE HEADER */
+    .main-container { padding: 40px 40px 60px; max-width: 1400px; margin: 0 auto; }
+    
+    .page-header { background: linear-gradient(135deg, #f3fbf6 0%, #e8f7ee 100%); padding: 30px; border-radius: 12px; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; }
+    .page-title { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+    .page-subtitle { color: var(--text-muted); font-size: 0.9rem; margin-top: 5px; }
+
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+    .product-card { border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; background: #ffffff; position: relative; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s, box-shadow 0.2s; }
+    .product-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    
+    .new-badge { position: absolute; top: 10px; left: 10px; background: #ef4444; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; z-index: 2; }
+
+    .product-img { width: 100%; height: 130px; object-fit: contain; margin-bottom: 12px; cursor: pointer; }
+    .product-vendor { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+    .product-title { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); margin-bottom: 10px; line-height: 1.3; height: 36px; overflow: hidden; cursor: pointer; }
+
+    .unit-price-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 8px; border-radius: 6px; margin-bottom: 10px; }
+    .unit-price-val { color: var(--primary); font-weight: 800; font-size: 1rem; }
+    
+    .add-to-cart-btn { width: 100%; background: var(--primary); color: #ffffff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: background 0.2s; }
+    .add-to-cart-btn:hover { background: var(--primary-hover); }
+
+    .mobile-only { display: none !important; }
+
+    /* SOL KATEGORİ DRAWER */
+    .category-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+    .category-overlay.active { opacity: 1; visibility: visible; }
+
+    .category-drawer { position: fixed; top: 0; left: -320px; width: 300px; max-width: 85vw; height: 100vh; background: #ffffff; z-index: 1000; box-shadow: 5px 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .category-drawer.active { left: 0; }
+
+    .category-header { padding: 20px; background: var(--primary); color: #ffffff; display: flex; align-items: center; justify-content: space-between; }
+    .category-header h3 { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .category-close-btn { background: transparent; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
+
+    .side-category-list { list-style: none; padding: 10px 0; overflow-y: auto; }
+    .side-category-list li { padding: 14px 20px; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 600; color: var(--text-dark); cursor: pointer; border-bottom: 1px solid var(--border-color); transition: background 0.2s; }
+    .side-category-list li i { color: var(--primary); font-size: 1.1rem; width: 22px; }
+    .side-category-list li:hover { background: #f0fdf4; color: var(--primary); }
+
+    /* SAĞ SEPET DRAWER */
+    .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+    .cart-overlay.active { opacity: 1; visibility: visible; }
+
+    .cart-drawer { position: fixed; top: 0; right: -400px; width: 380px; max-width: 90vw; height: 100vh; background: #ffffff; z-index: 1000; box-shadow: -5px 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .cart-drawer.active { right: 0; }
+
+    .cart-header { padding: 20px; background: var(--primary); color: #ffffff; display: flex; align-items: center; justify-content: space-between; }
+    .cart-header h3 { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .cart-close-btn { background: transparent; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
+
+    .cart-body { flex: 1; padding: 20px; overflow-y: auto; }
+    .cart-empty-state { text-align: center; color: #94a3b8; margin-top: 60px; }
+    .cart-empty-state i { font-size: 3rem; margin-bottom: 10px; display: block; }
+
+    .cart-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
+    .cart-item-img { width: 48px; height: 48px; object-fit: contain; border-radius: 6px; border: 1px solid var(--border-color); }
+    .cart-item-details { flex: 1; }
+    .cart-item-title { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+    .cart-item-price { font-size: 0.85rem; color: var(--primary); font-weight: 800; }
+    .cart-item-remove { background: transparent; border: none; color: #ef4444; cursor: pointer; font-size: 0.9rem; padding: 5px; }
+
+    .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: #f8faf9; }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 0.95rem; }
+    .cart-total-row strong { font-size: 1.2rem; color: var(--primary); }
+    .cart-checkout-btn { width: 100%; padding: 12px; background: var(--primary-light); color: var(--primary); border: none; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
+
+    @media (max-width: 900px) {
+      .desktop-only, .top-bar, nav { display: none !important; }
+      .mobile-only { display: flex !important; }
+      header { background: transparent; padding: 12px 16px 0; flex-direction: column; gap: 10px; }
+      .mobile-top-nav { width: 100%; background: #ffffff; border-radius: 30px; padding: 8px 18px; display: flex; align-items: center; justify-content: space-between; }
+      .mobile-search-box { width: 100%; display: flex; background: #ffffff; border-radius: 25px; border: 1px solid var(--border-color); overflow: hidden; padding: 4px 6px; align-items: center; }
+      .mobile-search-input { flex: 1; border: none; padding: 8px; font-size: 0.85rem; outline: none; }
+      .mobile-search-btn { background: var(--primary); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+      .main-container { padding: 20px 16px 40px; }
+      .product-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); }
+      .page-header { padding: 20px; flex-direction: column; align-items: flex-start; gap: 10px; }
+      .page-title { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MASAÜSTÜ TOP BAR -->
+  <div class="top-bar desktop-only">
+    <div class="top-bar-info">
+      <span>📞 +90 850 123 45 67</span>
+      <span>✉️ destek@birimcek.com</span>
+    </div>
+    <div class="top-bar-options">
+      <span>TRY ₺</span>
+      <span>Türkçe</span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <a href="index.html" class="logo desktop-only">
+      <i class="fa-solid fa-leaf"></i>Birimçek
+    </a>
+
+    <div class="search-box-desktop desktop-only">
+      <select class="search-category" id="categorySelectDesktop">
+        <option value="Tümü">Tüm Kategoriler</option>
+        <option value="Meyve & Sebze">Meyve & Sebze</option>
+        <option value="Et & Balık & Tavuk">Et, Balık & Tavuk</option>
+        <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
+        <option value="Temel Gıda">Temel Gıda</option>
+        <option value="Atıştırmalık">Atıştırmalık</option>
+        <option value="İçecekler">İçecekler</option>
+        <option value="Deterjan & Ev Temizliği">Deterjan & Temizlik</option>
+        <option value="Kişisel Bakım">Kişisel Bakım</option>
+      </select>
+      <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') window.executeSearch('desktop')">
+      <button class="search-btn" onclick="window.executeSearch('desktop')">Ara</button>
+    </div>
+
+    <div class="header-actions desktop-only">
+      <a href="hesabim.html" class="action-item"><i class="fa-regular fa-user"></i> HESABIM</a>
+      <button class="action-item badge-icon" onclick="window.toggleCart()">
+        <i class="fa-solid fa-basket-shopping"></i> SEPETİM 
+        <span class="badge" id="cartBadgeDesktop">0</span>
+      </button>
+    </div>
+
+    <!-- MOBİL HEADER -->
+    <div class="mobile-top-nav mobile-only">
+      <button onclick="window.toggleCategoryMenu()" style="background:none; border:none; font-size:1.2rem; color:var(--text-dark); cursor:pointer;"><i class="fa-solid fa-bars"></i></button>
+      <a href="index.html" class="logo" style="color:var(--primary); font-size:1.3rem;"><i class="fa-solid fa-leaf" style="color:var(--primary-light);"></i> Birimçek</a>
+      <button class="action-item badge-icon" onclick="window.toggleCart()" style="color:var(--text-dark);">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span class="badge" id="cartBadgeMobile" style="background:var(--primary); color:#fff;">0</span>
+      </button>
+    </div>
+
+    <div class="mobile-search-box mobile-only">
+      <input type="text" class="mobile-search-input" id="searchInputMobile" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') window.executeSearch('mobile')">
+      <button class="mobile-search-btn" onclick="window.executeSearch('mobile')"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav class="desktop-only">
+    <div class="nav-left">
+      <button class="category-btn" onclick="window.toggleCategoryMenu()">
+        <i class="fa-solid fa-bars"></i> Tüm Kategoriler
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="urunler.html">Tüm Ürünler</a></li>
+        <li><a href="marketler.html">Marketler</a></li>
+        <li><a href="firsatlar.html">Fırsatlar</a></li>
+        <li><a href="yenieklenenler.html" class="active">Yeni Eklenenler</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- İÇERİK -->
+  <div class="main-container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title"><i class="fa-solid fa-sparkles" style="color: var(--primary-light); margin-right: 8px;"></i>Yeni Eklenen Ürünler</h1>
+        <p class="page-subtitle">Sisteme en son eklenen ürünleri ve güncel birim fiyatlarını keşfedin.</p>
+      </div>
+    </div>
+
+    <div class="product-grid" id="productList">
+      <p style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Yükleniyor...</p>
+    </div>
+  </div>
+
+  <!-- SOL KATEGORİ DRAWER -->
+  <div id="categoryOverlay" class="category-overlay" onclick="window.toggleCategoryMenu()"></div>
+  <div id="categoryDrawer" class="category-drawer">
+    <div class="category-header">
+      <h3><i class="fa-solid fa-list"></i> Tüm Kategoriler</h3>
+      <button class="category-close-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <ul class="side-category-list">
+      <li onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i> Meyve & Sebze</li>
+      <li onclick="window.goToCategoryPage('Et & Balık & Tavuk')"><i class="fa-solid fa-drumstick-bite"></i> Et, Balık & Tavuk</li>
+      <li onclick="window.goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i> Süt & Kahvaltılık</li>
+      <li onclick="window.goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i> Temel Gıda</li>
+      <li onclick="window.goToCategoryPage('Atıştırmalık')"><i class="fa-solid fa-cookie-bite"></i> Atıştırmalık & Tatlı</li>
+      <li onclick="window.goToCategoryPage('İçecekler')"><i class="fa-solid fa-bottle-water"></i> İçecekler</li>
+      <li onclick="window.goToCategoryPage('Deterjan & Ev Temizliği')"><i class="fa-solid fa-broom"></i> Deterjan & Temizlik</li>
+      <li onclick="window.goToCategoryPage('Kişisel Bakım')"><i class="fa-solid fa-soap"></i> Kişisel Bakım & Hijyen</li>
+    </ul>
+  </div>
+
+  <!-- SAĞ SEPET DRAWER -->
+  <div id="cartOverlay" class="cart-overlay" onclick="window.toggleCart()"></div>
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h3><i class="fa-solid fa-basket-shopping"></i> Sepetim</h3>
+      <button class="cart-close-btn" onclick="window.toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty-state">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <p>Sepetiniz henüz boş.</p>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Tahmini Toplam Tutar:</span>
+        <strong id="cartTotalPrice">0.00 ₺</strong>
+      </div>
+      <button class="cart-checkout-btn" onclick="alert('Listeniz hazırlandı!')">Market Kıyaslamasını Gör</button>
+    </div>
+  </div>
+
+  <!-- SUPABASE VE JAVASCRIPT KODLARI -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const SUPABASE_URL = "https://lejkdyhensjyauburrxk.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlamtkeWhlbnNqeWF1YnVycnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MjE1MDQsImV4cCI6MjE0Mjk5NzUwNH0.7aVdxtM-1BFVmwVcc0eqLZospU2XkfDhLHr77HMI_2Y";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    window.cart = [];
+
+    window.toggleCategoryMenu = () => {
+      document.getElementById("categoryDrawer")?.classList.toggle("active");
+      document.getElementById("categoryOverlay")?.classList.toggle("active");
+    };
+
+    window.toggleCart = () => {
+      document.getElementById("cartDrawer")?.classList.toggle("active");
+      document.getElementById("cartOverlay")?.classList.toggle("active");
+    };
+
+    window.addToCart = (title, price, imgUrl) => {
+      const numPrice = parseFloat(price) || 0;
+      window.cart.push({ title, price: numPrice, imgUrl });
+      window.renderCart();
+      window.toggleCart();
+    };
+
+    window.removeFromCart = (index) => {
+      window.cart.splice(index, 1);
+      window.renderCart();
+    };
+
+    window.renderCart = () => {
+      const cartBody = document.getElementById("cartBody");
+      const cartTotalPrice = document.getElementById("cartTotalPrice");
+      const badgeDesk = document.getElementById("cartBadgeDesktop");
+      const badgeMob = document.getElementById("cartBadgeMobile");
+
+      if (badgeDesk) badgeDesk.innerText = window.cart.length;
+      if (badgeMob) badgeMob.innerText = window.cart.length;
+
+      if (window.cart.length === 0) {
+        cartBody.innerHTML = `
+          <div class="cart-empty-state">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <p>Sepetiniz henüz boş.</p>
+          </div>`;
+        cartTotalPrice.innerText = "0.00 ₺";
+        return;
+      }
+
+      let total = 0;
+      cartBody.innerHTML = window.cart.map((item, index) => {
+        total += item.price;
+        return `
+          <div class="cart-item">
+            <img src="${item.imgUrl}" class="cart-item-img" alt="${item.title}">
+            <div class="cart-item-details">
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-price">${item.price.toFixed(2)} ₺</div>
+            </div>
+            <button class="cart-item-remove" onclick="window.removeFromCart(${index})">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      cartTotalPrice.innerText = total.toFixed(2) + " ₺";
+    };
+
+    window.goToCategoryPage = (catName) => {
+      window.location.href = `urunler.html?kategori=${encodeURIComponent(catName)}`;
+    };
+
+    window.executeSearch = (source) => {
+      const inputEl = source === 'desktop' 
+        ? document.getElementById("searchInputDesktop") 
+        : document.getElementById("searchInputMobile");
+      
+      const query = inputEl?.value.trim();
+      if (query) {
+        window.location.href = `urunler.html?q=${encodeURIComponent(query)}`;
+      }
+    };
+
+    window.goToProductDetail = (productId) => {
+      window.location.href = `urun-detay.html?id=${productId}`;
+    };
+
+    // YENİ EKLENEN ÜRÜNLERİ ÇEKME (created_at AZALAN SIRADA)
+    async function loadNewestProducts() {
+      const container = document.getElementById("productList");
+      try {
+        const { data: prices, error } = await supabase
+          .from('prices')
+          .select(`
+            net_price,
+            product_id,
+            created_at,
+            products ( id, title, brand, net_quantity, unit_type, image_url, created_at ),
+            markets ( id, name )
+          `)
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        if (error || !prices || prices.length === 0) {
+          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Henüz yeni eklenmiş ürün bulunmuyor.</p>`;
+          return;
+        }
+
+        const combined = prices.map(price => {
+          const prod = price.products || {};
+          const qty = parseFloat(prod.net_quantity) > 0 ? parseFloat(prod.net_quantity) : 1;
+          const netPrice = parseFloat(price.net_price) || 0;
+          const unitPrice = netPrice / qty;
+          return { ...price, unitPrice, netPrice };
+        });
+
+        renderGrid(combined);
+      } catch (err) {
+        console.error("Veri yükleme hatası:", err);
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red;">Veriler yüklenirken bir hata oluştu.</p>`;
+      }
+    }
+
+    function renderGrid(items) {
+      const container = document.getElementById("productList");
+      const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
+
+      container.innerHTML = items.map(item => {
+        const prod = item.products || {};
+        const market = item.markets || {};
+        const img = prod.image_url || defaultImg;
+        const title = prod.title || 'İsimsiz Ürün';
+        const safeTitle = encodeURIComponent(title);
+
+        return `
+          <div class="product-card">
+            <span class="new-badge">YENİ</span>
+            <img src="${img}" class="product-img" onclick="window.goToProductDetail(${prod.id || item.product_id})" alt="${title}">
+            <div>
+              <div class="product-vendor">${prod.brand || 'Genel'} • ${market.name || ''}</div>
+              <div class="product-title" onclick="window.goToProductDetail(${prod.id || item.product_id})">${title}</div>
+            </div>
+            <div class="unit-price-box">
+              <div class="unit-price-val">${item.unitPrice.toFixed(2)} ₺ <span style="font-size:0.7rem; color:#666;">/ ${prod.unit_type || 'birim'}</span></div>
+            </div>
+            <button class="add-to-cart-btn" onclick="window.addToCart(decodeURIComponent('${safeTitle}'), ${item.netPrice}, '${img}')">
+              <i class="fa-solid fa-basket-shopping"></i> Sepete Ekle
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    loadNewestProducts();
+  </script>
+</body>
+</html>

@@ -8,7 +8,7 @@
   <style>
     :root {
       --primary: #0b4d3c;
-      --primary-light: #80e7a5;
+      --primary-light: #52e396;
       --primary-hover: #07382b;
       --bg-soft: #f4fbf7;
       --text-dark: #1e293b;
@@ -20,7 +20,7 @@
     body { background-color: #ffffff; color: var(--text-dark); -webkit-tap-highlight-color: transparent; }
 
     /* ==========================================
-       1. MASAÜSTÜ TASARIMI (Varsayılan Stil)
+       1. MASAÜSTÜ TASARIMI
        ========================================== */
     .top-bar { background: var(--primary); color: #ffffff; font-size: 0.78rem; padding: 6px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .top-bar-info { display: flex; gap: 20px; }
@@ -34,7 +34,7 @@
     .search-category { background: #f8fafc; border: none; border-right: 1px solid var(--border-color); padding: 0 15px; font-size: 0.85rem; color: #475569; outline: none; cursor: pointer; }
     .search-input { flex: 1; border: none; padding: 0 15px; font-size: 0.88rem; outline: none; }
     .search-btn { background: var(--primary-light); border: none; color: var(--primary); font-weight: 700; padding: 0 25px; cursor: pointer; transition: background 0.2s; }
-    .search-btn:hover { background: #6bd692; }
+    .search-btn:hover { background: #3bd683; }
 
     .header-actions { display: flex; align-items: center; gap: 25px; color: #ffffff; font-size: 0.85rem; font-weight: 600; }
     .action-item { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; color: #ffffff; }
@@ -55,7 +55,7 @@
     .nav-links { display: flex; gap: 25px; list-style: none; }
     .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.88rem; font-weight: 600; transition: color 0.2s; }
     .nav-links a:hover { color: var(--primary); }
-    .special-offer-link { background: var(--primary-light); color: var(--primary) !important; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem !important; font-weight: 700; }
+    .special-offer-link { background: var(--primary-light); color: var(--primary) !important; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem !important; font-weight: 700; text-decoration: none; }
 
     .hero-section { background: linear-gradient(135deg, #f3fbf6 0%, #e8f7ee 100%); padding: 50px 40px; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; position: relative; }
     .hero-content { max-width: 500px; }
@@ -90,7 +90,7 @@
     .mobile-only { display: none !important; }
 
     /* ==========================================
-       2. MOBİL TASARIM (Ekran < 900px Olunca)
+       2. MOBİL TASARIM (Düzeltilmiş Medya Sorgusu)
        ========================================== */
     @media (max-width: 900px) {
       .desktop-only, .top-bar, nav, .hero-section { display: none !important; }
@@ -98,53 +98,53 @@
 
       body { background-color: #f8faf9; }
 
-      /* Mobil Üst Bar */
-      header { background: transparent; padding: 12px 16px; flex-direction: column; gap: 10px; position: relative; z-index: 10; }
+      /* Mobil Üst Bar ve Header Hijyeni */
+      header { background: transparent; padding: 12px 16px 0; flex-direction: column; gap: 10px; position: relative; z-index: 20; }
       .mobile-top-nav { width: 100%; background: #ffffff; border-radius: 30px; padding: 8px 18px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
       .mobile-logo { font-size: 1.3rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; }
-      .mobile-logo i { color: #52e396; }
+      .mobile-logo i { color: var(--primary-light); }
       .mobile-actions { display: flex; align-items: center; gap: 15px; }
 
-      /* Mobil Arama Barı */
-      .mobile-search-box { width: 100%; display: flex; background: #ffffff; border-radius: 25px; border: 1px solid var(--border-color); overflow: hidden; padding: 4px 6px; }
-      .mobile-search-category { background: transparent; border: none; border-right: 1px solid var(--border-color); padding: 0 10px; font-size: 0.78rem; color: #475569; outline: none; }
-      .mobile-search-input { flex: 1; border: none; padding: 8px 10px; font-size: 0.85rem; outline: none; }
-      .mobile-search-btn { background: var(--primary); color: #fff; border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+      /* Mobil Arama Barı Taşma Koruması */
+      .mobile-search-box { width: 100%; display: flex; background: #ffffff; border-radius: 25px; border: 1px solid var(--border-color); overflow: hidden; padding: 4px 6px; align-items: center; }
+      .mobile-search-category { background: transparent; border: none; border-right: 1px solid var(--border-color); padding: 0 6px; font-size: 0.75rem; color: #475569; outline: none; max-width: 95px; text-overflow: ellipsis; white-space: nowrap; }
+      .mobile-search-input { flex: 1; border: none; padding: 8px; font-size: 0.85rem; outline: none; width: 50%; }
+      .mobile-search-btn { background: var(--primary); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
 
-      /* Mobil Koyu Hero Banner */
-      .mobile-hero-banner { background: #333333; color: #ffffff; padding: 35px 20px 25px; border-radius: 0 0 24px 24px; margin-top: -65px; padding-top: 85px; position: relative; overflow: hidden; display: block !important; }
+      /* Mobil Hero Banner Çakışmasız Temiz Düzzen */
+      .mobile-hero-banner { background: #262626; color: #ffffff; padding: 25px 20px; border-radius: 20px; margin: 12px 16px 0; position: relative; overflow: hidden; display: block !important; }
       .mobile-hero-content { max-width: 60%; position: relative; z-index: 2; }
-      .mobile-hero-title { font-size: 1.7rem; font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
-      .mobile-hero-btn { background: #52e396; color: #0f2d24; border: none; padding: 8px 18px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
-      .mobile-hero-bg { position: absolute; right: -20px; bottom: -10px; width: 55%; max-width: 240px; pointer-events: none; }
+      .mobile-hero-title { font-size: 1.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
+      .mobile-hero-btn { background: var(--primary-light); color: #0f2d24; border: none; padding: 8px 18px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+      .mobile-hero-bg { position: absolute; right: -15px; bottom: -10px; width: 50%; max-width: 200px; pointer-events: none; }
       
-      .dots { display: flex; gap: 6px; margin-top: 20px; }
+      .dots { display: flex; gap: 6px; margin-top: 15px; }
       .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); }
       .dot.active { width: 10px; height: 10px; background: #ffffff; border: 2px solid #333; }
 
-      /* Mobil Konteyner ve Kategori Kartları */
-      .main-container { padding: 25px 16px 50px; }
-      .section-title { font-size: 1.25rem; }
+      /* Mobil Konteyner ve Kart Düzeni */
+      .main-container { padding: 20px 16px 50px; }
+      .section-title { font-size: 1.2rem; margin-bottom: 15px; }
 
       .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 30px; }
-      .cat-card { background: #ffffff; border-radius: 20px; padding: 20px 10px; border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.03); display: flex; flex-direction: column; align-items: center; }
+      .cat-card { background: #ffffff; border-radius: 20px; padding: 18px 10px; border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.03); display: flex; flex-direction: column; align-items: center; }
       .cat-card i { font-size: 2.2rem; margin-bottom: 8px; }
       .cat-card h4 { font-size: 0.95rem; font-weight: 800; color: var(--primary); }
 
-      /* Mobil Ürün Kartları Grid */
-      .product-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+      /* Mobil Ürün Grid Kartları */
+      .product-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; }
       .product-card { border: none; border-radius: 16px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-      .product-img { height: 110px; }
-      .product-title { font-size: 0.82rem; height: 32px; }
+      .product-img { height: 100px; }
+      .product-title { font-size: 0.8rem; height: 32px; }
       .unit-price-box { padding: 6px; }
-      .unit-price-val { font-size: 0.95rem; }
+      .unit-price-val { font-size: 0.9rem; }
     }
   </style>
 </head>
 <body>
 
   <!-- ==========================================
-       MASAÜSTÜ HEADER & NAV
+       MASAÜSTÜ ULUŞUMU
        ========================================== -->
   <div class="top-bar desktop-only">
     <div class="top-bar-info">
@@ -158,9 +158,8 @@
     </div>
   </div>
 
-  <!-- Ortak / Adaptif Header -->
   <header>
-    <!-- Masaüstü Header Görünümü -->
+    <!-- Masaüstü Header -->
     <a href="#" class="logo desktop-only">
       <i class="fa-solid fa-leaf"></i>Birimçek
     </a>
@@ -193,7 +192,7 @@
       <a href="#" class="action-item badge-icon"><i class="fa-solid fa-basket-shopping"></i><span class="badge">0</span></a>
     </div>
 
-    <!-- Mobil Header Görünümü (Son Tasarımınıza Göre) -->
+    <!-- Mobil Header -->
     <div class="mobile-top-nav mobile-only">
       <button style="background:none; border:none; font-size:1.1rem;"><i class="fa-solid fa-bars"></i></button>
       <a href="#" class="mobile-logo"><i class="fa-solid fa-leaf"></i> Birimçek</a>
@@ -262,7 +261,7 @@
     </div>
   </nav>
 
-  <!-- Masaüstü Hero Section -->
+  <!-- Masaüstü Hero -->
   <div class="hero-section desktop-only">
     <div class="hero-content">
       <div class="hero-subtitle">%100 Akıllı Birim Fiyat Hesabı</div>
@@ -273,7 +272,7 @@
     <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" class="hero-image" alt="Birimçek Ürünler">
   </div>
 
-  <!-- Mobil Hero Banner (Son Tasarımınızdaki Gibi) -->
+  <!-- Mobil Hero Banner -->
   <div class="mobile-hero-banner mobile-only">
     <div class="mobile-hero-content">
       <h1 class="mobile-hero-title">Organik Meyve & Sebze</h1>
@@ -287,11 +286,10 @@
     <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=500&q=80" class="mobile-hero-bg" alt="Organik Meyve">
   </div>
 
-  <!-- Ortak İçerik Alanı -->
+  <!-- İçerik Alanı -->
   <div class="main-container">
     <h3 class="section-title">Öne Çıkan Kategoriler</h3>
 
-    <!-- 14 Türkçe Kategori Grid (Masaüstü ve Mobil Responsive) -->
     <div class="categories-grid">
       <div class="cat-card" onclick="selectCategory('Meyve & Sebze')">
         <i class="fa-solid fa-apple-whole"></i>
@@ -351,14 +349,14 @@
       </div>
     </div>
 
-    <!-- Ortak Ürün Listesi -->
+    <!-- Ürün Listesi -->
     <h3 class="section-title">En Uygun Birim Fiyatlı Ürünler</h3>
     <div class="product-grid" id="productList">
       <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Veriler yükleniyor...</p>
     </div>
   </div>
 
-  <!-- Supabase Script -->
+  <!-- Supabase Script ve Fonksiyon Bağlantıları -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
@@ -367,6 +365,24 @@
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
     let allProductsCombined = [];
+
+    // Global Fonksiyon Bağlantıları (Scope Hatasını Engeller)
+    window.syncAndFilter = function(source) {
+      if (source === 'desktop') {
+        document.getElementById("categorySelectMobile").value = document.getElementById("categorySelectDesktop").value;
+        document.getElementById("searchInputMobile").value = document.getElementById("searchInputDesktop").value;
+      } else {
+        document.getElementById("categorySelectDesktop").value = document.getElementById("categorySelectMobile").value;
+        document.getElementById("searchInputDesktop").value = document.getElementById("searchInputMobile").value;
+      }
+      filterProducts();
+    };
+
+    window.selectCategory = function(cat) {
+      document.getElementById("categorySelectDesktop").value = cat;
+      document.getElementById("categorySelectMobile").value = cat;
+      filterProducts();
+    };
 
     async function loadData() {
       try {
@@ -393,23 +409,6 @@
         console.error("Hata:", err);
       }
     }
-
-    window.syncAndFilter = function(source) {
-      if (source === 'desktop') {
-        document.getElementById("categorySelectMobile").value = document.getElementById("categorySelectDesktop").value;
-        document.getElementById("searchInputMobile").value = document.getElementById("searchInputDesktop").value;
-      } else {
-        document.getElementById("categorySelectDesktop").value = document.getElementById("categorySelectMobile").value;
-        document.getElementById("searchInputDesktop").value = document.getElementById("searchInputMobile").value;
-      }
-      filterProducts();
-    };
-
-    window.selectCategory = function(cat) {
-      document.getElementById("categorySelectDesktop").value = cat;
-      document.getElementById("categorySelectMobile").value = cat;
-      filterProducts();
-    };
 
     function filterProducts() {
       const searchTerm = (document.getElementById("searchInputDesktop").value || '').toLowerCase();

@@ -1,6 +1,6 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-// BİLEŞENLERİ DOĞRUDAN HTML İÇERİĞİYLE BESLEYEN FONKSİYON (GitHub Uyumlu)
+// BİLEŞENLERİ TÜM SAYFALARDA EKSİZSİZ YÜKLEYEN FONKSİYON
 function loadComponents() {
     const headerContainer = document.getElementById('header-container');
     const drawersContainer = document.getElementById('drawers-container');
@@ -42,7 +42,7 @@ function loadComponents() {
                 <i class="fa-solid fa-store"></i>
                 <span class="action-text">Marketler</span>
               </a>
-              <button class="cart-trigger-btn" onclick="window.toggleCart()" title="Sepetim">
+              <button class="cart-trigger-btn" onclick="window.toggleCart()" title="Sepetim" type="button">
                 <i class="fa-solid fa-basket-shopping"></i>
                 <span class="action-text">Sepet</span>
                 <span class="cart-badge" id="cartBadgeDesktop">0</span>
@@ -51,7 +51,7 @@ function loadComponents() {
                 <i class="fa-regular fa-user"></i>
                 <span class="action-text">Hesabım</span>
               </a>
-              <button class="menu-trigger-btn" onclick="window.toggleCategoryMenu()" title="Menü">
+              <button class="menu-trigger-btn" onclick="window.toggleCategoryMenu()" title="Menü" type="button">
                 <i class="fa-solid fa-bars"></i>
               </button>
             </div>
@@ -66,11 +66,11 @@ function loadComponents() {
               <span>Birimçek</span>
             </a>
             <div class="mf-actions">
-              <button class="cart-trigger-btn" onclick="window.toggleCart()">
+              <button class="cart-trigger-btn" onclick="window.toggleCart()" type="button">
                 <i class="fa-solid fa-basket-shopping"></i>
                 <span class="cart-badge" id="cartBadgeMobile">0</span>
               </button>
-              <button class="menu-trigger-btn" onclick="window.toggleCategoryMenu()">
+              <button class="menu-trigger-btn" onclick="window.toggleCategoryMenu()" type="button">
                 <i class="fa-solid fa-bars"></i>
               </button>
             </div>
@@ -84,7 +84,7 @@ function loadComponents() {
           <!-- MOBİL ARAMA FULLSCREEN PANEL -->
           <div class="mobile-search-overlay-panel">
             <div class="ms-top-bar">
-              <button class="ms-back-btn" onclick="window.closeMobileSearch()"><i class="fa-solid fa-arrow-left"></i></button>
+              <button class="ms-back-btn" onclick="window.closeMobileSearch()" type="button"><i class="fa-solid fa-arrow-left"></i></button>
               <div class="mf-category-select-wrap" onclick="window.toggleMfCatDropdown()">
                 <span id="mfSelectedCatText">Tümü</span>
                 <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
@@ -95,7 +95,7 @@ function loadComponents() {
                 </div>
               </div>
               <input type="text" id="searchInputMobile" class="ms-input" placeholder="Ne aramak istemiştiniz?">
-              <button class="ms-submit-btn" onclick="window.executeSearch('mobile')"><i class="fa-solid fa-magnifying-glass"></i></button>
+              <button class="ms-submit-btn" onclick="window.executeSearch('mobile')" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
           </div>
         </div>
@@ -106,7 +106,7 @@ function loadComponents() {
             <i class="fa-solid fa-circle-info"></i>
             <span>Ürünler, hak geçmemesi için en küçük ortak birimlerine (Litre, Kilogram, Adet) dönüştürülerek sıralanmaktadır.</span>
           </div>
-          <button class="unit-info-close" onclick="window.closeUnitPopup()"><i class="fa-solid fa-xmark"></i></button>
+          <button class="unit-info-close" onclick="window.closeUnitPopup()" type="button"><i class="fa-solid fa-xmark"></i></button>
         </div>`;
     }
 
@@ -117,7 +117,7 @@ function loadComponents() {
         <div id="videoModal" class="custom-modal">
           <div class="modal-header">
             <h3><i class="fa-solid fa-video" style="color: var(--primary);"></i> Reyon Videosu Yükle</h3>
-            <button class="modal-close" onclick="window.toggleVideoModal()"><i class="fa-solid fa-xmark"></i></button>
+            <button class="modal-close" onclick="window.toggleVideoModal()" type="button"><i class="fa-solid fa-xmark"></i></button>
           </div>
           <div class="modal-body">
             <p>Yüksek çözünürlüklü reyon videosu yükle. Yapay zeka onayından sonra yeni veya 1₺+ değişen her ürün için <strong>1 Puan</strong> kazan!</p>
@@ -128,7 +128,7 @@ function loadComponents() {
               <input type="file" accept="video/*" id="videoInput" onchange="window.handleFileSelect(event, 'video')">
               <div id="fileNameDisplay" style="margin-top:10px; font-size:0.85rem; font-weight:700; color:var(--primary); display:none;"></div>
             </div>
-            <button class="cart-checkout-btn" id="uploadSubmitBtn" onclick="window.submitUpload('video')" style="display:none;">
+            <button class="cart-checkout-btn" id="uploadSubmitBtn" onclick="window.submitUpload('video')" style="display:none;" type="button">
               Videoyu Gönder & Teyit Et
             </button>
           </div>
@@ -139,7 +139,7 @@ function loadComponents() {
         <div id="receiptModal" class="custom-modal">
           <div class="modal-header">
             <h3><i class="fa-solid fa-receipt" style="color: var(--primary);"></i> Alışveriş Fişi Yükle</h3>
-            <button class="modal-close" onclick="window.toggleReceiptModal()"><i class="fa-solid fa-xmark"></i></button>
+            <button class="modal-close" onclick="window.toggleReceiptModal()" type="button"><i class="fa-solid fa-xmark"></i></button>
           </div>
           <div class="modal-body">
             <p>Alışveriş fişini yükleyerek puan kazan ve marketlere onaylı değerlendirme yapma hakkı elde et!</p>
@@ -150,7 +150,7 @@ function loadComponents() {
               <input type="file" accept="image/*" id="receiptInput" onchange="window.handleFileSelect(event, 'receipt')">
               <div id="receiptNameDisplay" style="font-size:0.85rem; color:var(--primary); font-weight:700; margin-top:10px; display:none;"></div>
             </div>
-            <button class="cart-checkout-btn" id="receiptSubmitBtn" onclick="window.submitUpload('receipt')" style="display:none;">
+            <button class="cart-checkout-btn" id="receiptSubmitBtn" onclick="window.submitUpload('receipt')" style="display:none;" type="button">
               Fişi Gönder & Kredi Kazan
             </button>
           </div>
@@ -161,7 +161,7 @@ function loadComponents() {
         <div id="categoryDrawer" class="side-drawer">
           <div class="drawer-header">
             <h3><i class="fa-solid fa-bars"></i> Menü & Kategoriler</h3>
-            <button class="drawer-close-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-xmark"></i></button>
+            <button class="drawer-close-btn" onclick="window.toggleCategoryMenu()" type="button"><i class="fa-solid fa-xmark"></i></button>
           </div>
           <div class="side-drawer-content">
             <div class="drawer-nav-group">
@@ -194,7 +194,7 @@ function loadComponents() {
         <div id="cartDrawer" class="side-drawer">
           <div class="drawer-header">
             <h3><i class="fa-solid fa-basket-shopping"></i> Alışveriş Sepetim</h3>
-            <button class="drawer-close-btn" onclick="window.toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+            <button class="drawer-close-btn" onclick="window.toggleCart()" type="button"><i class="fa-solid fa-xmark"></i></button>
           </div>
           <div class="cart-body" id="cartBody">
             <div class="cart-empty-state">
@@ -216,7 +216,7 @@ function loadComponents() {
               <span>Tahmini En Uygun Tutar:</span>
               <strong id="cartTotalPrice">0.00 ₺</strong>
             </div>
-            <button class="cart-checkout-btn" onclick="alert('Optimizasyon yapıldı! Rota ve navigasyon ekranına yönlendiriliyorsunuz.')">
+            <button class="cart-checkout-btn" onclick="alert('Optimizasyon yapıldı! Rota ve navigasyon ekranına yönlendiriliyorsunuz.')" type="button">
               <i class="fa-solid fa-route"></i> En Uygun Noktaları Gör & Rota Al
             </button>
           </div>
@@ -231,9 +231,10 @@ function loadComponents() {
     }
 }
 
-// SAYFA YÜKLENDİĞİ ANDA BİLEŞENLERİ TETİKLE
+// SAYFA YÜKLENDİĞİ ANDA ÇALIŞTIR
 document.addEventListener("DOMContentLoaded", () => {
     loadComponents();
+    window.renderCart(); // Sayfa açıldığında sepet badge'ini güncelle
 });
 
 // --- GLOBAL FONKSİYONLAR ---
@@ -303,13 +304,17 @@ window.closeUnitPopup = () => {
 };
 
 window.toggleCategoryMenu = () => {
-    document.getElementById("categoryDrawer")?.classList.toggle("active");
-    document.getElementById("categoryOverlay")?.classList.toggle("active");
+    const drawer = document.getElementById("categoryDrawer");
+    const overlay = document.getElementById("categoryOverlay");
+    drawer?.classList.toggle("active");
+    overlay?.classList.toggle("active");
 };
 
 window.toggleCart = () => {
-    document.getElementById("cartDrawer")?.classList.toggle("active");
-    document.getElementById("cartOverlay")?.classList.toggle("active");
+    const drawer = document.getElementById("cartDrawer");
+    const overlay = document.getElementById("cartOverlay");
+    drawer?.classList.toggle("active");
+    overlay?.classList.toggle("active");
 };
 
 window.toggleVideoModal = () => {
@@ -381,7 +386,7 @@ window.renderCart = () => {
               <div class="cart-item-title">${item.title}</div>
               <div class="cart-item-price">${item.price.toFixed(2)} ₺</div>
             </div>
-            <button class="cart-item-remove" onclick="window.removeFromCart(${index})"><i class="fa-solid fa-trash-can"></i></button>
+            <button class="cart-item-remove" onclick="window.removeFromCart(${index})" type="button"><i class="fa-solid fa-trash-can"></i></button>
           </div>`;
     }).join('');
     if(totalEl) totalEl.innerText = total.toFixed(2) + " ₺";

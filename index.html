@@ -39,7 +39,6 @@
     .search-menu-btn { background: transparent; border: none; padding: 0 8px; font-size: 0.9rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s; white-space: nowrap; height: 100%; }
     .search-menu-btn:hover { color: var(--primary-hover); }
 
-    /* Açılır Kategori Seçim Kutusu */
     .category-dropdown-menu {
       position: absolute; top: 46px; left: 0; background: #ffffff; border: 1px solid var(--border-color);
       box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 12px; width: 210px; max-height: 250px;
@@ -234,7 +233,6 @@
       .mf-account { color: var(--primary); font-size: 1rem; text-decoration: none; display: flex; align-items: center; }
       .mf-cart { background: none; border: none; cursor: pointer; position: relative; font-size: 1rem; color: var(--primary); padding: 4px; }
 
-      /* Mobil Genişleyen Arama Modu */
       .mobile-floating-header.search-active {
         padding: 4px 10px;
         border: 2px solid var(--primary);
@@ -346,7 +344,6 @@
 
   <!-- MOBILE FLOATING HEADER -->
   <div class="mobile-floating-header" id="mobileFloatingHeader">
-    <!-- Normal Durum -->
     <div class="mf-default-content">
       <div class="mf-left">
         <button class="mf-menu-btn" onclick="window.toggleCategoryMenu()">
@@ -371,7 +368,6 @@
       </div>
     </div>
 
-    <!-- Arama Butonuna Basıldığında Açılan Kategori Seçimli Bar -->
     <div class="mf-search-container" id="mfSearchContainer">
       <div class="mf-search-category">
         <button class="mf-search-cat-btn" onclick="window.toggleMfCatDropdown()">
@@ -623,7 +619,6 @@
     window.currentSearchCategory = "Tümü";
     window.currentMfCategory = "Tümü";
 
-    // Desktop Search Category Dropdown
     window.toggleSearchCategoryDropdown = () => {
       const menu = document.getElementById("searchCategoryDropdownMenu");
       if(menu) menu.classList.toggle("active");
@@ -636,7 +631,6 @@
       window.toggleSearchCategoryDropdown();
     };
 
-    // Mobile Search Bar Expand / Collapse Logic
     window.openMobileSearch = () => {
       const header = document.getElementById("mobileFloatingHeader");
       if(header) {
@@ -667,7 +661,6 @@
       window.toggleMfCatDropdown();
     };
 
-    // Close dropdowns when clicking outside
     window.addEventListener('click', function(e) {
       const dropdown = document.getElementById("searchCategoryDropdownMenu");
       const btn = document.querySelector(".search-category-dropdown");
@@ -687,13 +680,11 @@
       const query = input?.value || '';
       const category = type === 'desktop' ? window.currentSearchCategory : window.currentMfCategory;
       
-      alert(`Seçilen Kategori: "${category}"\nAranan Kelime: "${query}"`);
-      if(type === 'mobile') window.closeMobileSearch();
+      window.location.href = `urunler.html?kategori=${encodeURIComponent(category)}&ara=${encodeURIComponent(query)}`;
     };
 
     window.goToCategoryPage = (catName) => {
-      alert(`"${catName}" kategorisine ait ürünler listeleniyor...`);
-      window.toggleCategoryMenu();
+      window.location.href = `urunler.html?kategori=${encodeURIComponent(catName)}`;
     };
 
     window.handleProductSort = (sortValue) => {

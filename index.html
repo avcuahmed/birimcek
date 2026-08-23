@@ -28,27 +28,28 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
     body { background-color: #ffffff; color: var(--text-dark); -webkit-tap-highlight-color: transparent; }
 
-    /* HEADER - Sticky (Aşağı kaydıkça takip eder) */
+    /* HEADER - Sticky */
     #header { background: #ffffff; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
     .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: var(--primary); }
     .logo i { color: var(--primary-light); }
 
-    /* DESKTOP SEARCH BOX - Daha büyük ve dengeli hale getirildi */
+    /* DESKTOP SEARCH BOX */
     .search-box-desktop { flex: 1; max-width: 650px; display: flex; border: 2.5px solid var(--primary); border-radius: 36px; overflow: hidden; height: 50px; background: #fff; box-shadow: 0 2px 8px rgba(11, 77, 60, 0.05); }
     .search-category { background: #f8fafc; border: none; border-right: 1px solid var(--border-color); padding: 0 18px; font-size: 0.88rem; color: #475569; outline: none; cursor: pointer; font-weight: 600; }
     .search-input { flex: 1; border: none; padding: 0 18px; font-size: 0.95rem; outline: none; background: transparent; }
     .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; font-size: 0.95rem; padding: 0 32px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; gap: 8px; }
     .search-btn:hover { background: var(--primary-hover); }
 
-    .header-actions { display: flex; align-items: center; gap: 18px; }
-    .action-item { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; color: var(--text-dark); background: none; border: none; font-size: 0.85rem; font-weight: 600; }
-    .action-item i { font-size: 1.2rem; color: var(--primary); }
+    .header-actions { display: flex; align-items: center; gap: 15px; }
+    .action-item { display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; color: var(--text-dark); background: none; border: none; font-size: 1.2rem; width: 40px; height: 40px; border-radius: 50%; transition: background 0.2s; }
+    .action-item:hover { background: var(--bg-soft); color: var(--primary); }
+    .action-item i { color: var(--primary); }
     .badge-icon { position: relative; }
-    .badge { position: absolute; top: -6px; right: -8px; background: var(--primary-light); color: var(--primary); font-size: 0.65rem; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .badge { position: absolute; top: 2px; right: 2px; background: var(--primary-light); color: var(--primary); font-size: 0.65rem; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
     /* POINTS & UPLOAD BUTTONS */
-    .points-badge { background: #fffbeb; color: var(--reward-color); border: 1px solid #fde68a; padding: 6px 12px; border-radius: 20px; font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; cursor: pointer; }
-    .video-upload-btn { background: var(--text-dark); color: white; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.2s; }
+    .points-badge { background: #fffbeb; color: var(--reward-color); border: 1px solid #fde68a; padding: 6px 12px; border-radius: 20px; font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; cursor: pointer; white-space: nowrap; }
+    .video-upload-btn { background: var(--text-dark); color: white; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.2s; white-space: nowrap; }
     .video-upload-btn:hover { background: var(--primary); }
     .video-upload-btn i { color: var(--primary-light) !important; }
 
@@ -228,7 +229,7 @@
       </div>
     </div>
 
-    <!-- Desktop Search Box (Genişletilmiş ve İyileştirilmiş Arama Alanı) -->
+    <!-- Desktop Search Box -->
     <div class="search-box-desktop desktop-only">
       <select class="search-category" id="categorySelectDesktop">
         <option value="Tümü">Tüm Kategoriler</option>
@@ -241,20 +242,20 @@
       </button>
     </div>
 
-    <!-- Desktop Actions -->
+    <!-- Desktop Actions (Puanlar, Hesap Simgesi solunda; Hesabım ve Sepetim sadece simge) -->
     <div class="header-actions desktop-only">
-      <div class="points-badge" onclick="alert('Ödül Havuzu: Onaylanan video ve fişlerinizden 12 Puan kazandınız!')" title="Krediler / Puanlar">
-        <i class="fa-solid fa-star"></i> 12 Puan
-      </div>
       <button class="video-upload-btn" onclick="window.toggleVideoModal()">
         <i class="fa-solid fa-video"></i> VİDEO YÜKLE
       </button>
       <button class="video-upload-btn" style="background:var(--primary);" onclick="window.toggleReceiptModal()">
         <i class="fa-solid fa-receipt"></i> FİŞ YÜKLE
       </button>
-      <a href="hesabim.html" class="action-item"><i class="fa-regular fa-user"></i> HESABIM</a>
-      <button class="action-item badge-icon" onclick="window.toggleCart()">
-        <i class="fa-solid fa-basket-shopping"></i> SEPETİM 
+      <div class="points-badge" onclick="alert('Ödül Havuzu: Onaylanan video ve fişlerinizden 12 Puan kazandınız!')" title="Krediler / Puanlar">
+        <i class="fa-solid fa-star"></i> 12 Puan
+      </div>
+      <a href="hesabim.html" class="action-item" title="Hesabım"><i class="fa-regular fa-user"></i></a>
+      <button class="action-item badge-icon" onclick="window.toggleCart()" title="Sepetim">
+        <i class="fa-solid fa-basket-shopping"></i> 
         <span class="badge" id="cartBadgeDesktop">0</span>
       </button>
     </div>

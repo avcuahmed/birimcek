@@ -1,1 +1,250 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tüm Ürünler - Birimçek</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0b4d3c;
+      --primary-light: #52e396;
+      --primary-hover: #07382b;
+      --bg-soft: #f4fbf7;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+    }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #f8faf9; color: var(--text-dark); }
+
+    /* Header & Top Bar */
+    header { background: var(--primary); padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: #ffffff; }
+    .logo i { color: var(--primary-light); }
+
+    .search-box { flex: 1; max-width: 600px; display: flex; background: #ffffff; border-radius: 6px; overflow: hidden; height: 42px; }
+    .search-input { flex: 1; border: none; padding: 0 15px; font-size: 0.88rem; outline: none; }
+    .search-btn { background: var(--primary-light); border: none; color: var(--primary); font-weight: 700; padding: 0 25px; cursor: pointer; }
+
+    .header-actions { display: flex; align-items: center; gap: 20px; color: #ffffff; font-size: 0.85rem; font-weight: 600; }
+    .action-item { display: flex; align-items: center; gap: 6px; text-decoration: none; color: #ffffff; }
+
+    nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; height: 50px; }
+    .nav-links { display: flex; gap: 25px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.88rem; font-weight: 600; }
+    .nav-links a.active { color: var(--primary); font-weight: 700; }
+
+    /* Layout */
+    .page-layout { max-width: 1400px; margin: 30px auto; padding: 0 40px; display: grid; grid-template-columns: 260px 1fr; gap: 30px; }
+
+    /* Sol Filtre Paneli */
+    .filter-sidebar { background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; height: fit-content; }
+    .filter-group { margin-bottom: 25px; }
+    .filter-title { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; border-bottom: 2px solid var(--bg-soft); padding-bottom: 6px; }
+    .filter-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .filter-list label { font-size: 0.85rem; color: #475569; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+
+    /* Sağ Ürün Listesi */
+    .products-container { display: flex; flex-direction: column; gap: 20px; }
+    .products-header { background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .products-count { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+    .sort-select { padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; outline: none; }
+
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+    .product-card { border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; background: #ffffff; transition: box-shadow 0.2s, transform 0.2s; position: relative; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+    .product-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.06); transform: translateY(-2px); }
+    .best-badge { position: absolute; top: 12px; left: 12px; background: #10b981; color: white; font-size: 0.65rem; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
+    .product-img { width: 100%; height: 140px; object-fit: contain; margin-bottom: 12px; }
+    .product-vendor { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+    .product-title { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); margin-bottom: 10px; line-height: 1.3; height: 36px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+
+    .unit-price-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 8px; border-radius: 6px; }
+    .unit-price-val { color: var(--primary); font-weight: 800; font-size: 1.05rem; }
+    .net-price-val { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+    @media (max-width: 900px) {
+      .page-layout { grid-template-columns: 1fr; padding: 0 16px; margin: 15px auto; }
+      .filter-sidebar { display: none; } /* Mobil filtre gizleme */
+      header { padding: 15px 16px; }
+      nav { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo"><i class="fa-solid fa-leaf"></i>Birimçek</a>
+    <div class="search-box">
+      <input type="text" class="search-input" id="pageSearchInput" placeholder="Ürün veya marka ara...">
+      <button class="search-btn" onclick="applySearch()">Ara</button>
+    </div>
+    <div class="header-actions">
+      <a href="hesabim.html" class="action-item"><i class="fa-regular fa-user"></i> Hesabım</a>
+      <a href="sepet.html" class="action-item"><i class="fa-solid fa-basket-shopping"></i> Sepet (0)</a>
+    </div>
+  </header>
+
+  <nav>
+    <ul class="nav-links">
+      <li><a href="index.html">Ana Sayfa</a></li>
+      <li><a href="firsatlar.html">Fırsatlar</a></li>
+      <li><a href="marketler.html">Marketler</a></li>
+      <li><a href="urunler.html" class="active">Tüm Ürünler</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-layout">
+    <!-- Sol Filtre Paneli -->
+    <aside class="filter-sidebar">
+      <div class="filter-group">
+        <h4 class="filter-title">Kategoriler</h4>
+        <ul class="filter-list" id="categoryFilterList">
+          <li><label><input type="radio" name="catFilter" value="" checked onchange="filterProducts()"> Tüm Kategoriler</label></li>
+          <li><label><input type="radio" name="catFilter" value="Meyve & Sebze" onchange="filterProducts()"> Meyve & Sebze</label></li>
+          <li><label><input type="radio" name="catFilter" value="Et, Balık & Şarküteri" onchange="filterProducts()"> Et & Şarküteri</label></li>
+          <li><label><input type="radio" name="catFilter" value="Süt & Kahvaltılık" onchange="filterProducts()"> Süt & Kahvaltı</label></li>
+          <li><label><input type="radio" name="catFilter" value="Temel Gıda" onchange="filterProducts()"> Temel Gıda</label></li>
+          <li><label><input type="radio" name="catFilter" value="Atıştırmalıklar" onchange="filterProducts()"> Atıştırmalıklar</label></li>
+          <li><label><input type="radio" name="catFilter" value="İçecekler" onchange="filterProducts()"> İçecekler</label></li>
+          <li><label><input type="radio" name="catFilter" value="Deterjan & Ev Temizliği" onchange="filterProducts()"> Temizlik Ürünleri</label></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Ürün Listesi Alanı -->
+    <main class="products-container">
+      <div class="products-header">
+        <span class="products-count" id="productCountText">Yükleniyor...</span>
+        <select class="sort-select" id="sortSelect" onchange="filterProducts()">
+          <option value="unit_asc">Birim Fiyat: En Düşük</option>
+          <option value="unit_desc">Birim Fiyat: En Yüksek</option>
+          <option value="price_asc">Paket Fiyatı: En Düşük</option>
+        </select>
+      </div>
+
+      <div class="product-grid" id="productList">
+        <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Yükleniyor...</p>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const SUPABASE_URL = "https://lejkdyhensjyauburrxk.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlamtkeWhlbnNqeWF1YnVycnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MjE1MDQsImV4cCI6MjE0Mjk5NzUwNH0.7aVdxtM-1BFVmwVcc0eqLZospU2XkfDhLHr77HMI_2Y";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let rawProductsData = [];
+
+    // URL Parametrelerini Oku ve İlk Yüklemeyi Yap
+    async function initPage() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const catParam = urlParams.get('kategori');
+      const qParam = urlParams.get('q');
+
+      if (qParam) {
+        document.getElementById("pageSearchInput").value = qParam;
+      }
+
+      if (catParam) {
+        const radio = document.querySelector(`input[name="catFilter"][value="${catParam}"]`);
+        if (radio) radio.checked = true;
+      }
+
+      await fetchAllProducts();
+    }
+
+    async function fetchAllProducts() {
+      try {
+        const { data: prices } = await supabase.from('prices').select('*');
+        const { data: products } = await supabase.from('products').select('*');
+        const { data: markets } = await supabase.from('markets').select('*');
+
+        if (!prices || prices.length === 0) {
+          document.getElementById("productList").innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Ürün bulunamadı.</p>`;
+          return;
+        }
+
+        rawProductsData = prices.map(price => {
+          const prod = (products || []).find(p => p.id === price.product_id) || {};
+          const market = (markets || []).find(m => m.id === price.market_id) || {};
+          const qty = prod.net_quantity || 1;
+          const unitPrice = price.net_price ? (price.net_price / qty) : 0;
+
+          return { ...price, product: prod, market: market, unitPrice };
+        });
+
+        filterProducts();
+      } catch (err) {
+        console.error("Hata:", err);
+      }
+    }
+
+    window.filterProducts = function() {
+      const q = document.getElementById("pageSearchInput").value.toLowerCase().trim();
+      const selectedCatRadio = document.querySelector('input[name="catFilter"]:checked');
+      const selectedCat = selectedCatRadio ? selectedCatRadio.value : "";
+      const sortVal = document.getElementById("sortSelect").value;
+
+      let filtered = rawProductsData.filter(item => {
+        const prod = item.product;
+        const matchQuery = !q || (prod.title && prod.title.toLowerCase().includes(q)) || (prod.brand && prod.brand.toLowerCase().includes(q));
+        const matchCat = !selectedCat || prod.category === selectedCat;
+
+        return matchQuery && matchCat;
+      });
+
+      // Sıralama Mantığı
+      if (sortVal === "unit_asc") {
+        filtered.sort((a, b) => a.unitPrice - b.unitPrice);
+      } else if (sortVal === "unit_desc") {
+        filtered.sort((a, b) => b.unitPrice - a.unitPrice);
+      } else if (sortVal === "price_asc") {
+        filtered.sort((a, b) => a.net_price - b.net_price);
+      }
+
+      document.getElementById("productCountText").innerText = `${filtered.length} ürün bulundu`;
+      renderGrid(filtered);
+    };
+
+    window.applySearch = function() {
+      filterProducts();
+    };
+
+    function renderGrid(items) {
+      const container = document.getElementById("productList");
+      const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
+
+      if (items.length === 0) {
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Aradığınız kriterlere uygun ürün bulunamadı.</p>`;
+        return;
+      }
+
+      container.innerHTML = items.map((item, index) => {
+        const prod = item.product || {};
+        const market = item.market || {};
+
+        return `
+          <div class="product-card" onclick="location.href='urun-detay.html?id=${prod.id || item.product_id}'">
+            ${index === 0 ? `<div class="best-badge">🏆 En Ucuz Birim</div>` : ''}
+            <img src="${prod.image_url || defaultImg}" class="product-img" alt="${prod.title}">
+            <div>
+              <div class="product-vendor">${prod.brand || 'Genel'} • ${market.name || ''}</div>
+              <div class="product-title">${prod.title || 'İsimsiz Ürün'}</div>
+            </div>
+            <div class="unit-price-box">
+              <div class="unit-price-val">${(item.unitPrice || 0).toFixed(2)} ₺ <span style="font-size:0.7rem; color:#666;">/ ${prod.unit_type || 'birim'}</span></div>
+              <div class="net-price-val">Paket: <strong>${Number(item.net_price || 0).toFixed(2)} ₺</strong></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    initPage();
+  </script>
+</body>
+</html>

@@ -1,25 +1,20 @@
-// js/main.js
-
-// Bileşenleri (Header & Footer) harici dosyalardan çeken fonksiyon
+// Bileşenleri yükleyen fonksiyon
 export async function loadComponent(id, file) {
     try {
         const response = await fetch(file);
         if (response.ok) {
             document.getElementById(id).innerHTML = await response.text();
-        } else {
-            console.error(`${file} yüklenemedi.`);
         }
     } catch (error) {
-        console.error('Bileşen yüklenirken hata oluştu:', error);
+        console.error(`${file} yüklenemedi:`, error);
     }
 }
 
-// Global Değişkenler
+// Global Değişkenler ve Fonksiyonlar
 window.cart = [];
 window.currentSearchCategory = "Tümü";
 window.currentMfCategory = "Tümü";
 
-// Arama ve Menü İşlevleri
 window.toggleSearchCategoryDropdown = () => {
     document.getElementById("searchCategoryDropdownMenu")?.classList.toggle("active");
 };
@@ -63,6 +58,24 @@ window.executeSearch = (type) => {
     if(type === 'mobile') window.closeMobileSearch();
 };
 
+window.goToCategoryPage = (catName) => {
+    alert(`"${catName}" kategorisine ait ürünler listeleniyor...`);
+    window.toggleCategoryMenu();
+};
+
+window.handleProductSort = (sortValue) => {
+    const popup = document.getElementById("unitInfoPopup");
+    if (sortValue && sortValue.includes("unit")) {
+        popup?.classList.add("active");
+    } else {
+        popup?.classList.remove("active");
+    }
+};
+
+window.closeUnitPopup = () => {
+    document.getElementById("unitInfoPopup")?.classList.remove("active");
+};
+
 window.toggleCategoryMenu = () => {
     document.getElementById("categoryDrawer")?.classList.toggle("active");
     document.getElementById("categoryOverlay")?.classList.toggle("active");
@@ -83,8 +96,25 @@ window.toggleReceiptModal = () => {
     document.getElementById("receiptOverlay")?.classList.toggle("active");
 };
 
-window.closeUnitPopup = () => {
-    document.getElementById("unitInfoPopup")?.classList.remove("active");
+window.handleFileSelect = (event, type) => {
+    const file = event.target.files[0];
+    if(file) {
+        if(type === 'video') {
+            const display = document.getElementById("fileNameDisplay");
+            if(display) { display.innerText = "Seçilen: " + file.name; display.style.display = "block"; }
+            document.getElementById("uploadSubmitBtn")?.style.setProperty("display", "block");
+        } else {
+            const display = document.getElementById("receiptNameDisplay");
+            if(display) { display.innerText = "Seçilen Fiş: " + file.name; display.style.display = "block"; }
+            document.getElementById("receiptSubmitBtn")?.style.setProperty("display", "block");
+        }
+    }
+};
+
+window.submitUpload = (type) => {
+    alert(type === 'video' ? "Video yüklendi! Yapay zeka denetimi sonrasında kredileriniz hesabınıza yansıtılacaktır." : "Fiş yüklendi! Değerlendirme haklarınız tanımlandı.");
+    if(type === 'video') window.toggleVideoModal();
+    else window.toggleReceiptModal();
 };
 
 window.addToCart = (title, price, imgUrl) => {
@@ -123,7 +153,7 @@ window.renderCart = () => {
             <img src="${item.imgUrl}" class="card-product-img" style="width:48px;height:48px;">
             <div class="cart-item-details">
               <div class="cart-item-title">${item.title}</div>
-              <div class="cart-item-price">${item.price.Footer?.toFixed ? item.price.toFixed(2) : item.price} ₺</div>
+              <div class="cart-item-price">${item.price.toFixed(2)} ₺</div>
             </div>
             <button class="cart-item-remove" onclick="window.removeFromCart(${index})"><i class="fa-solid fa-trash-can"></i></button>
           </div>`;

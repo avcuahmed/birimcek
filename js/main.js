@@ -16,8 +16,9 @@ async function loadComponent(id, file) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // Header ve Footer'ı eşzamanlı olarak sayfaya enjekte et
+    // Header, Drawers (Sepet, Kategori Menüsü, Modallar) ve Footer'ı eşzamanlı olarak yükle
     await loadComponent('header-container', 'components/header.html');
+    await loadComponent('drawers-container', 'components/drawers.html');
     await loadComponent('footer-container', 'components/footer.html');
 });
 

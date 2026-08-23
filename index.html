@@ -19,11 +19,12 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: #ffffff; color: var(--text-dark); -webkit-tap-highlight-color: transparent; }
 
-    /* MASAÜSTÜ TASARIMI */
+    /* MASAÜSTÜ TOP BAR */
     .top-bar { background: var(--primary); color: #ffffff; font-size: 0.78rem; padding: 6px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .top-bar-info { display: flex; gap: 20px; }
     .top-bar-options { display: flex; gap: 15px; }
 
+    /* HEADER */
     header { background: var(--primary); padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
     .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: #ffffff; }
     .logo i { color: var(--primary-light); }
@@ -39,19 +40,15 @@
     .badge-icon { position: relative; }
     .badge { position: absolute; top: -6px; right: -8px; background: var(--primary-light); color: var(--primary); font-size: 0.65rem; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-    nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 50px; position: relative; }
+    /* NAV */
+    nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 50px; }
     .nav-left { display: flex; align-items: center; gap: 30px; height: 100%; }
-    
-    .category-dropdown { position: relative; height: 100%; display: flex; align-items: center; }
     .category-btn { background: #ffffff; border: none; font-weight: 700; font-size: 0.9rem; color: var(--text-dark); display: flex; align-items: center; gap: 10px; cursor: pointer; height: 100%; }
-    .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; width: 260px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 0 0 8px 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); z-index: 100; list-style: none; padding: 10px 0; max-height: 420px; overflow-y: auto; }
-    .category-dropdown:hover .dropdown-menu { display: block; }
-    .dropdown-menu li a { display: flex; justify-content: space-between; align-items: center; padding: 9px 20px; text-decoration: none; color: #334155; font-size: 0.85rem; font-weight: 500; }
 
     .nav-links { display: flex; gap: 25px; list-style: none; }
     .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.88rem; font-weight: 600; }
-    .special-offer-link { background: var(--primary-light); color: var(--primary) !important; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem !important; font-weight: 700; text-decoration: none; }
 
+    /* HERO & CONTAINER */
     .hero-section { background: linear-gradient(135deg, #f3fbf6 0%, #e8f7ee 100%); padding: 50px 40px; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; }
     .hero-content { max-width: 500px; }
     .hero-title { font-size: 2.8rem; font-weight: 800; color: var(--primary); line-height: 1.2; margin-bottom: 15px; }
@@ -62,7 +59,8 @@
     .section-title { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
 
     .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-bottom: 50px; }
-    .cat-card { border-radius: 12px; padding: 18px 12px; text-align: center; cursor: pointer; background: #f8fafc; border: 1px solid var(--border-color); }
+    .cat-card { border-radius: 12px; padding: 18px 12px; text-align: center; cursor: pointer; background: #f8fafc; border: 1px solid var(--border-color); transition: transform 0.2s; }
+    .cat-card:hover { transform: translateY(-3px); background: #f0fdf4; }
     .cat-card i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; display: block; }
     .cat-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); }
 
@@ -80,7 +78,23 @@
 
     .mobile-only { display: none !important; }
 
-    /* YANDAN AÇILIR SEPET CSS STİLLERİ */
+    /* SOL KATEGORİ DRAWER */
+    .category-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+    .category-overlay.active { opacity: 1; visibility: visible; }
+
+    .category-drawer { position: fixed; top: 0; left: -320px; width: 300px; max-width: 85vw; height: 100vh; background: #ffffff; z-index: 1000; box-shadow: 5px 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .category-drawer.active { left: 0; }
+
+    .category-header { padding: 20px; background: var(--primary); color: #ffffff; display: flex; align-items: center; justify-content: space-between; }
+    .category-header h3 { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .category-close-btn { background: transparent; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
+
+    .side-category-list { list-style: none; padding: 10px 0; overflow-y: auto; }
+    .side-category-list li { padding: 14px 20px; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 600; color: var(--text-dark); cursor: pointer; border-bottom: 1px solid var(--border-color); transition: background 0.2s; }
+    .side-category-list li i { color: var(--primary); font-size: 1.1rem; width: 22px; }
+    .side-category-list li:hover { background: #f0fdf4; color: var(--primary); }
+
+    /* SAĞ SEPET DRAWER */
     .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
     .cart-overlay.active { opacity: 1; visibility: visible; }
 
@@ -142,24 +156,23 @@
 
     <div class="search-box-desktop desktop-only">
       <select class="search-category" id="categorySelectDesktop">
-  <option value="Tümü">Tüm Kategoriler</option>
-  <option value="Meyve & Sebze">Meyve & Sebze</option>
-  <option value="Et & Balık & Tavuk">Et, Balık & Tavuk</option>
-  <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
-  <option value="Temel Gıda">Temel Gıda</option>
-  <option value="Atıştırmalık">Atıştırmalık</option>
-  <option value="İçecekler">İçecekler</option>
-  <option value="Deterjan & Ev Temizliği">Deterjan & Temizlik</option>
-  <option value="Kişisel Bakım">Kişisel Bakım</option>
-</select>
-      <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') executeSearch('desktop')">
-      <button class="search-btn" onclick="executeSearch('desktop')">Ara</button>
+        <option value="Tümü">Tüm Kategoriler</option>
+        <option value="Meyve & Sebze">Meyve & Sebze</option>
+        <option value="Et & Balık & Tavuk">Et, Balık & Tavuk</option>
+        <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
+        <option value="Temel Gıda">Temel Gıda</option>
+        <option value="Atıştırmalık">Atıştırmalık</option>
+        <option value="İçecekler">İçecekler</option>
+        <option value="Deterjan & Ev Temizliği">Deterjan & Temizlik</option>
+        <option value="Kişisel Bakım">Kişisel Bakım</option>
+      </select>
+      <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') window.executeSearch('desktop')">
+      <button class="search-btn" onclick="window.executeSearch('desktop')">Ara</button>
     </div>
 
     <div class="header-actions desktop-only">
       <a href="hesabim.html" class="action-item"><i class="fa-regular fa-user"></i> HESABIM</a>
-      <!-- Sepet Butonu (Drawer Tetikleyici) -->
-      <button class="action-item badge-icon" onclick="toggleCart()">
+      <button class="action-item badge-icon" onclick="window.toggleCart()">
         <i class="fa-solid fa-basket-shopping"></i> SEPETİM 
         <span class="badge" id="cartBadgeDesktop">0</span>
       </button>
@@ -167,36 +180,26 @@
 
     <!-- MOBİL HEADER -->
     <div class="mobile-top-nav mobile-only">
+      <button onclick="window.toggleCategoryMenu()" style="background:none; border:none; font-size:1.2rem; color:var(--text-dark); cursor:pointer;"><i class="fa-solid fa-bars"></i></button>
       <a href="index.html" class="logo" style="color:var(--primary); font-size:1.3rem;"><i class="fa-solid fa-leaf" style="color:var(--primary-light);"></i> Birimçek</a>
-      <button class="action-item badge-icon" onclick="toggleCart()" style="color:var(--text-dark);">
+      <button class="action-item badge-icon" onclick="window.toggleCart()" style="color:var(--text-dark);">
         <i class="fa-solid fa-basket-shopping"></i>
         <span class="badge" id="cartBadgeMobile" style="background:var(--primary); color:#fff;">0</span>
       </button>
     </div>
 
     <div class="mobile-search-box mobile-only">
-      <input type="text" class="mobile-search-input" id="searchInputMobile" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') executeSearch('mobile')">
-      <button class="mobile-search-btn" onclick="executeSearch('mobile')"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <input type="text" class="mobile-search-input" id="searchInputMobile" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') window.executeSearch('mobile')">
+      <button class="mobile-search-btn" onclick="window.executeSearch('mobile')"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
   </header>
 
   <!-- NAV -->
   <nav class="desktop-only">
     <div class="nav-left">
-      <div class="category-dropdown">
-        <button class="category-btn"><i class="fa-solid fa-bars"></i> Tüm Kategoriler <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></button>
-        <ul class="dropdown-menu">
-          <li><a href="#" onclick="goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i> Meyve & Sebze</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Et & Balık & Tavuk')"><i class="fa-solid fa-drumstick-bite"></i> Et, Balık & Tavuk</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i> Süt & Kahvaltılık</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i> Temel Gıda</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Atıştırmalık')"><i class="fa-solid fa-cookie-bite"></i> Atıştırmalık & Tatlı</a></li>
-          <li><a href="#" onclick="goToCategoryPage('İçecekler')"><i class="fa-solid fa-bottle-water"></i> İçecekler</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Deterjan & Ev Temizliği')"><i class="fa-solid fa-broom"></i> Deterjan & Temizlik</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Kişisel Bakım')"><i class="fa-solid fa-soap"></i> Kişisel Bakım & Hijyen</a></li>
-       </ul>
-        </ul>
-      </div>
+      <button class="category-btn" onclick="window.toggleCategoryMenu()">
+        <i class="fa-solid fa-bars"></i> Tüm Kategoriler
+      </button>
       <ul class="nav-links">
         <li><a href="index.html">Ana Sayfa</a></li>
         <li><a href="firsatlar.html">Fırsatlar</a></li>
@@ -219,40 +222,16 @@
   <!-- İÇERİK -->
   <div class="main-container">
     <h3 class="section-title">Öne Çıkan Kategoriler</h3>
-   <div class="categories-grid">
-  <div class="cat-card" onclick="goToCategoryPage('Meyve & Sebze')">
-    <i class="fa-solid fa-apple-whole"></i>
-    <h4>Meyve & Sebze</h4>
-  </div>
-  <div class="cat-card" onclick="goToCategoryPage('Et & Balık & Tavuk')">
-    <i class="fa-solid fa-drumstick-bite"></i>
-    <h4>Et & Balık</h4>
-  </div>
-  <div class="cat-card" onclick="goToCategoryPage('Süt & Kahvaltılık')">
-    <i class="fa-solid fa-cheese"></i>
-    <h4>Süt & Kahvaltı</h4>
-  </div>
-  <div class="cat-card" onclick="goToCategoryPage('Temel Gıda')">
-    <i class="fa-solid fa-wheat-awn"></i>
-    <h4>Temel Gıda</h4>
-  </div>
-  <div class="cat-card" onclick="goToCategoryPage('Atıştırmalık')">
-    <i class="fa-solid fa-cookie-bite"></i>
-    <h4>Atıştırmalık</h4>
-  </div>
-  <div class="cat-card" onclick="goToCategoryPage('İçecekler')">
-    <i class="fa-solid fa-bottle-water"></i>
-    <h4>İçecekler</h4>
-  </div>
-  <div class="cat-card" onclick="goToCategoryPage('Deterjan & Ev Temizliği')">
-    <i class="fa-solid fa-broom"></i>
-    <h4>Deterjan & Temizlik</h4>
-  </div>
-  <div class="cat-card" onclick="goToCategoryPage('Kişisel Bakım')">
-    <i class="fa-solid fa-soap"></i>
-    <h4>Kişisel Bakım</h4>
-  </div>
-</div>
+    <div class="categories-grid">
+      <div class="cat-card" onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i><h4>Meyve & Sebze</h4></div>
+      <div class="cat-card" onclick="window.goToCategoryPage('Et & Balık & Tavuk')"><i class="fa-solid fa-drumstick-bite"></i><h4>Et & Balık</h4></div>
+      <div class="cat-card" onclick="window.goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i><h4>Süt & Kahvaltı</h4></div>
+      <div class="cat-card" onclick="window.goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i><h4>Temel Gıda</h4></div>
+      <div class="cat-card" onclick="window.goToCategoryPage('Atıştırmalık')"><i class="fa-solid fa-cookie-bite"></i><h4>Atıştırmalık</h4></div>
+      <div class="cat-card" onclick="window.goToCategoryPage('İçecekler')"><i class="fa-solid fa-bottle-water"></i><h4>İçecekler</h4></div>
+      <div class="cat-card" onclick="window.goToCategoryPage('Deterjan & Ev Temizliği')"><i class="fa-solid fa-broom"></i><h4>Deterjan & Temizlik</h4></div>
+      <div class="cat-card" onclick="window.goToCategoryPage('Kişisel Bakım')"><i class="fa-solid fa-soap"></i><h4>Kişisel Bakım</h4></div>
+    </div>
 
     <h3 class="section-title">En Uygun Birim Fiyatlı Ürünler</h3>
     <div class="product-grid" id="productList">
@@ -260,12 +239,31 @@
     </div>
   </div>
 
-  <!-- YANDAN AÇILIR SEPET PANELERİ (DRAWER) -->
-  <div id="cartOverlay" class="cart-overlay"></div>
+  <!-- SOL KATEGORİ DRAWER -->
+  <div id="categoryOverlay" class="category-overlay" onclick="window.toggleCategoryMenu()"></div>
+  <div id="categoryDrawer" class="category-drawer">
+    <div class="category-header">
+      <h3><i class="fa-solid fa-list"></i> Tüm Kategoriler</h3>
+      <button class="category-close-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <ul class="side-category-list">
+      <li onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i> Meyve & Sebze</li>
+      <li onclick="window.goToCategoryPage('Et & Balık & Tavuk')"><i class="fa-solid fa-drumstick-bite"></i> Et, Balık & Tavuk</li>
+      <li onclick="window.goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i> Süt & Kahvaltılık</li>
+      <li onclick="window.goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i> Temel Gıda</li>
+      <li onclick="window.goToCategoryPage('Atıştırmalık')"><i class="fa-solid fa-cookie-bite"></i> Atıştırmalık & Tatlı</li>
+      <li onclick="window.goToCategoryPage('İçecekler')"><i class="fa-solid fa-bottle-water"></i> İçecekler</li>
+      <li onclick="window.goToCategoryPage('Deterjan & Ev Temizliği')"><i class="fa-solid fa-broom"></i> Deterjan & Temizlik</li>
+      <li onclick="window.goToCategoryPage('Kişisel Bakım')"><i class="fa-solid fa-soap"></i> Kişisel Bakım & Hijyen</li>
+    </ul>
+  </div>
+
+  <!-- SAĞ SEPET DRAWER -->
+  <div id="cartOverlay" class="cart-overlay" onclick="window.toggleCart()"></div>
   <div id="cartDrawer" class="cart-drawer">
     <div class="cart-header">
       <h3><i class="fa-solid fa-basket-shopping"></i> Sepetim</h3>
-      <button class="cart-close-btn" id="btnCloseCart"><i class="fa-solid fa-xmark"></i></button>
+      <button class="cart-close-btn" onclick="window.toggleCart()"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="cart-body" id="cartBody">
       <div class="cart-empty-state">
@@ -282,7 +280,7 @@
     </div>
   </div>
 
-  <!-- SUPABASE VE SEPET SCRIPT BLOĞU -->
+  <!-- SUPABASE VE JAVASCRIPT KODLARI -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
@@ -290,17 +288,21 @@
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlamtkeWhlbnNqeWF1YnVycnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MjE1MDQsImV4cCI6MjE0Mjk5NzUwNH0.7aVdxtM-1BFVmwVcc0eqLZospU2XkfDhLHr77HMI_2Y";
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // SEPET DEĞİŞKENİ VE FONKSİYONLARI (Window Objesine Bağlama)
     window.cart = [];
 
+    // SOL MENÜ AÇ/KAPAT
+    window.toggleCategoryMenu = function() {
+      document.getElementById("categoryDrawer").classList.toggle("active");
+      document.getElementById("categoryOverlay").classList.toggle("active");
+    };
+
+    // SAĞ SEPET AÇ/KAPAT
     window.toggleCart = function() {
       document.getElementById("cartDrawer").classList.toggle("active");
       document.getElementById("cartOverlay").classList.toggle("active");
     };
 
-    document.getElementById("cartOverlay").addEventListener("click", window.toggleCart);
-    document.getElementById("btnCloseCart").addEventListener("click", window.toggleCart);
-
+    // SEPET İŞLEMLERİ
     window.addToCart = function(title, price, imgUrl) {
       window.cart.push({ title, price: parseFloat(price), imgUrl });
       window.renderCart();
@@ -341,7 +343,7 @@
               <div class="cart-item-title">${item.title}</div>
               <div class="cart-item-price">${item.price.toFixed(2)} ₺</div>
             </div>
-            <button class="cart-item-remove" onclick="removeFromCart(${index})">
+            <button class="cart-item-remove" onclick="window.removeFromCart(${index})">
               <i class="fa-solid fa-trash-can"></i>
             </button>
           </div>
@@ -351,7 +353,7 @@
       cartTotalPrice.innerText = total.toFixed(2) + " ₺";
     };
 
-    // YÖNLENDİRME FONKSİYONLARI
+    // YÖNLENDİRMELER
     window.goToCategoryPage = function(catName) {
       window.location.href = `urunler.html?kategori=${encodeURIComponent(catName)}`;
     };
@@ -370,7 +372,7 @@
       window.location.href = `urun-detay.html?id=${productId}`;
     };
 
-    // SUPABASE VERİ ÇEKME
+    // VERİ ÇEKME
     async function loadFeaturedProducts() {
       try {
         const { data: prices } = await supabase.from('prices').select('*');
@@ -409,15 +411,15 @@
 
         return `
           <div class="product-card">
-            <img src="${img}" class="product-img" onclick="goToProductDetail(${prod.id || item.product_id})">
+            <img src="${img}" class="product-img" onclick="window.goToProductDetail(${prod.id || item.product_id})">
             <div>
               <div class="product-vendor">${prod.brand || 'Genel'} • ${market.name || ''}</div>
-              <div class="product-title" onclick="goToProductDetail(${prod.id || item.product_id})">${prod.title || 'İsimsiz Ürün'}</div>
+              <div class="product-title" onclick="window.goToProductDetail(${prod.id || item.product_id})">${prod.title || 'İsimsiz Ürün'}</div>
             </div>
             <div class="unit-price-box">
               <div class="unit-price-val">${(item.unitPrice || 0).toFixed(2)} ₺ <span style="font-size:0.7rem; color:#666;">/ ${prod.unit_type || 'birim'}</span></div>
             </div>
-            <button class="add-to-cart-btn" onclick="addToCart('${title}', '${item.net_price || 0}', '${img}')">
+            <button class="add-to-cart-btn" onclick="window.addToCart('${title}', '${item.net_price || 0}', '${img}')">
               <i class="fa-solid fa-basket-shopping"></i> Sepete Ekle
             </button>
           </div>

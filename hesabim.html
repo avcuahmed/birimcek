@@ -1,59 +1,209 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hesabım - Birimçek</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Birimçek | Hesabım</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #0b4d3c; --primary-light: #52e396; --text-dark: #1e293b; --text-muted: #64748b; --border-color: #e2e8f0; }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #f8faf9; color: var(--text-dark); }
-    header { background: var(--primary); padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: #ffffff; }
+    :root { --primary: #0b4d3c; --primary-light: #52e396; --primary-hover: #07382b; --text-dark: #191919; --text-muted: #666666; --border-color: #e5e5e5; --bg-soft: #f9fbf9; --font-main: 'Sora', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
+    body { background-color: #ffffff; color: var(--text-dark); }
+    #header { background: #ffffff; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; border-bottom: 1px solid var(--border-color); }
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: var(--primary); }
     .logo i { color: var(--primary-light); }
-    .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 240px 1fr; gap: 30px; }
-    .profile-sidebar { background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; }
-    .menu-item { display: block; padding: 12px; color: var(--text-dark); text-decoration: none; font-weight: 600; font-size: 0.9rem; border-radius: 6px; margin-bottom: 5px; }
-    .menu-item:hover, .menu-item.active { background: #f0fdf4; color: var(--primary); }
-    .content-box { background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; }
+    .search-box-desktop { flex: 1; max-width: 600px; display: flex; border: 2px solid var(--primary); border-radius: 30px; overflow: hidden; height: 44px; }
+    .search-category { background: #f8fafc; border: none; border-right: 1px solid var(--border-color); padding: 0 15px; font-size: 0.82rem; color: #475569; outline: none; cursor: pointer; }
+    .search-input { flex: 1; border: none; padding: 0 15px; font-size: 0.88rem; outline: none; }
+    .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; padding: 0 25px; cursor: pointer; }
+    .header-actions { display: flex; align-items: center; gap: 25px; }
+    .action-item { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-dark); background: none; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .action-item i { font-size: 1.2rem; color: var(--primary); }
+    .badge-icon { position: relative; }
+    .badge { position: absolute; top: -6px; right: -8px; background: var(--primary-light); color: var(--primary); font-size: 0.65rem; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 50px; }
+    .nav-left { display: flex; align-items: center; gap: 30px; height: 100%; }
+    .category-btn { background: var(--primary); color: #ffffff; border: none; border-radius: 6px; padding: 8px 16px; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .nav-links { display: flex; gap: 25px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.88rem; font-weight: 600; }
+    .nav-links a.active { color: var(--primary); font-weight: 700; }
+    .main-container { padding: 40px; max-width: 1000px; margin: 0 auto; }
+    .profile-card { border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; background: #fff; display: flex; align-items: center; gap: 20px; margin-bottom: 30px; }
+    .profile-avatar { width: 70px; height: 70px; border-radius: 50%; background: var(--bg-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 2rem; border: 2px solid var(--primary-light); }
+    .account-tabs { display: flex; gap: 10px; border-bottom: 1px solid var(--border-color); margin-bottom: 25px; }
+    .tab-btn { padding: 12px 20px; background: none; border: none; border-bottom: 3px solid transparent; font-weight: 700; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .mobile-only { display: none !important; }
+    .drawer-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+    .drawer-overlay.active { opacity: 1; visibility: visible; }
+    .side-drawer { position: fixed; top: 0; width: 340px; height: 100vh; background: #ffffff; z-index: 1000; box-shadow: 0 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; transition: all 0.3s ease; }
+    #categoryDrawer { left: -360px; } #categoryDrawer.active { left: 0; }
+    #cartDrawer { right: -360px; } #cartDrawer.active { right: 0; }
+    .drawer-header { padding: 20px; background: var(--primary); color: #ffffff; display: flex; align-items: center; justify-content: space-between; }
+    .drawer-close-btn { background: transparent; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
+    .side-category-list { list-style: none; padding: 10px 0; }
+    .side-category-list li { padding: 14px 20px; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border-bottom: 1px solid var(--border-color); }
+    .cart-body { flex: 1; padding: 20px; overflow-y: auto; }
+    .cart-empty-state { text-align: center; color: var(--text-muted); margin-top: 60px; }
+    .cart-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
+    .cart-item-img { width: 48px; height: 48px; object-fit: contain; }
+    .cart-item-details { flex: 1; }
+    .cart-item-title { font-size: 0.85rem; font-weight: 700; }
+    .cart-item-price { font-size: 0.85rem; color: var(--primary); font-weight: 800; }
+    .cart-item-remove { background: transparent; border: none; color: #ef4444; cursor: pointer; }
+    .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: #f8faf9; }
+    .cart-total-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
+    .cart-checkout-btn { width: 100%; padding: 12px; background: var(--primary-light); color: var(--primary); border: none; border-radius: 8px; font-weight: 800; cursor: pointer; }
+    .toolbar-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 10px 0; z-index: 900; }
+    .toolbar-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--text-dark); font-size: 0.7rem; font-weight: 600; gap: 4px; background: none; border: none; cursor: pointer; }
+    .toolbar-item i { font-size: 1.2rem; color: var(--primary); }
+    footer { background: #072e24; color: #ffffff; padding: 40px; margin-top: 60px; text-align: center; font-size: 0.85rem; }
+    @media (max-width: 900px) {
+      .desktop-only, nav { display: none !important; }
+      .mobile-only { display: flex !important; }
+      #header { padding: 12px 16px; flex-direction: column; gap: 10px; }
+      .main-container { padding: 20px 16px 80px; }
+    }
   </style>
 </head>
 <body>
-
-  <header>
-    <a href="index.html" class="logo"><i class="fa-solid fa-leaf"></i>Birimçek</a>
+  <header id="header">
+    <a href="index.html" class="logo desktop-only"><i class="fa-solid fa-leaf"></i>Birimçek</a>
+    <div class="search-box-desktop desktop-only">
+      <select class="search-category" id="categorySelectDesktop">
+        <option value="Tümü">Tüm Kategoriler</option>
+        <option value="Meyve & Sebze">Meyve & Sebze</option>
+        <option value="Et & Balık & Tavuk">Et, Balık & Tavuk</option>
+        <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
+      </select>
+      <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') window.executeSearch('desktop')">
+      <button class="search-btn" onclick="window.executeSearch('desktop')">Ara</button>
+    </div>
+    <div class="header-actions desktop-only">
+      <a href="hesabim.html" class="action-item"><i class="fa-regular fa-user"></i> HESABIM</a>
+      <button class="action-item badge-icon" onclick="window.toggleCart()">
+        <i class="fa-solid fa-basket-shopping"></i> SEPETİM <span class="badge" id="cartBadgeDesktop">0</span>
+      </button>
+    </div>
   </header>
 
-  <div class="container">
-    <aside class="profile-sidebar">
-      <a href="hesabim.html" class="menu-item active" id="tabProfil"><i class="fa-regular fa-user"></i> Profil Bilgilerim</a>
-      <a href="hesabim.html?tab=favoriler" class="menu-item" id="tabFavori"><i class="fa-regular fa-heart"></i> Favorilerim</a>
-      <a href="index.html" class="menu-item" style="color:#ef4444;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Çıkış Yap</a>
-    </aside>
+  <nav class="desktop-only">
+    <div class="nav-left">
+      <button class="category-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-bars"></i> Tüm Kategoriler</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="urunler.html">Tüm Ürünler</a></li>
+        <li><a href="marketler.html">Marketler</a></li>
+        <li><a href="firsatlar.html">Fırsatlar</a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <main class="content-box" id="accountContent">
-      <h2 style="color:var(--primary); margin-bottom:15px;">Profil Bilgilerim</h2>
-      <p style="color:var(--text-muted); margin-bottom:20px;">Hesap ayarlarınızı buradan güncelleyebilirsiniz.</p>
-      <div style="display:flex; flex-direction:column; gap:15px; max-width:400px;">
-        <input type="text" value="Kullanıcı Adı" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
-        <input type="email" value="kullanici@birimcek.com" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
-        <button style="padding:10px; background:var(--primary); color:white; border:none; border-radius:6px; font-weight:700; cursor:pointer;">Kaydet</button>
+  <div class="main-container">
+    <div class="profile-card">
+      <div class="profile-avatar"><i class="fa-solid fa-user"></i></div>
+      <div>
+        <h2 style="font-size: 1.3rem; font-weight: 800;">Hoş Geldiniz</h2>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Kayıtlı alışveriş listelerinizi ve takibe aldığınız ürünleri buradan yönetebilirsiniz.</p>
       </div>
-    </main>
+    </div>
+
+    <div class="account-tabs">
+      <button class="tab-btn active"><i class="fa-solid fa-heart"></i> Favori Ürünlerim</button>
+      <button class="tab-btn"><i class="fa-solid fa-list-check"></i> Kayıtlı Listelerim</button>
+      <button class="tab-btn"><i class="fa-solid fa-gear"></i> Hesap Ayarları</button>
+    </div>
+
+    <div style="border: 1px dashed var(--border-color); border-radius: 12px; padding: 40px; text-align: center; color: var(--text-muted);">
+      <i class="fa-regular fa-heart" style="font-size: 2.5rem; margin-bottom: 10px; color: var(--primary);"></i>
+      <p>Henüz favorilerinize bir ürün eklemediniz.</p>
+      <a href="urunler.html" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background: var(--primary); color: white; text-decoration: none; font-weight: 700; border-radius: 8px; font-size: 0.85rem;">Ürünleri İncele</a>
+    </div>
   </div>
 
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('tab') === 'favoriler') {
-      document.getElementById("tabProfil").classList.remove("active");
-      document.getElementById("tabFavori").classList.add("active");
-      document.getElementById("accountContent").innerHTML = `
-        <h2 style="color:var(--primary); margin-bottom:15px;">Favori Ürünlerim</h2>
-        <p style="color:var(--text-muted);">Takibe aldığınız ürünler burada listelenir.</p>
-        <p style="margin-top:20px; color:#888;">Henüz favori ürün eklemediniz.</p>
-      `;
-    }
+  <div class="toolbar-bottom mobile-only">
+    <a href="index.html" class="toolbar-item"><i class="fa-solid fa-house"></i><span>Ana Sayfa</span></a>
+    <button class="toolbar-item" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-list"></i><span>Kategoriler</span></button>
+    <button class="toolbar-item" onclick="window.toggleCart()"><i class="fa-solid fa-basket-shopping"></i><span>Sepetim</span></button>
+    <a href="hesabim.html" class="toolbar-item"><i class="fa-solid fa-user"></i><span>Hesabım</span></a>
+  </div>
+
+  <div id="categoryOverlay" class="drawer-overlay" onclick="window.toggleCategoryMenu()"></div>
+  <div id="categoryDrawer" class="side-drawer">
+    <div class="drawer-header">
+      <h3><i class="fa-solid fa-list"></i> Kategoriler</h3>
+      <button class="drawer-close-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <ul class="side-category-list">
+      <li onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i> Meyve & Sebze</li>
+      <li onclick="window.goToCategoryPage('Et & Balık & Tavuk')"><i class="fa-solid fa-drumstick-bite"></i> Et, Balık & Tavuk</li>
+    </ul>
+  </div>
+
+  <div id="cartOverlay" class="drawer-overlay" onclick="window.toggleCart()"></div>
+  <div id="cartDrawer" class="side-drawer">
+    <div class="drawer-header">
+      <h3><i class="fa-solid fa-basket-shopping"></i> Sepetim</h3>
+      <button class="drawer-close-btn" onclick="window.toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty-state"><i class="fa-solid fa-basket-shopping"></i><p>Sepetiniz henüz boş.</p></div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row"><span>Tahmini Toplam:</span><strong id="cartTotalPrice">0.00 ₺</strong></div>
+      <button class="cart-checkout-btn" onclick="alert('Listeniz hazırlandı!')">Market Karşılaştırması Yap</button>
+    </div>
+  </div>
+
+  <footer><p>&copy; 2026 Birimçek - Tüm hakları saklıdır.</p></footer>
+
+  <script type="module">
+    window.cart = [];
+    window.toggleCategoryMenu = () => {
+      document.getElementById("categoryDrawer")?.classList.toggle("active");
+      document.getElementById("categoryOverlay")?.classList.toggle("active");
+    };
+    window.toggleCart = () => {
+      document.getElementById("cartDrawer")?.classList.toggle("active");
+      document.getElementById("cartOverlay")?.classList.toggle("active");
+    };
+    window.removeFromCart = (index) => {
+      window.cart.splice(index, 1);
+      window.renderCart();
+    };
+    window.renderCart = () => {
+      const cartBody = document.getElementById("cartBody");
+      const cartTotalPrice = document.getElementById("cartTotalPrice");
+      const badgeDesk = document.getElementById("cartBadgeDesktop");
+      if (badgeDesk) badgeDesk.innerText = window.cart.length;
+      if (window.cart.length === 0) {
+        cartBody.innerHTML = `<div class="cart-empty-state"><i class="fa-solid fa-basket-shopping"></i><p>Sepetiniz henüz boş.</p></div>`;
+        cartTotalPrice.innerText = "0.00 ₺";
+        return;
+      }
+      let total = 0;
+      cartBody.innerHTML = window.cart.map((item, index) => {
+        total += item.price;
+        return `
+          <div class="cart-item">
+            <img src="${item.imgUrl}" class="cart-item-img" alt="${item.title}">
+            <div class="cart-item-details">
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-price">${item.price.toFixed(2)} ₺</div>
+            </div>
+            <button class="cart-item-remove" onclick="window.removeFromCart(${index})"><i class="fa-solid fa-trash-can"></i></button>
+          </div>`;
+      }).join('');
+      cartTotalPrice.innerText = total.toFixed(2) + " ₺";
+    };
+    window.goToCategoryPage = (catName) => {
+      window.location.href = `urunler.html?kategori=${encodeURIComponent(catName)}`;
+    };
+    window.executeSearch = () => {
+      const query = document.getElementById("searchInputDesktop")?.value.trim();
+      if (query) window.location.href = `urunler.html?q=${encodeURIComponent(query)}`;
+    };
   </script>
 </body>
 </html>

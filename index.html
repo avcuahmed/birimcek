@@ -12,6 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- CRITICAL: Component scriptini head içine taşıdık ki içerik yüklenmeden header gelsin -->
+  <script src="components.js"></script>
+
   <style>
     /* Ana Sayfaya Özel Ek Stiller */
     .main-container { padding: 30px 30px 60px; max-width: 1400px; margin: 0 auto; }
@@ -209,8 +212,7 @@
     <p>&copy; 2026 Birimçek - Yapay Zeka Destekli Fiyat Karşılaştırma Ağı.</p>
   </footer>
 
-  <!-- COMPONENT SCRIPT VE SEPET YÖNETİMİ -->
-  <script src="components.js"></script>
+  <!-- SEPET YÖNETİM SCRİPTİ -->
   <script>
     window.cart = [];
     window.addToCart = (title, price, imgUrl) => {

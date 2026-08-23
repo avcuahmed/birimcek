@@ -138,18 +138,47 @@
     <a href="hesabim.html" class="toolbar-item"><i class="fa-solid fa-user"></i><span>Hesabım</span></a>
   </div>
 
+  <!-- CATEGORY & MENU DRAWER (Full Page Menu) -->
   <div id="categoryOverlay" class="drawer-overlay" onclick="window.toggleCategoryMenu()"></div>
   <div id="categoryDrawer" class="side-drawer">
     <div class="drawer-header">
-      <h3><i class="fa-solid fa-list"></i> Kategoriler</h3>
+      <h3><i class="fa-solid fa-bars"></i> Menü & Kategoriler</h3>
       <button class="drawer-close-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <ul class="side-category-list">
-      <li onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i> Meyve & Sebze</li>
-      <li onclick="window.goToCategoryPage('Et & Balık & Tavuk')"><i class="fa-solid fa-drumstick-bite"></i> Et, Balık & Tavuk</li>
-      <li onclick="window.goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i> Süt & Kahvaltılık</li>
-      <li onclick="window.goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i> Temel Gıda</li>
-    </ul>
+    
+    <div class="side-drawer-content">
+      <!-- Hızlı Erişim Linkleri -->
+      <div class="drawer-nav-group">
+        <h4>Hızlı Erişim</h4>
+        <ul class="drawer-nav-links">
+          <li><a href="index.html"><i class="fa-solid fa-house"></i> Ana Sayfa</a></li>
+          <li><a href="urunler.html"><i class="fa-solid fa-box-open"></i> Tüm Ürünler</a></li>
+          <li><a href="marketler.html"><i class="fa-solid fa-store"></i> Marketler</a></li>
+          <li><a href="firsatlar.html"><i class="fa-solid fa-bolt"></i> Aktüel & Fırsatlar</a></li>
+        </ul>
+      </div>
+
+      <!-- Tüm Kategoriler Listesi -->
+      <div class="drawer-nav-group" style="border-bottom: none; background: #fff; padding-bottom: 0;">
+        <h4>Kategoriler</h4>
+      </div>
+      <ul class="side-category-list">
+        <li onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i> Meyve & Sebze</li>
+        <li onclick="window.goToCategoryPage('Et, Balık & Şarküteri')"><i class="fa-solid fa-drumstick-bite"></i> Et, Balık & Şarküteri</li>
+        <li onclick="window.goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i> Süt & Kahvaltılık</li>
+        <li onclick="window.goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i> Temel Gıda</li>
+        <li onclick="window.goToCategoryPage('Atıştırmalıklar')"><i class="fa-solid fa-cookie-bite"></i> Atıştırmalıklar</li>
+        <li onclick="window.goToCategoryPage('İçecekler')"><i class="fa-solid fa-bottle-droplet"></i> İçecekler</li>
+        <li onclick="window.goToCategoryPage('Fırın & Pastane')"><i class="fa-solid fa-bread-slice"></i> Fırın & Pastane</li>
+        <li onclick="window.goToCategoryPage('Dondurulmuş Gıdalar')"><i class="fa-solid fa-snowflake"></i> Dondurulmuş Gıdalar</li>
+        <li onclick="window.goToCategoryPage('Deterjan & Ev Temizliği')"><i class="fa-solid fa-pump-soap"></i> Deterjan & Ev Temizliği</li>
+        <li onclick="window.goToCategoryPage('Kişisel Bakım & Hijyen')"><i class="fa-solid fa-sparkles"></i> Kişisel Bakım & Hijyen</li>
+        <li onclick="window.goToCategoryPage('Kağıt Ürünleri')"><i class="fa-solid fa-toilet-paper"></i> Kağıt Ürünleri</li>
+        <li onclick="window.goToCategoryPage('Bebek Dünyası')"><i class="fa-solid fa-baby"></i> Bebek Dünyası</li>
+        <li onclick="window.goToCategoryPage('Evcil Dostlar')"><i class="fa-solid fa-paw"></i> Evcil Dostlar</li>
+        <li onclick="window.goToCategoryPage('Ev & Yaşam')"><i class="fa-solid fa-house"></i> Ev & Yaşam</li>
+      </ul>
+    </div>
   </div>
 
   <div id="cartOverlay" class="drawer-overlay" onclick="window.toggleCart()"></div>

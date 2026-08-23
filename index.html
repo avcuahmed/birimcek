@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Birimçek | Market Birim Fiyat Karşılaştırma</title>
+  <title>Birimçek | Akıllı Market Fiyat Karşılaştırma</title>
   
   <!-- Fonts & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,6 +21,7 @@
       --text-muted: #666666;
       --border-color: #e5e5e5;
       --bg-soft: #f9fbf9;
+      --reward-color: #f59e0b;
       --font-main: 'Sora', sans-serif;
     }
 
@@ -38,11 +39,17 @@
     .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; padding: 0 25px; cursor: pointer; transition: background 0.2s; }
     .search-btn:hover { background: var(--primary-hover); }
 
-    .header-actions { display: flex; align-items: center; gap: 25px; }
+    .header-actions { display: flex; align-items: center; gap: 18px; }
     .action-item { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; color: var(--text-dark); background: none; border: none; font-size: 0.85rem; font-weight: 600; }
     .action-item i { font-size: 1.2rem; color: var(--primary); }
     .badge-icon { position: relative; }
     .badge { position: absolute; top: -6px; right: -8px; background: var(--primary-light); color: var(--primary); font-size: 0.65rem; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+    /* POINTS & UPLOAD BUTTONS */
+    .points-badge { background: #fffbeb; color: var(--reward-color); border: 1px solid #fde68a; padding: 6px 12px; border-radius: 20px; font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; cursor: pointer; }
+    .video-upload-btn { background: var(--text-dark); color: white; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.2s; }
+    .video-upload-btn:hover { background: var(--primary); }
+    .video-upload-btn i { color: var(--primary-light) !important; }
 
     /* NAV */
     nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 50px; }
@@ -53,19 +60,41 @@
     .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.88rem; font-weight: 600; transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--primary); font-weight: 700; }
 
-    /* MAIN CONTAINER & HERO SLIDER */
+    /* MAIN CONTAINER */
     .main-container { padding: 30px 40px 60px; max-width: 1400px; margin: 0 auto; }
+    
+    /* HERO BANNER */
     .hero-banner { background: linear-gradient(135deg, #0b4d3c 0%, #15735b 100%); border-radius: 16px; padding: 40px; color: #ffffff; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; }
     .hero-text h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; }
-    .hero-text p { font-size: 1rem; opacity: 0.9; margin-bottom: 20px; }
+    .hero-text p { font-size: 1rem; opacity: 0.9; margin-bottom: 20px; max-width: 600px; line-height: 1.5; }
+    .hero-btns { display: flex; gap: 15px; }
     .hero-btn { background: var(--primary-light); color: var(--primary); border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; }
+    .hero-btn-alt { background: transparent; color: white; border: 2px solid white; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; }
 
-    /* SECTION TITLE */
+    /* 8. MADDE: BİRİM FİYAT BİLGİLENDİRME POP-UP (BANNER/MODAL) */
+    .unit-info-popup { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 16px 20px; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; animation: fadeIn 0.4s ease; }
+    .unit-info-content { display: flex; align-items: center; gap: 15px; }
+    .unit-info-content i { font-size: 1.5rem; color: var(--primary); }
+    .unit-info-content h4 { font-size: 0.95rem; font-weight: 800; color: var(--primary); margin-bottom: 2px; }
+    .unit-info-content p { font-size: 0.85rem; color: var(--text-muted); }
+    .unit-info-close { background: none; border: none; font-size: 1.1rem; color: var(--text-muted); cursor: pointer; padding: 5px; }
+
+    /* 5. MADDE: İNDİRİME GİREN ÜRÜN BOARDLARI */
+    .discount-board-section { margin-bottom: 40px; }
+    .board-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory; }
+    .board-card { min-width: 280px; background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border: 1px solid #fed7d7; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 15px; scroll-snap-align: start; position: relative; }
+    .board-badge { position: absolute; top: 12px; right: 12px; background: #ef4444; color: white; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 20px; }
+    .board-img { width: 70px; height: 70px; object-fit: contain; }
+    .board-info h5 { font-size: 0.88rem; font-weight: 700; margin-bottom: 5px; color: var(--text-dark); }
+    .board-prices { display: flex; gap: 10px; align-items: center; }
+    .old-price { font-size: 0.8rem; color: var(--text-muted); text-decoration: line-through; }
+    .new-price { font-size: 1rem; font-weight: 800; color: #ef4444; }
+
+    /* PRODUCT GRID */
     .section-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
     .section-title { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); }
     .section-link { color: var(--primary); font-size: 0.88rem; font-weight: 700; text-decoration: none; }
 
-    /* ORVANA STYLE PRODUCT CARD */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; margin-bottom: 40px; }
     .card-product { border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; background: #ffffff; position: relative; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.25s ease; }
     .card-product:hover { border-color: var(--primary-light); box-shadow: 0 12px 24px rgba(0,0,0,0.06); transform: translateY(-3px); }
@@ -86,7 +115,7 @@
 
     .mobile-only { display: none !important; }
 
-    /* SIDEBARS & DRAWERS */
+    /* DRAWERS & MODALS */
     .drawer-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
     .drawer-overlay.active { opacity: 1; visibility: visible; }
 
@@ -102,12 +131,10 @@
 
     .side-category-list { list-style: none; padding: 10px 0; overflow-y: auto; }
     .side-category-list li { padding: 14px 20px; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 600; color: var(--text-dark); cursor: pointer; border-bottom: 1px solid var(--border-color); }
-    .side-category-list li:hover { background: var(--bg-soft); color: var(--primary); }
-
+    
     .cart-body { flex: 1; padding: 20px; overflow-y: auto; }
     .cart-empty-state { text-align: center; color: var(--text-muted); margin-top: 60px; }
     .cart-empty-state i { font-size: 3rem; margin-bottom: 10px; display: block; }
-
     .cart-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
     .cart-item-img { width: 48px; height: 48px; object-fit: contain; border-radius: 6px; border: 1px solid var(--border-color); }
     .cart-item-details { flex: 1; }
@@ -116,14 +143,39 @@
     .cart-item-remove { background: transparent; border: none; color: #ef4444; cursor: pointer; font-size: 0.9rem; }
 
     .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: #f8faf9; }
-    .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 0.95rem; }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.95rem; }
     .cart-total-row strong { font-size: 1.2rem; color: var(--primary); }
+    
+    /* 16. Madde Seçenek Alanı */
+    .market-limit-box { margin-bottom: 15px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); }
+    .market-limit-box label { font-size: 0.78rem; font-weight: 700; display: block; margin-bottom: 5px; color: var(--text-muted); }
+    .market-limit-select { width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; outline: none; }
+    
     .cart-checkout-btn { width: 100%; padding: 12px; background: var(--primary-light); color: var(--primary); border: none; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
 
-    /* ORVANA MOBILE TOOLBAR BOTTOM */
-    .toolbar-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 10px 0; z-index: 900; }
-    .toolbar-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--text-dark); font-size: 0.7rem; font-weight: 600; gap: 4px; background: none; border: none; cursor: pointer; }
-    .toolbar-item i { font-size: 1.2rem; color: var(--primary); }
+    /* VIDEO / FİŞ UPLOAD MODAL */
+    .custom-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: #fff; width: 90%; max-width: 500px; border-radius: 16px; z-index: 1001; opacity: 0; visibility: hidden; transition: all 0.3s ease; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+    .custom-modal.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+    .modal-header { padding: 20px 25px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+    .modal-header h3 { font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+    .modal-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted); }
+    .modal-body { padding: 25px; text-align: center; }
+    .modal-body p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; }
+    .upload-area { border: 2px dashed var(--primary-light); padding: 30px 20px; border-radius: 12px; cursor: pointer; position: relative; background: var(--bg-soft); transition: background 0.2s; margin-bottom: 20px; }
+    .upload-area:hover { background: #eefcf4; }
+    .upload-area i { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
+    .upload-area span { display: block; font-weight: 700; font-size: 0.95rem; color: var(--text-dark); margin-bottom: 5px; }
+    .upload-area small { color: var(--text-muted); font-size: 0.75rem; }
+    .upload-area input { position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; }
+    #fileNameDisplay { font-size: 0.85rem; color: var(--primary); font-weight: 700; margin-top: 10px; display: none; }
+
+    /* MOBILE TOOLBAR */
+    .toolbar-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; z-index: 900; }
+    .toolbar-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--text-dark); font-size: 0.7rem; font-weight: 600; gap: 4px; background: none; border: none; cursor: pointer; flex: 1; }
+    .toolbar-item i { font-size: 1.2rem; color: var(--text-muted); }
+    .toolbar-item.active i { color: var(--primary); }
+    .toolbar-fab { width: 50px; height: 50px; background: var(--text-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; border: none; transform: translateY(-15px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); margin: 0 10px; cursor: pointer; }
+    .toolbar-fab i { color: var(--primary-light); }
 
     /* FOOTER */
     footer { background: #072e24; color: #ffffff; padding: 40px; margin-top: 60px; text-align: center; font-size: 0.85rem; opacity: 0.9; }
@@ -150,20 +202,23 @@
     <div class="search-box-desktop desktop-only">
       <select class="search-category" id="categorySelectDesktop">
         <option value="Tümü">Tüm Kategoriler</option>
-        <option value="Meyve & Sebze">Meyve & Sebze</option>
-        <option value="Et & Balık & Tavuk">Et, Balık & Tavuk</option>
-        <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
         <option value="Temel Gıda">Temel Gıda</option>
-        <option value="Atıştırmalık">Atıştırmalık</option>
-        <option value="İçecekler">İçecekler</option>
-        <option value="Deterjan & Ev Temizliği">Deterjan & Temizlik</option>
-        <option value="Kişisel Bakım">Kişisel Bakım</option>
+        <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
       </select>
-      <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') window.executeSearch('desktop')">
+      <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün, marka veya kilogram/adet ara..." onkeypress="if(event.key==='Enter') window.executeSearch('desktop')">
       <button class="search-btn" onclick="window.executeSearch('desktop')">Ara</button>
     </div>
 
     <div class="header-actions desktop-only">
+      <div class="points-badge" onclick="alert('Ödül Havuzu: Onaylanan video ve fişlerinizden 12 Puan kazandınız!')" title="Krediler / Puanlar">
+        <i class="fa-solid fa-star"></i> 12 Puan
+      </div>
+      <button class="video-upload-btn" onclick="window.toggleVideoModal()">
+        <i class="fa-solid fa-video"></i> VİDEO YÜKLE
+      </button>
+      <button class="video-upload-btn" style="background:var(--primary);" onclick="window.toggleReceiptModal()">
+        <i class="fa-solid fa-receipt"></i> FİŞ YÜKLE
+      </button>
       <a href="hesabim.html" class="action-item"><i class="fa-regular fa-user"></i> HESABIM</a>
       <button class="action-item badge-icon" onclick="window.toggleCart()">
         <i class="fa-solid fa-basket-shopping"></i> SEPETİM 
@@ -182,8 +237,7 @@
         <li><a href="index.html" class="active">Ana Sayfa</a></li>
         <li><a href="urunler.html">Tüm Ürünler</a></li>
         <li><a href="marketler.html">Marketler</a></li>
-        <li><a href="firsatlar.html">Fırsatlar</a></li>
-        <li><a href="yenieklenenler.html">Yeni Eklenenler</a></li>
+        <li><a href="firsatlar.html">Aktüel & Fırsatlar</a></li>
       </ul>
     </div>
   </nav>
@@ -191,18 +245,68 @@
   <!-- MAIN CONTENT -->
   <div class="main-container">
     
+    <!-- 8. MADDE: BİRİM FİYAT BİLGİLENDİRME POP-UP (OTOMATİK / KAPATILABİLİR) -->
+    <div class="unit-info-popup" id="unitInfoPopup">
+      <div class="unit-info-content">
+        <i class="fa-solid fa-circle-info"></i>
+        <div>
+          <h4>Birim Fiyat Sıralaması Aktif!</h4>
+          <p>Ürünler paket büyüklüklerine aldanmamanız için doğrudan <strong>Kilogram / Adet Birim Fiyatına</strong> göre sıralanmıştır.</p>
+        </div>
+      </div>
+      <button class="unit-info-close" onclick="window.closeUnitPopup()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
     <!-- HERO BANNER -->
     <div class="hero-banner">
       <div class="hero-text">
-        <h2>Akıllı Market Alışverişi</h2>
-        <p>Paket boyutuna aldanmayın. Birim fiyatları karşılaştırın, gerçek tasarrufu yakalayın.</p>
-        <a href="urunler.html" class="hero-btn">Hemen İncele</a>
+        <h2>Akıllı Sepet, Gerçek Tasarruf</h2>
+        <p>Reyon videoları veya alışveriş fişlerini yükle, yapay zeka denetimiyle anında puan kazan. Listeni oluşturup en az market gezerek en ucuz fiyata alışveriş yap.</p>
+        <div class="hero-btns">
+          <button class="hero-btn" onclick="window.toggleVideoModal()">Reyon Videosu Çek</button>
+          <button class="hero-btn-alt" onclick="window.toggleReceiptModal()">Fiş Yükle & Puan Kazan</button>
+        </div>
       </div>
     </div>
 
-    <!-- FEATURED PRODUCTS SECTION -->
+    <!-- 5. MADDE: İNDİRİME GİREN ÜRÜN BOARDLARI -->
+    <div class="discount-board-section">
+      <div class="section-title-wrap">
+        <h3 class="section-title"><i class="fa-solid fa-bolt" style="color: #ef4444;"></i> Güncellenen Fiyatlar & İndirim Boardu</h3>
+        <span style="font-size: 0.82rem; color: var(--text-muted);">Yapay Zeka Afiş & Aktüel Taraması</span>
+      </div>
+      <div class="board-scroll" id="discountBoardList">
+        <!-- Örnek Board Kartları -->
+        <div class="board-card">
+          <span class="board-badge">%25 İndirim</span>
+          <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&q=80" class="board-img" alt="Ürün">
+          <div class="board-info">
+            <h5>Ayçiçek Yağı 5L</h5>
+            <div class="board-prices">
+              <span class="old-price">245.00 ₺</span>
+              <span class="new-price">185.00 ₺</span>
+            </div>
+            <span style="font-size:0.7rem; color:var(--primary); font-weight:700;">A101 • Birim: 37.00 ₺/L</span>
+          </div>
+        </div>
+        <div class="board-card">
+          <span class="board-badge">%18 İndirim</span>
+          <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&q=80" class="board-img" alt="Ürün">
+          <div class="board-info">
+            <h5>Toz Şeker 3kg</h5>
+            <div class="board-prices">
+              <span class="old-price">110.00 ₺</span>
+              <span class="new-price">90.00 ₺</span>
+            </div>
+            <span style="font-size:0.7rem; color:var(--primary); font-weight:700;">BIM • Birim: 30.00 ₺/kg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURED PRODUCTS -->
     <div class="section-title-wrap">
-      <h3 class="section-title">Öne Çıkan Birim Fırsatları</h3>
+      <h3 class="section-title">En Uygun Birim Fiyatlı Ürünler</h3>
       <a href="urunler.html" class="section-link">Tümünü Gör <i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
@@ -211,19 +315,27 @@
     </div>
   </div>
 
-  <!-- ORVANA TOOLBAR BOTTOM (MOBIL ICON NAVIGATION) -->
+  <!-- MOBILE TOOLBAR -->
   <div class="toolbar-bottom mobile-only">
-    <a href="index.html" class="toolbar-item">
+    <a href="index.html" class="toolbar-item active">
       <i class="fa-solid fa-house"></i>
       <span>Ana Sayfa</span>
     </a>
     <button class="toolbar-item" onclick="window.toggleCategoryMenu()">
       <i class="fa-solid fa-list"></i>
-      <span>Kategoriler</span>
+      <span>Kategori</span>
     </button>
+    
+    <button class="toolbar-fab" onclick="window.toggleVideoModal()" title="Video Yükle">
+      <i class="fa-solid fa-video"></i>
+    </button>
+
     <button class="toolbar-item" onclick="window.toggleCart()">
-      <i class="fa-solid fa-basket-shopping"></i>
-      <span>Sepetim</span>
+      <div class="badge-icon">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span class="badge" style="top: -12px; right: 2px;" id="cartBadgeMobile">0</span>
+      </div>
+      <span>Sepet</span>
     </button>
     <a href="hesabim.html" class="toolbar-item">
       <i class="fa-solid fa-user"></i>
@@ -231,29 +343,69 @@
     </a>
   </div>
 
-  <!-- DRAWER OVERLAYS & DRAWERS -->
+  <!-- VIDEO UPLOAD MODAL -->
+  <div id="videoOverlay" class="drawer-overlay" onclick="window.toggleVideoModal()"></div>
+  <div id="videoModal" class="custom-modal">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-video" style="color: var(--primary);"></i> Reyon Videosu Yükle</h3>
+      <button class="modal-close" onclick="window.toggleVideoModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <p>Yüksek çözünürlüklü reyon videosu yükle. Yapay zeka onayından sonra yeni veya 1₺+ değişen her ürün için <strong>1 Puan</strong> kazan!</p>
+      <div class="upload-area">
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+        <span>Videoyu buraya sürükle veya seç</span>
+        <small>MP4, MOV (Yüksek Çözünürlük Önerilir)</small>
+        <input type="file" accept="video/*" id="videoInput" onchange="window.handleFileSelect(event, 'video')">
+        <div id="fileNameDisplay"></div>
+      </div>
+      <button class="cart-checkout-btn" id="uploadSubmitBtn" onclick="window.submitUpload('video')" style="display:none;">
+        Videoyu Gönder & Teyit Et
+      </button>
+    </div>
+  </div>
+
+  <!-- RECEIPT (FİŞ) UPLOAD MODAL -->
+  <div id="receiptOverlay" class="drawer-overlay" onclick="window.toggleReceiptModal()"></div>
+  <div id="receiptModal" class="custom-modal">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-receipt" style="color: var(--primary);"></i> Alışveriş Fişi Yükle</h3>
+      <button class="modal-close" onclick="window.toggleReceiptModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <p>Alışveriş fişini yükleyerek puan kazan ve marketlere/ürünlere onaylı değerlendirme (yorum) yapma hakkı elde et!</p>
+      <div class="upload-area">
+        <i class="fa-solid fa-file-arrow-up"></i>
+        <span>Fiş görselini seç veya sürükle</span>
+        <small>PNG, JPG</small>
+        <input type="file" accept="image/*" id="receiptInput" onchange="window.handleFileSelect(event, 'receipt')">
+        <div id="receiptNameDisplay" style="font-size:0.85rem; color:var(--primary); font-weight:700; margin-top:10px; display:none;"></div>
+      </div>
+      <button class="cart-checkout-btn" id="receiptSubmitBtn" onclick="window.submitUpload('receipt')" style="display:none;">
+        Fişi Gönder & Kredi Kazan
+      </button>
+    </div>
+  </div>
+
+  <!-- CATEGORY DRAWER -->
   <div id="categoryOverlay" class="drawer-overlay" onclick="window.toggleCategoryMenu()"></div>
   <div id="categoryDrawer" class="side-drawer">
     <div class="drawer-header">
-      <h3><i class="fa-solid fa-list"></i> Kategoriler</h3>
+      <h3><i class="fa-solid fa-list"></i> Kategoriler & Filtreler</h3>
       <button class="drawer-close-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <ul class="side-category-list">
       <li onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i> Meyve & Sebze</li>
-      <li onclick="window.goToCategoryPage('Et & Balık & Tavuk')"><i class="fa-solid fa-drumstick-bite"></i> Et, Balık & Tavuk</li>
-      <li onclick="window.goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i> Süt & Kahvaltılık</li>
       <li onclick="window.goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i> Temel Gıda</li>
-      <li onclick="window.goToCategoryPage('Atıştırmalık')"><i class="fa-solid fa-cookie-bite"></i> Atıştırmalık & Tatlı</li>
-      <li onclick="window.goToCategoryPage('İçecekler')"><i class="fa-solid fa-bottle-water"></i> İçecekler</li>
-      <li onclick="window.goToCategoryPage('Deterjan & Ev Temizliği')"><i class="fa-solid fa-broom"></i> Deterjan & Temizlik</li>
-      <li onclick="window.goToCategoryPage('Kişisel Bakım')"><i class="fa-solid fa-soap"></i> Kişisel Bakım</li>
+      <li onclick="window.goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i> Süt & Kahvaltılık</li>
     </ul>
   </div>
 
+  <!-- CART & OPTIMIZATION DRAWER -->
   <div id="cartOverlay" class="drawer-overlay" onclick="window.toggleCart()"></div>
   <div id="cartDrawer" class="side-drawer">
     <div class="drawer-header">
-      <h3><i class="fa-solid fa-basket-shopping"></i> Sepetim</h3>
+      <h3><i class="fa-solid fa-basket-shopping"></i> Alışveriş Sepetim</h3>
       <button class="drawer-close-btn" onclick="window.toggleCart()"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="cart-body" id="cartBody">
@@ -263,28 +415,52 @@
       </div>
     </div>
     <div class="cart-footer">
+      <!-- 16. Madde: Kaç markete gidebileceğini seçme -->
+      <div class="market-limit-box">
+        <label for="marketLimitSelect"><i class="fa-solid fa-store"></i> En Fazla Kaç Markete Gidebilirsin?</label>
+        <select id="marketLimitSelect" class="market-limit-select">
+          <option value="1">Tek Market (En Uygun Tümü)</option>
+          <option value="2">En Fazla 2 Market</option>
+          <option value="3">En Fazla 3 Market</option>
+          <option value="0">Farketmez (En Ucuz Kombinasyon)</option>
+        </select>
+      </div>
+
       <div class="cart-total-row">
-        <span>Tahmini Toplam Tutar:</span>
+        <span>Tahmini En Uygun Tutar:</span>
         <strong id="cartTotalPrice">0.00 ₺</strong>
       </div>
-      <button class="cart-checkout-btn" onclick="alert('Listeniz hazırlandı!')">Market Karşılaştırması Yap</button>
+      <button class="cart-checkout-btn" onclick="alert('Optimizasyon yapıldı! Rota ve navigasyon ekranına yönlendiriliyorsunuz.')">
+        <i class="fa-solid fa-route"></i> En Uygun Noktaları Gör & Rota Al
+      </button>
     </div>
   </div>
 
   <footer>
-    <p>&copy; 2026 Birimçek - Tüm hakları saklıdır. En uygun birim fiyat karşılaştırma platformu.</p>
+    <p>&copy; 2026 Birimçek - Yapay Zeka Destekli Fiyat Karşılaştırma Ağı.</p>
   </footer>
 
-  <!-- SUPABASE INTEGRATION SCRIPT -->
+  <!-- JAVASCRIPT & SUPABASE -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
     const SUPABASE_URL = "https://lejkdyhensjyauburrxk.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlamtkeWhlbnNqeWF1YnVycnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MjE1MDQsImV4cCI6MjE0Mjk5NzUwNH0.7aVdxtM-1BFVmwVcc0eqLZospU2XkfDhLHr77HMI_2Y";
+    const SUPABASE_KEY = "YOUR_KEY_HERE";
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     window.cart = [];
 
+    // 8. Madde: Pop-up otomatik kapanma süresi (15 saniye)
+    setTimeout(() => {
+      window.closeUnitPopup();
+    }, 15000);
+
+    window.closeUnitPopup = () => {
+      const popup = document.getElementById("unitInfoPopup");
+      if(popup) popup.style.display = "none";
+    };
+
+    // Modals & Drawers
     window.toggleCategoryMenu = () => {
       document.getElementById("categoryDrawer")?.classList.toggle("active");
       document.getElementById("categoryOverlay")?.classList.toggle("active");
@@ -295,9 +471,42 @@
       document.getElementById("cartOverlay")?.classList.toggle("active");
     };
 
+    window.toggleVideoModal = () => {
+      document.getElementById("videoModal")?.classList.toggle("active");
+      document.getElementById("videoOverlay")?.classList.toggle("active");
+    };
+
+    window.toggleReceiptModal = () => {
+      document.getElementById("receiptModal")?.classList.toggle("active");
+      document.getElementById("receiptOverlay")?.classList.toggle("active");
+    };
+
+    window.handleFileSelect = (event, type) => {
+      const file = event.target.files[0];
+      if(file) {
+        if(type === 'video') {
+          const display = document.getElementById("fileNameDisplay");
+          display.innerText = "Seçilen: " + file.name;
+          display.style.display = "block";
+          document.getElementById("uploadSubmitBtn").style.display = "block";
+        } else {
+          const display = document.getElementById("receiptNameDisplay");
+          display.innerText = "Seçilen Fiş: " + file.name;
+          display.style.display = "block";
+          document.getElementById("receiptSubmitBtn").style.display = "block";
+        }
+      }
+    };
+
+    window.submitUpload = (type) => {
+      alert(type === 'video' ? "Video yüklendi! Yapay zeka denetimi sonrasında kredileriniz hesabınıza yansıtılacaktır." : "Fiş yüklendi! Değerlendirme haklarınız tanımlandı.");
+      if(type === 'video') window.toggleVideoModal();
+      else window.toggleReceiptModal();
+    };
+
+    // Cart & Render Functions
     window.addToCart = (title, price, imgUrl) => {
-      const numPrice = parseFloat(price) || 0;
-      window.cart.push({ title, price: numPrice, imgUrl });
+      window.cart.push({ title, price: parseFloat(price) || 0, imgUrl });
       window.renderCart();
       window.toggleCart();
     };
@@ -309,18 +518,16 @@
 
     window.renderCart = () => {
       const cartBody = document.getElementById("cartBody");
-      const cartTotalPrice = document.getElementById("cartTotalPrice");
-      const badgeDesk = document.getElementById("cartBadgeDesktop");
+      const totalEl = document.getElementById("cartTotalPrice");
+      const bDesktop = document.getElementById("cartBadgeDesktop");
+      const bMobile = document.getElementById("cartBadgeMobile");
 
-      if (badgeDesk) badgeDesk.innerText = window.cart.length;
+      if (bDesktop) bDesktop.innerText = window.cart.length;
+      if (bMobile) bMobile.innerText = window.cart.length;
 
       if (window.cart.length === 0) {
-        cartBody.innerHTML = `
-          <div class="cart-empty-state">
-            <i class="fa-solid fa-basket-shopping"></i>
-            <p>Sepetiniz henüz boş.</p>
-          </div>`;
-        cartTotalPrice.innerText = "0.00 ₺";
+        cartBody.innerHTML = `<div class="cart-empty-state"><i class="fa-solid fa-basket-shopping"></i><p>Sepetiniz henüz boş.</p></div>`;
+        totalEl.innerText = "0.00 ₺";
         return;
       }
 
@@ -329,105 +536,16 @@
         total += item.price;
         return `
           <div class="cart-item">
-            <img src="${item.imgUrl}" class="cart-item-img" alt="${item.title}">
+            <img src="${item.imgUrl}" class="card-product-img" style="width:48px;height:48px;">
             <div class="cart-item-details">
               <div class="cart-item-title">${item.title}</div>
               <div class="cart-item-price">${item.price.toFixed(2)} ₺</div>
             </div>
-            <button class="cart-item-remove" onclick="window.removeFromCart(${index})">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
-          </div>
-        `;
+            <button class="cart-item-remove" onclick="window.removeFromCart(${index})"><i class="fa-solid fa-trash-can"></i></button>
+          </div>`;
       }).join('');
-
-      cartTotalPrice.innerText = total.toFixed(2) + " ₺";
+      totalEl.innerText = total.toFixed(2) + " ₺";
     };
-
-    window.goToCategoryPage = (catName) => {
-      window.location.href = `urunler.html?kategori=${encodeURIComponent(catName)}`;
-    };
-
-    window.executeSearch = (source) => {
-      const inputEl = source === 'desktop' 
-        ? document.getElementById("searchInputDesktop") 
-        : document.getElementById("searchInputMobile");
-      
-      const query = inputEl?.value.trim();
-      if (query) {
-        window.location.href = `urunler.html?q=${encodeURIComponent(query)}`;
-      }
-    };
-
-    window.goToProductDetail = (productId) => {
-      window.location.href = `urun-detay.html?id=${productId}`;
-    };
-
-    async function loadFeaturedProducts() {
-      const container = document.getElementById("productList");
-      try {
-        const { data: prices, error } = await supabase
-          .from('prices')
-          .select(`
-            net_price,
-            product_id,
-            products ( id, title, brand, net_quantity, unit_type, image_url ),
-            markets ( id, name )
-          `);
-
-        if (error || !prices || prices.length === 0) {
-          container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Henüz ürün bulunmuyor.</p>`;
-          return;
-        }
-
-        const combined = prices.map(price => {
-          const prod = price.products || {};
-          const qty = parseFloat(prod.net_quantity) > 0 ? parseFloat(prod.net_quantity) : 1;
-          const netPrice = parseFloat(price.net_price) || 0;
-          const unitPrice = netPrice / qty;
-          return { ...price, unitPrice, netPrice };
-        });
-
-        combined.sort((a, b) => a.unitPrice - b.unitPrice);
-        renderGrid(combined.slice(0, 8));
-      } catch (err) {
-        console.error("Veri yükleme hatası:", err);
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: red;">Veriler yüklenirken bir hata oluştu.</p>`;
-      }
-    }
-
-    function renderGrid(items) {
-      const container = document.getElementById("productList");
-      const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
-
-      container.innerHTML = items.map(item => {
-        const prod = item.products || {};
-        const market = item.markets || {};
-        const img = prod.image_url || defaultImg;
-        const title = prod.title || 'İsimsiz Ürün';
-        const safeTitle = encodeURIComponent(title);
-
-        return `
-          <div class="card-product">
-            <div class="card-product-wrapper">
-              <img src="${img}" class="card-product-img" onclick="window.goToProductDetail(${prod.id || item.product_id})" alt="${title}">
-            </div>
-            <div class="card-product-info">
-              <div class="product-vendor">${prod.brand || 'Genel'} • ${market.name || ''}</div>
-              <div class="product-title" onclick="window.goToProductDetail(${prod.id || item.product_id})">${title}</div>
-            </div>
-            <div class="unit-price-box">
-              <div class="unit-price-val">${item.unitPrice.toFixed(2)} ₺ <span style="font-size:0.75rem; color:#666; font-weight: 500;">/ ${prod.unit_type || 'birim'}</span></div>
-            </div>
-            <button class="add-to-cart-btn" onclick="window.addToCart(decodeURIComponent('${safeTitle}'), ${item.netPrice}, '${img}')">
-              <i class="fa-solid fa-basket-shopping"></i> Sepete Ekle
-            </button>
-          </div>
-        `;
-      }).join('');
-    }
-
-    loadFeaturedProducts();
   </script>
 </body>
 </html>

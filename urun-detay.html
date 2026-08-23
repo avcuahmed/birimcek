@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ürün Detayı ve Market Karşılaştırması - Birimçek</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0b4d3c;
+      --primary-light: #52e396;
+      --bg-soft: #f4fbf7;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #f8faf9; color: var(--text-dark); }
+
+    header { background: var(--primary); padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: #ffffff; }
+    .logo i { color: var(--primary-light); }
+
+    .detail-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+    .product-main-card { background: #ffffff; border-radius: 16px; border: 1px solid var(--border-color); padding: 30px; display: grid; grid-template-columns: 350px 1fr; gap: 40px; margin-bottom: 30px; }
+    .detail-img { width: 100%; height: 300px; object-fit: contain; }
+    .detail-brand { color: var(--text-muted); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
+    .detail-title { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-bottom: 15px; }
+    .detail-badge { display: inline-block; background: var(--bg-soft); color: var(--primary); border: 1px solid var(--primary-light); padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; margin-bottom: 20px; }
+
+    /* Market Karşılaştırma Tablosu */
+    .market-compare-section { background: #ffffff; border-radius: 16px; border: 1px solid var(--border-color); padding: 30px; }
+    .section-heading { font-size: 1.3rem; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
+
+    .market-table { width: 100%; border-collapse: collapse; }
+    .market-table th, .market-table td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+    .market-table th { background: #f8fafc; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; }
+    .best-row { background: #f0fdf4; }
+    .best-tag { background: #10b981; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; margin-left: 8px; }
+
+    @media (max-width: 768px) {
+      .product-main-card { grid-template-columns: 1fr; gap: 20px; padding: 20px; }
+      header { padding: 15px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo"><i class="fa-solid fa-leaf"></i>Birimçek</a>
+    <a href="urunler.html" style="color:white; text-decoration:none; font-weight:600;"><i class="fa-solid fa-arrow-left"></i> Ürünlere Dön</a>
+  </header>
+
+  <div class="detail-container">
+    <div class="product-main-card" id="productMainCard">
+      <p>Ürün bilgileri yükleniyor...</p>
+    </div>
+
+    <div class="market-compare-section">
+      <h3 class="section-heading">Market Fiyat Karşılaştırması</h3>
+      <table class="market-table">
+        <thead>
+          <tr>
+            <th>Market</th>
+            <th>Paket Fiyatı</th>
+            <th>Birim Fiyat</th>
+            <th>Durum</th>
+          </tr>
+        </thead>
+        <tbody id="marketTableBody">
+          <tr><td colspan="4">Fiyatlar getiriliyor...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const SUPABASE_URL = "https://lejkdyhensjyauburrxk.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlamtkeWhlbnNqeWF1YnVycnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MjE1MDQsImV4cCI6MjE0Mjk5NzUwNH0.7aVdxtM-1BFVmwVcc0eqLZospU2XkfDhLHr77HMI_2Y";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function loadProductDetail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+
+      if (!productId) {
+        document.getElementById("productMainCard").innerHTML = "<p>Ürün bulunamadı.</p>";
+        return;
+      }
+
+      // Ürün Bilgisi Çek
+      const { data: product } = await supabase.from('products').select('*').eq('id', productId).single();
+      // Ürünün Tüm Market Fiyatlarını Çek
+      const { data: prices } = await supabase.from('prices').select('*').eq('product_id', productId);
+      const { data: markets } = await supabase.from('markets').select('*');
+
+      if (!product) {
+        document.getElementById("productMainCard").innerHTML = "<p>Ürün verisi çekilemedi.</p>";
+        return;
+      }
+
+      // Ana Ürün Bilgisini Ekrana Bas
+      const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
+      document.getElementById("productMainCard").innerHTML = `
+        <img src="${product.image_url || defaultImg}" class="detail-img" alt="${product.title}">
+        <div>
+          <div class="detail-brand">${product.brand || 'Marka Belirtilmemiş'}</div>
+          <h1 class="detail-title">${product.title}</h1>
+          <div class="detail-badge">Net Gramaj/Miktar: ${product.net_quantity || 1} ${product.unit_type || 'Birim'}</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+            Bu ürünün farklı marketlerdeki paket ve birim fiyatları aşağıda karşılaştırmalı olarak verilmiştir. Birim fiyatı en düşük olan seçeneği tercih ederek tasarruf sağlayabilirsiniz.
+          </p>
+        </div>
+      `;
+
+      // Market Tablosunu Hazırla
+      if (!prices || prices.length === 0) {
+        document.getElementById("marketTableBody").innerHTML = `<tr><td colspan="4">Bu ürün için henüz market fiyat bilgisi girilmemiş.</td></tr>`;
+        return;
+      }
+
+      const combined = prices.map(price => {
+        const m = (markets || []).find(market => market.id === price.market_id) || {};
+        const qty = product.net_quantity || 1;
+        const unitPrice = price.net_price ? (price.net_price / qty) : 0;
+        return { ...price, marketName: m.name || 'Bilinmeyen Market', unitPrice };
+      });
+
+      // En ucuz birim fiyata göre sırala
+      combined.sort((a, b) => a.unitPrice - b.unitPrice);
+
+      document.getElementById("marketTableBody").innerHTML = combined.map((item, index) => {
+        const isBest = index === 0;
+        return `
+          <tr class="${isBest ? 'best-row' : ''}">
+            <td><strong>${item.marketName}</strong> ${isBest ? `<span class="best-tag">EN UCUZ</span>` : ''}</td>
+            <td>${Number(item.net_price).toFixed(2)} ₺</td>
+            <td style="color: var(--primary); font-weight: 800;">${item.unitPrice.toFixed(2)} ₺ / ${product.unit_type || 'birim'}</td>
+            <td>${isBest ? '🟢 En Avantajlı' : '⚪ Standart'}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    loadProductDetail();
+  </script>
+</body>
+</html>

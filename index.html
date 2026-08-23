@@ -53,7 +53,7 @@
     .video-upload-btn:hover { background: var(--primary); }
     .video-upload-btn i { color: var(--primary-light) !important; }
 
-    /* NAV (Desktop) - "Tüm Kategoriler" yerine Arama Butonu entegre edildi */
+    /* NAV (Desktop) */
     nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 50px; }
     .nav-left { display: flex; align-items: center; gap: 30px; height: 100%; }
     
@@ -77,8 +77,9 @@
     .hero-btn { background: var(--primary-light); color: var(--primary); border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; }
     .hero-btn-alt { background: transparent; color: white; border: 2px solid white; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; }
 
-    /* BİRİM FİYAT BİLGİLENDİRME POP-UP */
-    .unit-info-popup { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 16px 20px; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; }
+    /* BİRİM FİYAT BİLGİLENDİRME POP-UP (Varsayılan gizli, tetiklendiğinde açılır) */
+    .unit-info-popup { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 16px 20px; margin-bottom: 30px; display: none; align-items: center; justify-content: space-between; animation: fadeIn 0.4s ease; }
+    .unit-info-popup.active { display: flex; }
     .unit-info-content { display: flex; align-items: center; gap: 15px; }
     .unit-info-content i { font-size: 1.5rem; color: var(--primary); }
     .unit-info-content h4 { font-size: 0.95rem; font-weight: 800; color: var(--primary); margin-bottom: 2px; }
@@ -96,10 +97,11 @@
     .old-price { font-size: 0.8rem; color: var(--text-muted); text-decoration: line-through; }
     .new-price { font-size: 1rem; font-weight: 800; color: #ef4444; }
 
-    /* PRODUCT GRID */
-    .section-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+    /* PRODUCT GRID & FILTERS */
+    .section-title-wrap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
     .section-title { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); }
-    .section-link { color: var(--primary); font-size: 0.88rem; font-weight: 700; text-decoration: none; }
+    
+    .sort-select-box { background: var(--bg-soft); border: 1px solid var(--border-color); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; color: var(--text-dark); outline: none; cursor: pointer; }
 
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; margin-bottom: 40px; }
     .card-product { border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; background: #ffffff; position: relative; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.25s ease; }
@@ -177,7 +179,7 @@
     /* FOOTER */
     footer { background: #072e24; color: #ffffff; padding: 40px; margin-top: 60px; text-align: center; font-size: 0.85rem; opacity: 0.9; }
 
-    /* MOBILE FLOATING HEADER STYLES - Sürekli Sabit (Sticky) */
+    /* MOBILE FLOATING HEADER STYLES */
     .mobile-floating-header { display: none; }
 
     @media (max-width: 900px) {
@@ -258,7 +260,7 @@
     </div>
   </header>
 
-  <!-- MOBILE FLOATING HEADER (Sayfa kaydırılsa dahi ekranda hep sabit kalır) -->
+  <!-- MOBILE FLOATING HEADER -->
   <div class="mobile-floating-header" id="mobileFloatingHeader">
     <div class="mf-left">
       <button class="mf-menu-btn" onclick="window.toggleCategoryMenu()">
@@ -283,7 +285,7 @@
     </div>
   </div>
 
-  <!-- NAV (Desktop) - "Tüm Kategoriler" yerine Hızlı Arama / Kategori Butonu eklendi -->
+  <!-- NAV (Desktop) -->
   <nav class="desktop-only">
     <div class="nav-left">
       <button class="desktop-quick-search-btn" onclick="window.toggleCategoryMenu()">
@@ -301,7 +303,7 @@
   <!-- MAIN CONTENT -->
   <div class="main-container">
     
-    <!-- BİRİM FİYAT BİLGİLENDİRME POP-UP -->
+    <!-- BİRİM FİYAT BİLGİLENDİRME POP-UP (Sadece sıralama değiştiğinde aktifleşir) -->
     <div class="unit-info-popup" id="unitInfoPopup">
       <div class="unit-info-content">
         <i class="fa-solid fa-circle-info"></i>
@@ -359,10 +361,15 @@
       </div>
     </div>
 
-    <!-- FEATURED PRODUCTS -->
+    <!-- FEATURED PRODUCTS & SORTING -->
     <div class="section-title-wrap">
       <h3 class="section-title">En Uygun Birim Fiyatlı Ürünler</h3>
-      <a href="urunler.html" class="section-link">Tümünü Gör <i class="fa-solid fa-arrow-right"></i></a>
+      <select class="sort-select-box" id="productSortSelect" onchange="window.handleProductSort(this.value)">
+        <option value="default">Sıralama Seçiniz</option>
+        <option value="unit_asc">Birim Fiyata Göre (En Düşük)</option>
+        <option value="unit_desc">Birim Fiyata Göre (En Yüksek)</option>
+        <option value="price_asc">Etiket Fiyatına Göre</option>
+      </select>
     </div>
 
     <div class="product-grid" id="productList">
@@ -414,7 +421,7 @@
     </div>
   </div>
 
-  <!-- CATEGORY DRAWER (Sol Kategori Bandı) -->
+  <!-- CATEGORY DRAWER -->
   <div id="categoryOverlay" class="drawer-overlay" onclick="window.toggleCategoryMenu()"></div>
   <div id="categoryDrawer" class="side-drawer">
     <div class="drawer-header">
@@ -476,13 +483,22 @@
 
     window.cart = [];
 
-    setTimeout(() => {
-      window.closeUnitPopup();
-    }, 15000);
+    // Ürün sıralama seçildiğinde tetiklenen fonksiyon
+    window.handleProductSort = (sortValue) => {
+      const popup = document.getElementById("unitInfoPopup");
+      if (sortValue.includes("unit")) {
+        // Eğer birim fiyata göre sıralama seçildiyse pop-up'ı göster
+        popup?.classList.add("active");
+      } else {
+        // Diğer sıralamalarda pop-up'ı gizle
+        popup?.classList.remove("active");
+      }
+      // Sıralama mantığı buraya eklenebilir
+    };
 
     window.closeUnitPopup = () => {
       const popup = document.getElementById("unitInfoPopup");
-      if(popup) popup.style.display = "none";
+      if(popup) popup.classList.remove("active");
     };
 
     window.toggleCategoryMenu = () => {

@@ -76,7 +76,7 @@
     .cat-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
 
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-    .product-card { border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; background: #ffffff; transition: box-shadow 0.2s, transform 0.2s; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
+    .product-card { border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; background: #ffffff; transition: box-shadow 0.2s, transform 0.2s; position: relative; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
     .product-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.06); transform: translateY(-2px); }
     .best-badge { position: absolute; top: 12px; left: 12px; background: #10b981; color: white; font-size: 0.65rem; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
     .product-img { width: 100%; height: 140px; object-fit: contain; margin-bottom: 12px; }
@@ -90,7 +90,7 @@
     .mobile-only { display: none !important; }
 
     /* ==========================================
-       2. MOBİL TASARIM (Düzeltilmiş Medya Sorgusu)
+       2. MOBİL TASARIM
        ========================================== */
     @media (max-width: 900px) {
       .desktop-only, .top-bar, nav, .hero-section { display: none !important; }
@@ -98,20 +98,17 @@
 
       body { background-color: #f8faf9; }
 
-      /* Mobil Üst Bar ve Header Hijyeni */
       header { background: transparent; padding: 12px 16px 0; flex-direction: column; gap: 10px; position: relative; z-index: 20; }
       .mobile-top-nav { width: 100%; background: #ffffff; border-radius: 30px; padding: 8px 18px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
       .mobile-logo { font-size: 1.3rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; }
       .mobile-logo i { color: var(--primary-light); }
       .mobile-actions { display: flex; align-items: center; gap: 15px; }
 
-      /* Mobil Arama Barı Taşma Koruması */
       .mobile-search-box { width: 100%; display: flex; background: #ffffff; border-radius: 25px; border: 1px solid var(--border-color); overflow: hidden; padding: 4px 6px; align-items: center; }
       .mobile-search-category { background: transparent; border: none; border-right: 1px solid var(--border-color); padding: 0 6px; font-size: 0.75rem; color: #475569; outline: none; max-width: 95px; text-overflow: ellipsis; white-space: nowrap; }
       .mobile-search-input { flex: 1; border: none; padding: 8px; font-size: 0.85rem; outline: none; width: 50%; }
       .mobile-search-btn { background: var(--primary); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
 
-      /* Mobil Hero Banner Çakışmasız Temiz Düzzen */
       .mobile-hero-banner { background: #262626; color: #ffffff; padding: 25px 20px; border-radius: 20px; margin: 12px 16px 0; position: relative; overflow: hidden; display: block !important; }
       .mobile-hero-content { max-width: 60%; position: relative; z-index: 2; }
       .mobile-hero-title { font-size: 1.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
@@ -122,7 +119,6 @@
       .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); }
       .dot.active { width: 10px; height: 10px; background: #ffffff; border: 2px solid #333; }
 
-      /* Mobil Konteyner ve Kart Düzeni */
       .main-container { padding: 20px 16px 50px; }
       .section-title { font-size: 1.2rem; margin-bottom: 15px; }
 
@@ -131,7 +127,6 @@
       .cat-card i { font-size: 2.2rem; margin-bottom: 8px; }
       .cat-card h4 { font-size: 0.95rem; font-weight: 800; color: var(--primary); }
 
-      /* Mobil Ürün Grid Kartları */
       .product-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; }
       .product-card { border: none; border-radius: 16px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
       .product-img { height: 100px; }
@@ -143,9 +138,7 @@
 </head>
 <body>
 
-  <!-- ==========================================
-       MASAÜSTÜ ULUŞUMU
-       ========================================== -->
+  <!-- Masaüstü Üst Bar -->
   <div class="top-bar desktop-only">
     <div class="top-bar-info">
       <span>📞 +90 850 123 45 67</span>
@@ -158,14 +151,15 @@
     </div>
   </div>
 
+  <!-- Header Alanı -->
   <header>
-    <!-- Masaüstü Header -->
-    <a href="#" class="logo desktop-only">
+    <a href="index.html" class="logo desktop-only">
       <i class="fa-solid fa-leaf"></i>Birimçek
     </a>
 
+    <!-- Masaüstü Arama Barı -->
     <div class="search-box-desktop desktop-only">
-      <select class="search-category" id="categorySelectDesktop" onchange="syncAndFilter('desktop')">
+      <select class="search-category" id="categorySelectDesktop">
         <option value="Tümü">Tüm Kategoriler</option>
         <option value="Meyve & Sebze">Meyve & Sebze</option>
         <option value="Et, Balık & Şarküteri">Et, Balık & Şarküteri</option>
@@ -182,28 +176,30 @@
         <option value="Evcil Dostlar">Evcil Dostlar</option>
         <option value="Ev & Yaşam">Ev & Yaşam</option>
       </select>
-      <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün veya marka ara..." oninput="syncAndFilter('desktop')">
-      <button class="search-btn">Ara</button>
+      <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') executeSearch('desktop')">
+      <button class="search-btn" onclick="executeSearch('desktop')">Ara</button>
     </div>
 
+    <!-- Masaüstü Sağ Linkler -->
     <div class="header-actions desktop-only">
-      <a href="#" class="action-item"><i class="fa-regular fa-user"></i> HESABIM</a>
-      <a href="#" class="action-item"><i class="fa-regular fa-heart"></i> FAVORİLERİM</a>
-      <a href="#" class="action-item badge-icon"><i class="fa-solid fa-basket-shopping"></i><span class="badge">0</span></a>
+      <a href="hesabim.html" class="action-item"><i class="fa-regular fa-user"></i> HESABIM</a>
+      <a href="hesabim.html?tab=favoriler" class="action-item"><i class="fa-regular fa-heart"></i> FAVORİLERİM</a>
+      <a href="sepet.html" class="action-item badge-icon"><i class="fa-solid fa-basket-shopping"></i><span class="badge">0</span></a>
     </div>
 
     <!-- Mobil Header -->
     <div class="mobile-top-nav mobile-only">
       <button style="background:none; border:none; font-size:1.1rem;"><i class="fa-solid fa-bars"></i></button>
-      <a href="#" class="mobile-logo"><i class="fa-solid fa-leaf"></i> Birimçek</a>
+      <a href="index.html" class="mobile-logo"><i class="fa-solid fa-leaf"></i> Birimçek</a>
       <div class="mobile-actions">
-        <a href="#" style="color:#1e293b;"><i class="fa-regular fa-user"></i></a>
-        <a href="#" style="color:#1e293b; position:relative;"><i class="fa-solid fa-basket-shopping"></i><span class="badge" style="background:var(--primary); color:#fff;">0</span></a>
+        <a href="hesabim.html" style="color:#1e293b;"><i class="fa-regular fa-user"></i></a>
+        <a href="sepet.html" style="color:#1e293b; position:relative;"><i class="fa-solid fa-basket-shopping"></i><span class="badge" style="background:var(--primary); color:#fff;">0</span></a>
       </div>
     </div>
 
+    <!-- Mobil Arama Barı -->
     <div class="mobile-search-box mobile-only">
-      <select class="mobile-search-category" id="categorySelectMobile" onchange="syncAndFilter('mobile')">
+      <select class="mobile-search-category" id="categorySelectMobile">
         <option value="Tümü">Tümü</option>
         <option value="Meyve & Sebze">Meyve & Sebze</option>
         <option value="Et, Balık & Şarküteri">Et, Balık & Şarküteri</option>
@@ -220,54 +216,54 @@
         <option value="Evcil Dostlar">Evcil Dostlar</option>
         <option value="Ev & Yaşam">Ev & Yaşam</option>
       </select>
-      <input type="text" class="mobile-search-input" id="searchInputMobile" placeholder="Ürün veya marka ara..." oninput="syncAndFilter('mobile')">
-      <button class="mobile-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <input type="text" class="mobile-search-input" id="searchInputMobile" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') executeSearch('mobile')">
+      <button class="mobile-search-btn" onclick="executeSearch('mobile')"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
   </header>
 
-  <!-- Masaüstü Nav Bar -->
+  <!-- Navigasyon Menüsü -->
   <nav class="desktop-only">
     <div class="nav-left">
       <div class="category-dropdown">
         <button class="category-btn"><i class="fa-solid fa-bars"></i> Tüm Kategoriler <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></button>
         <ul class="dropdown-menu">
-          <li><a href="#" onclick="selectCategory('Meyve & Sebze')">Meyve & Sebze</a></li>
-          <li><a href="#" onclick="selectCategory('Et, Balık & Şarküteri')">Et, Balık & Şarküteri</a></li>
-          <li><a href="#" onclick="selectCategory('Süt & Kahvaltılık')">Süt & Kahvaltılık</a></li>
-          <li><a href="#" onclick="selectCategory('Temel Gıda')">Temel Gıda</a></li>
-          <li><a href="#" onclick="selectCategory('Atıştırmalıklar')">Atıştırmalıklar</a></li>
-          <li><a href="#" onclick="selectCategory('İçecekler')">İçecekler</a></li>
-          <li><a href="#" onclick="selectCategory('Fırın & Pastane')">Fırın & Pastane</a></li>
-          <li><a href="#" onclick="selectCategory('Dondurulmuş Gıdalar')">Dondurulmuş Gıdalar</a></li>
-          <li><a href="#" onclick="selectCategory('Deterjan & Ev Temizliği')">Deterjan & Ev Temizliği</a></li>
-          <li><a href="#" onclick="selectCategory('Kişisel Bakım & Hijyen')">Kişisel Bakım & Hijyen</a></li>
-          <li><a href="#" onclick="selectCategory('Kağıt Ürünleri')">Kağıt Ürünleri</a></li>
-          <li><a href="#" onclick="selectCategory('Bebek Dünyası')">Bebek Dünyası</a></li>
-          <li><a href="#" onclick="selectCategory('Evcil Dostlar')">Evcil Dostlar</a></li>
-          <li><a href="#" onclick="selectCategory('Ev & Yaşam')">Ev & Yaşam</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Meyve & Sebze')">Meyve & Sebze</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Et, Balık & Şarküteri')">Et, Balık & Şarküteri</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Süt & Kahvaltılık')">Süt & Kahvaltılık</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Temel Gıda')">Temel Gıda</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Atıştırmalıklar')">Atıştırmalıklar</a></li>
+          <li><a href="#" onclick="goToCategoryPage('İçecekler')">İçecekler</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Fırın & Pastane')">Fırın & Pastane</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Dondurulmuş Gıdalar')">Dondurulmuş Gıdalar</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Deterjan & Ev Temizliği')">Deterjan & Ev Temizliği</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Kişisel Bakım & Hijyen')">Kişisel Bakım & Hijyen</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Kağıt Ürünleri')">Kağıt Ürünleri</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Bebek Dünyası')">Bebek Dünyası</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Evcil Dostlar')">Evcil Dostlar</a></li>
+          <li><a href="#" onclick="goToCategoryPage('Ev & Yaşam')">Ev & Yaşam</a></li>
         </ul>
       </div>
       <ul class="nav-links">
-        <li><a href="#">Ana Sayfa</a></li>
-        <li><a href="#">Fırsatlar</a></li>
-        <li><a href="#">Marketler</a></li>
-        <li><a href="#">Tüm Ürünler</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">İletişim</a></li>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="firsatlar.html">Fırsatlar</a></li>
+        <li><a href="marketler.html">Marketler</a></li>
+        <li><a href="urunler.html">Tüm Ürünler</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="iletisim.html">İletişim</a></li>
       </ul>
     </div>
     <div>
-      <a href="#" class="special-offer-link"><i class="fa-solid fa-percent"></i> Özel Fırsatlar!</a>
+      <a href="firsatlar.html" class="special-offer-link"><i class="fa-solid fa-percent"></i> Özel Fırsatlar!</a>
     </div>
   </nav>
 
-  <!-- Masaüstü Hero -->
+  <!-- Masaüstü Hero Section -->
   <div class="hero-section desktop-only">
     <div class="hero-content">
       <div class="hero-subtitle">%100 Akıllı Birim Fiyat Hesabı</div>
       <h1 class="hero-title">En Uygun Fiyat.<br>Maksimum Tasarruf.</h1>
       <p class="hero-desc">Tüm marketlerdeki gramaj ve fiyat farklarını tek birim üzerinden anında kıyaslayın.</p>
-      <button class="hero-btn">Detaylı İncele</button>
+      <button class="hero-btn" onclick="window.location.href='urunler.html'">Detaylı İncele</button>
     </div>
     <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" class="hero-image" alt="Birimçek Ürünler">
   </div>
@@ -276,7 +272,7 @@
   <div class="mobile-hero-banner mobile-only">
     <div class="mobile-hero-content">
       <h1 class="mobile-hero-title">Organik Meyve & Sebze</h1>
-      <button class="mobile-hero-btn">İncele</button>
+      <button class="mobile-hero-btn" onclick="goToCategoryPage('Meyve & Sebze')">İncele</button>
       <div class="dots">
         <div class="dot active"></div>
         <div class="dot"></div>
@@ -291,72 +287,75 @@
     <h3 class="section-title">Öne Çıkan Kategoriler</h3>
 
     <div class="categories-grid">
-      <div class="cat-card" onclick="selectCategory('Meyve & Sebze')">
+      <div class="cat-card" onclick="goToCategoryPage('Meyve & Sebze')">
         <i class="fa-solid fa-apple-whole"></i>
         <h4>Meyve & Sebze</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Et, Balık & Şarküteri')">
+      <div class="cat-card" onclick="goToCategoryPage('Et, Balık & Şarküteri')">
         <i class="fa-solid fa-drumstick-bite"></i>
         <h4>Et & Şarküteri</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Süt & Kahvaltılık')">
+      <div class="cat-card" onclick="goToCategoryPage('Süt & Kahvaltılık')">
         <i class="fa-solid fa-cheese"></i>
         <h4>Süt & Kahvaltı</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Temel Gıda')">
+      <div class="cat-card" onclick="goToCategoryPage('Temel Gıda')">
         <i class="fa-solid fa-wheat-awn"></i>
         <h4>Temel Gıda</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Atıştırmalıklar')">
+      <div class="cat-card" onclick="goToCategoryPage('Atıştırmalıklar')">
         <i class="fa-solid fa-cookie"></i>
         <h4>Atıştırmalık</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('İçecekler')">
+      <div class="cat-card" onclick="goToCategoryPage('İçecekler')">
         <i class="fa-solid fa-bottle-water"></i>
         <h4>İçecekler</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Fırın & Pastane')">
+      <div class="cat-card" onclick="goToCategoryPage('Fırın & Pastane')">
         <i class="fa-solid fa-bread-slice"></i>
         <h4>Fırın & Pastane</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Dondurulmuş Gıdalar')">
+      <div class="cat-card" onclick="goToCategoryPage('Dondurulmuş Gıdalar')">
         <i class="fa-solid fa-snowflake"></i>
         <h4>Dondurulmuş</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Deterjan & Ev Temizliği')">
+      <div class="cat-card" onclick="goToCategoryPage('Deterjan & Ev Temizliği')">
         <i class="fa-solid fa-broom"></i>
         <h4>Deterjan & Temizlik</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Kişisel Bakım & Hijyen')">
+      <div class="cat-card" onclick="goToCategoryPage('Kişisel Bakım & Hijyen')">
         <i class="fa-solid fa-pump-soap"></i>
         <h4>Kişisel Bakım</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Kağıt Ürünleri')">
+      <div class="cat-card" onclick="goToCategoryPage('Kağıt Ürünleri')">
         <i class="fa-solid fa-toilet-paper"></i>
         <h4>Kağıt Ürünleri</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Bebek Dünyası')">
+      <div class="cat-card" onclick="goToCategoryPage('Bebek Dünyası')">
         <i class="fa-solid fa-baby"></i>
         <h4>Bebek Dünyası</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Evcil Dostlar')">
+      <div class="cat-card" onclick="goToCategoryPage('Evcil Dostlar')">
         <i class="fa-solid fa-paw"></i>
         <h4>Evcil Dostlar</h4>
       </div>
-      <div class="cat-card" onclick="selectCategory('Ev & Yaşam')">
+      <div class="cat-card" onclick="goToCategoryPage('Ev & Yaşam')">
         <i class="fa-solid fa-house"></i>
         <h4>Ev & Yaşam</h4>
       </div>
     </div>
 
-    <!-- Ürün Listesi -->
-    <h3 class="section-title">En Uygun Birim Fiyatlı Ürünler</h3>
+    <!-- Ürün Listesi (Vitrin) -->
+    <h3 class="section-title">
+      En Uygun Birim Fiyatlı Ürünler
+      <a href="urunler.html" style="font-size: 0.85rem; color: var(--primary); text-decoration: none;">Tümünü Gör <i class="fa-solid fa-chevron-right"></i></a>
+    </h3>
     <div class="product-grid" id="productList">
       <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Veriler yükleniyor...</p>
     </div>
   </div>
 
-  <!-- Supabase Script ve Fonksiyon Bağlantıları -->
+  <!-- Supabase Script ve Yönlendirme Mantığı -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
@@ -364,38 +363,48 @@
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlamtkeWhlbnNqeWF1YnVycnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MjE1MDQsImV4cCI6MjE0Mjk5NzUwNH0.7aVdxtM-1BFVmwVcc0eqLZospU2XkfDhLHr77HMI_2Y";
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-    let allProductsCombined = [];
 
-    // Global Fonksiyon Bağlantıları (Scope Hatasını Engeller)
-    window.syncAndFilter = function(source) {
-      if (source === 'desktop') {
-        document.getElementById("categorySelectMobile").value = document.getElementById("categorySelectDesktop").value;
-        document.getElementById("searchInputMobile").value = document.getElementById("searchInputDesktop").value;
-      } else {
-        document.getElementById("categorySelectDesktop").value = document.getElementById("categorySelectMobile").value;
-        document.getElementById("searchInputDesktop").value = document.getElementById("searchInputMobile").value;
-      }
-      filterProducts();
+    // Kategori Sayfasına Yönlendirme Fonksiyonu
+    window.goToCategoryPage = function(catName) {
+      const encoded = encodeURIComponent(catName);
+      window.location.href = `urunler.html?kategori=${encoded}`;
     };
 
-    window.selectCategory = function(cat) {
-      document.getElementById("categorySelectDesktop").value = cat;
-      document.getElementById("categorySelectMobile").value = cat;
-      filterProducts();
+    // Arama Butonuna Veya Enter'a Basıldığında urunler.html Sayfasına Yönlendirme
+    window.executeSearch = function(source) {
+      const searchInput = source === 'desktop' 
+        ? document.getElementById("searchInputDesktop").value 
+        : document.getElementById("searchInputMobile").value;
+        
+      const catSelect = source === 'desktop' 
+        ? document.getElementById("categorySelectDesktop").value 
+        : document.getElementById("categorySelectMobile").value;
+
+      const params = new URLSearchParams();
+      if (searchInput && searchInput.trim() !== "") params.set("q", searchInput.trim());
+      if (catSelect && catSelect !== "Tümü") params.set("kategori", catSelect);
+
+      window.location.href = `urunler.html?${params.toString()}`;
     };
 
-    async function loadData() {
+    // Detay Sayfasına Yönlendirme
+    window.goToProductDetail = function(productId) {
+      window.location.href = `urun-detay.html?id=${productId}`;
+    };
+
+    // Ana Sayfa İçin Vitrin Ürünlerini Çekme
+    async function loadFeaturedProducts() {
       try {
         const { data: prices, error: pErr } = await supabase.from('prices').select('*');
         const { data: products, error: prErr } = await supabase.from('products').select('*');
         const { data: markets, error: mErr } = await supabase.from('markets').select('*');
 
         if (pErr || !prices || prices.length === 0) {
-          document.getElementById("productList").innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Henüz gösterilecek ürün bulunmuyor.</p>`;
+          document.getElementById("productList").innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Henüz ürün bulunmuyor.</p>`;
           return;
         }
 
-        allProductsCombined = prices.map(price => {
+        const combined = prices.map(price => {
           const prod = (products || []).find(p => p.id === price.product_id) || {};
           const market = (markets || []).find(m => m.id === price.market_id) || {};
           const qty = prod.net_quantity || 1;
@@ -404,38 +413,19 @@
           return { ...price, product: prod, market: market, unitPrice };
         });
 
-        filterProducts();
+        // Birim fiyata göre en ucuz ilk 8 ürünü vitrine ekle
+        combined.sort((a, b) => a.unitPrice - b.unitPrice);
+        const featuredItems = combined.slice(0, 8);
+
+        renderGrid(featuredItems);
       } catch (err) {
         console.error("Hata:", err);
       }
     }
 
-    function filterProducts() {
-      const searchTerm = (document.getElementById("searchInputDesktop").value || '').toLowerCase();
-      const dropCat = document.getElementById("categorySelectDesktop").value;
-
-      const filtered = allProductsCombined.filter(item => {
-        const prod = item.product || {};
-        let matchesCat = dropCat === 'Tümü';
-        if (!matchesCat && prod.category) {
-          matchesCat = prod.category.toLowerCase().includes(dropCat.toLowerCase());
-        }
-        const matchesSearch = (prod.title || '').toLowerCase().includes(searchTerm) || (prod.brand || '').toLowerCase().includes(searchTerm);
-        return matchesCat && matchesSearch;
-      });
-
-      filtered.sort((a, b) => a.unitPrice - b.unitPrice);
-      renderGrid(filtered);
-    }
-
     function renderGrid(items) {
       const container = document.getElementById("productList");
       const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
-
-      if (items.length === 0) {
-        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Ürün bulunamadı.</p>`;
-        return;
-      }
 
       container.innerHTML = items.map((item, index) => {
         const prod = item.product || {};
@@ -443,7 +433,7 @@
         const isBest = index === 0;
 
         return `
-          <div class="product-card">
+          <div class="product-card" onclick="goToProductDetail(${prod.id || item.product_id})">
             ${isBest ? `<div class="best-badge">🏆 En Uygun</div>` : ''}
             <img src="${prod.image_url || defaultImg}" class="product-img" alt="${prod.title}">
             <div>
@@ -459,7 +449,7 @@
       }).join('');
     }
 
-    loadData();
+    loadFeaturedProducts();
   </script>
 </body>
 </html>

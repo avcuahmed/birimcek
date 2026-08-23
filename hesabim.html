@@ -1,1 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hesabım - Birimçek</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { --primary: #0b4d3c; --primary-light: #52e396; --text-dark: #1e293b; --text-muted: #64748b; --border-color: #e2e8f0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #f8faf9; color: var(--text-dark); }
+    header { background: var(--primary); padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: #ffffff; }
+    .logo i { color: var(--primary-light); }
+    .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 240px 1fr; gap: 30px; }
+    .profile-sidebar { background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; }
+    .menu-item { display: block; padding: 12px; color: var(--text-dark); text-decoration: none; font-weight: 600; font-size: 0.9rem; border-radius: 6px; margin-bottom: 5px; }
+    .menu-item:hover, .menu-item.active { background: #f0fdf4; color: var(--primary); }
+    .content-box { background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; }
+  </style>
+</head>
+<body>
 
+  <header>
+    <a href="index.html" class="logo"><i class="fa-solid fa-leaf"></i>Birimçek</a>
+  </header>
+
+  <div class="container">
+    <aside class="profile-sidebar">
+      <a href="hesabim.html" class="menu-item active" id="tabProfil"><i class="fa-regular fa-user"></i> Profil Bilgilerim</a>
+      <a href="hesabim.html?tab=favoriler" class="menu-item" id="tabFavori"><i class="fa-regular fa-heart"></i> Favorilerim</a>
+      <a href="index.html" class="menu-item" style="color:#ef4444;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Çıkış Yap</a>
+    </aside>
+
+    <main class="content-box" id="accountContent">
+      <h2 style="color:var(--primary); margin-bottom:15px;">Profil Bilgilerim</h2>
+      <p style="color:var(--text-muted); margin-bottom:20px;">Hesap ayarlarınızı buradan güncelleyebilirsiniz.</p>
+      <div style="display:flex; flex-direction:column; gap:15px; max-width:400px;">
+        <input type="text" value="Kullanıcı Adı" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
+        <input type="email" value="kullanici@birimcek.com" style="padding:10px; border:1px solid #ccc; border-radius:6px;">
+        <button style="padding:10px; background:var(--primary); color:white; border:none; border-radius:6px; font-weight:700; cursor:pointer;">Kaydet</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('tab') === 'favoriler') {
+      document.getElementById("tabProfil").classList.remove("active");
+      document.getElementById("tabFavori").classList.add("active");
+      document.getElementById("accountContent").innerHTML = `
+        <h2 style="color:var(--primary); margin-bottom:15px;">Favori Ürünlerim</h2>
+        <p style="color:var(--text-muted);">Takibe aldığınız ürünler burada listelenir.</p>
+        <p style="margin-top:20px; color:#888;">Henüz favori ürün eklemediniz.</p>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,3 +1,113 @@
+<!-- VIDEO UPLOAD MODAL -->
+<div id="videoOverlay" class="drawer-overlay" onclick="window.toggleVideoModal()"></div>
+<div id="videoModal" class="custom-modal">
+  <div class="modal-header">
+    <h3><i class="fa-solid fa-video" style="color: var(--primary);"></i> Reyon Videosu Yükle</h3>
+    <button class="modal-close" onclick="window.toggleVideoModal()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="modal-body">
+    <p>Yüksek çözünürlüklü reyon videosu yükle. Yapay zeka onayından sonra yeni veya 1₺+ değişen her ürün için <strong>1 Puan</strong> kazan!</p>
+    <div class="upload-area">
+      <i class="fa-solid fa-cloud-arrow-up"></i>
+      <span>Videoyu buraya sürükle veya seç</span>
+      <small>MP4, MOV</small>
+      <input type="file" accept="video/*" id="videoInput" onchange="window.handleFileSelect(event, 'video')">
+      <div id="fileNameDisplay" style="margin-top:10px; font-size:0.85rem; font-weight:700; color:var(--primary); display:none;"></div>
+    </div>
+    <button class="cart-checkout-btn" id="uploadSubmitBtn" onclick="window.submitUpload('video')" style="display:none;">
+      Videoyu Gönder & Teyit Et
+    </button>
+  </div>
+</div>
+
+<!-- RECEIPT UPLOAD MODAL -->
+<div id="receiptOverlay" class="drawer-overlay" onclick="window.toggleReceiptModal()"></div>
+<div id="receiptModal" class="custom-modal">
+  <div class="modal-header">
+    <h3><i class="fa-solid fa-receipt" style="color: var(--primary);"></i> Alışveriş Fişi Yükle</h3>
+    <button class="modal-close" onclick="window.toggleReceiptModal()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="modal-body">
+    <p>Alışveriş fişini yükleyerek puan kazan ve marketlere onaylı değerlendirme yapma hakkı elde et!</p>
+    <div class="upload-area">
+      <i class="fa-solid fa-file-arrow-up"></i>
+      <span>Fiş görselini seç veya sürükle</span>
+      <small>PNG, JPG</small>
+      <input type="file" accept="image/*" id="receiptInput" onchange="window.handleFileSelect(event, 'receipt')">
+      <div id="receiptNameDisplay" style="font-size:0.85rem; color:var(--primary); font-weight:700; margin-top:10px; display:none;"></div>
+    </div>
+    <button class="cart-checkout-btn" id="receiptSubmitBtn" onclick="window.submitUpload('receipt')" style="display:none;">
+      Fişi Gönder & Kredi Kazan
+    </button>
+  </div>
+</div>
+
+<!-- CATEGORY & MENU DRAWER -->
+<div id="categoryOverlay" class="drawer-overlay" onclick="window.toggleCategoryMenu()"></div>
+<div id="categoryDrawer" class="side-drawer">
+  <div class="drawer-header">
+    <h3><i class="fa-solid fa-bars"></i> Menü & Kategoriler</h3>
+    <button class="drawer-close-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="side-drawer-content">
+    <div class="drawer-nav-group">
+      <h4>Hızlı Erişim</h4>
+      <ul class="drawer-nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Ana Sayfa</a></li>
+        <li><a href="urunler.html"><i class="fa-solid fa-box-open"></i> Tüm Ürünler</a></li>
+        <li><a href="marketler.html"><i class="fa-solid fa-store"></i> Marketler</a></li>
+        <li><a href="firsatlar.html"><i class="fa-solid fa-bolt"></i> Aktüel & Fırsatlar</a></li>
+      </ul>
+    </div>
+    <div class="drawer-nav-group" style="border-bottom: none; background: #fff; padding-bottom: 0;">
+      <h4>Kategoriler</h4>
+    </div>
+    <ul class="side-category-list">
+      <li onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i> Meyve & Sebze</li>
+      <li onclick="window.goToCategoryPage('Et, Balık & Şarküteri')"><i class="fa-solid fa-drumstick-bite"></i> Et, Balık & Şarküteri</li>
+      <li onclick="window.goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i> Süt & Kahvaltılık</li>
+      <li onclick="window.goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i> Temel Gıda</li>
+      <li onclick="window.goToCategoryPage('Atıştırmalıklar')"><i class="fa-solid fa-cookie-bite"></i> Atıştırmalıklar</li>
+      <li onclick="window.goToCategoryPage('İçecekler')"><i class="fa-solid fa-bottle-droplet"></i> İçecekler</li>
+      <li onclick="window.goToCategoryPage('Deterjan & Ev Temizliği')"><i class="fa-solid fa-pump-soap"></i> Deterjan & Ev Temizliği</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div id="cartOverlay" class="drawer-overlay" onclick="window.toggleCart()"></div>
+<div id="cartDrawer" class="side-drawer">
+  <div class="drawer-header">
+    <h3><i class="fa-solid fa-basket-shopping"></i> Alışveriş Sepetim</h3>
+    <button class="drawer-close-btn" onclick="window.toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty-state">
+      <i class="fa-solid fa-basket-shopping"></i>
+      <p>Sepetiniz henüz boş.</p>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="market-limit-box">
+      <label for="marketLimitSelect"><i class="fa-solid fa-store"></i> En Fazla Kaç Markete Gidebilirsin?</label>
+      <select id="marketLimitSelect" class="market-limit-select">
+        <option value="1">Tek Market (En Uygun Tümü)</option>
+        <option value="2">En Fazla 2 Market</option>
+        <option value="3">En Fazla 3 Market</option>
+        <option value="0">Farketmez (En Ucuz Kombinasyon)</option>
+      </select>
+    </div>
+    <div class="cart-total-row">
+      <span>Tahmini En Uygun Tutar:</span>
+      <strong id="cartTotalPrice">0.00 ₺</strong>
+    </div>
+    <button class="cart-checkout-btn" onclick="alert('Optimizasyon yapıldı! Rota ve navigasyon ekranına yönlendiriliyorsunuz.')">
+      <i class="fa-solid fa-route"></i> En Uygun Noktaları Gör & Rota Al
+    </button>
+  </div>
+</div>
+
+<!-- FOOTER -->
 <footer>
   <p>&copy; 2026 Birimçek - Yapay Zeka Destekli Fiyat Karşılaştırma Ağı.</p>
 </footer>

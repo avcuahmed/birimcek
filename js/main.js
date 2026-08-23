@@ -1,16 +1,27 @@
-// Bileşenleri yükleyen fonksiyon
-export async function loadComponent(id, file) {
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+// BİLEŞENLERİ DİNAMİK YÜKLEME FONKSİYONU
+async function loadComponent(id, file) {
     try {
         const response = await fetch(file);
         if (response.ok) {
-            document.getElementById(id).innerHTML = await response.text();
+            const html = await response.text();
+            document.getElementById(id).innerHTML = html;
+        } else {
+            console.error(`${file} yüklenemedi.`);
         }
     } catch (error) {
-        console.error(`${file} yüklenemedi:`, error);
+        console.error('Bileşen yükleme hatası:', error);
     }
 }
 
-// Global Değişkenler ve Fonksiyonlar
+document.addEventListener("DOMContentLoaded", async () => {
+    // Header ve Footer'ı eşzamanlı olarak sayfaya enjekte et
+    await loadComponent('header-container', 'components/header.html');
+    await loadComponent('footer-container', 'components/footer.html');
+});
+
+// --- GLOBAL DEĞİŞKENLER VE FONKSİYONLAR ---
 window.cart = [];
 window.currentSearchCategory = "Tümü";
 window.currentMfCategory = "Tümü";
@@ -160,3 +171,8 @@ window.renderCart = () => {
     }).join('');
     if(totalEl) totalEl.innerText = total.toFixed(2) + " ₺";
 };
+
+// Supabase Bağlantısı
+const SUPABASE_URL = "https://lejkdyhensjyauburrxk.supabase.co";
+const SUPABASE_KEY = "YOUR_KEY_HERE";
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);

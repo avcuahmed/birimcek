@@ -170,8 +170,17 @@
     .drawer-header h3 { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
     .drawer-close-btn { background: transparent; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
 
-    .side-category-list { list-style: none; padding: 10px 0; overflow-y: auto; flex: 1; }
-    .side-category-list li { padding: 14px 20px; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 600; color: var(--text-dark); cursor: pointer; border-bottom: 1px solid var(--border-color); transition: background 0.2s; }
+    /* DRAWER QUICK NAV & CATEGORY LIST */
+    .side-drawer-content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+    .drawer-nav-group { padding: 15px 20px; border-bottom: 1px solid var(--border-color); background: var(--bg-soft); }
+    .drawer-nav-group h4 { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; font-weight: 700; letter-spacing: 0.5px; }
+    .drawer-nav-links { display: flex; flex-direction: column; gap: 8px; list-style: none; }
+    .drawer-nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 10px; padding: 6px 0; transition: color 0.2s; }
+    .drawer-nav-links a:hover, .drawer-nav-links a.active { color: var(--primary); }
+    .drawer-nav-links a i { color: var(--primary); width: 18px; text-align: center; }
+
+    .side-category-list { list-style: none; padding: 10px 0; }
+    .side-category-list li { padding: 12px 20px; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 600; color: var(--text-dark); cursor: pointer; border-bottom: 1px solid var(--border-color); transition: background 0.2s; }
     .side-category-list li:hover { background: var(--bg-soft); color: var(--primary); }
     
     .cart-body { flex: 1; padding: 20px; overflow-y: auto; }
@@ -548,29 +557,47 @@
     </div>
   </div>
 
-  <!-- CATEGORY DRAWER (Full Page Menu) -->
+  <!-- CATEGORY & MENU DRAWER (Full Page Menu) -->
   <div id="categoryOverlay" class="drawer-overlay" onclick="window.toggleCategoryMenu()"></div>
   <div id="categoryDrawer" class="side-drawer">
     <div class="drawer-header">
-      <h3><i class="fa-solid fa-list"></i> Tüm Kategoriler</h3>
+      <h3><i class="fa-solid fa-bars"></i> Menü & Kategoriler</h3>
       <button class="drawer-close-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <ul class="side-category-list">
-      <li onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i> Meyve & Sebze</li>
-      <li onclick="window.goToCategoryPage('Et, Balık & Şarküteri')"><i class="fa-solid fa-drumstick-bite"></i> Et, Balık & Şarküteri</li>
-      <li onclick="window.goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i> Süt & Kahvaltılık</li>
-      <li onclick="window.goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i> Temel Gıda</li>
-      <li onclick="window.goToCategoryPage('Atıştırmalıklar')"><i class="fa-solid fa-cookie-bite"></i> Atıştırmalıklar</li>
-      <li onclick="window.goToCategoryPage('İçecekler')"><i class="fa-solid fa-bottle-droplet"></i> İçecekler</li>
-      <li onclick="window.goToCategoryPage('Fırın & Pastane')"><i class="fa-solid fa-bread-slice"></i> Fırın & Pastane</li>
-      <li onclick="window.goToCategoryPage('Dondurulmuş Gıdalar')"><i class="fa-solid fa-snowflake"></i> Dondurulmuş Gıdalar</li>
-      <li onclick="window.goToCategoryPage('Deterjan & Ev Temizliği')"><i class="fa-solid fa-pump-soap"></i> Deterjan & Ev Temizliği</li>
-      <li onclick="window.goToCategoryPage('Kişisel Bakım & Hijyen')"><i class="fa-solid fa-sparkles"></i> Kişisel Bakım & Hijyen</li>
-      <li onclick="window.goToCategoryPage('Kağıt Ürünleri')"><i class="fa-solid fa-toilet-paper"></i> Kağıt Ürünleri</li>
-      <li onclick="window.goToCategoryPage('Bebek Dünyası')"><i class="fa-solid fa-baby"></i> Bebek Dünyası</li>
-      <li onclick="window.goToCategoryPage('Evcil Dostlar')"><i class="fa-solid fa-paw"></i> Evcil Dostlar</li>
-      <li onclick="window.goToCategoryPage('Ev & Yaşam')"><i class="fa-solid fa-house"></i> Ev & Yaşam</li>
-    </ul>
+    
+    <div class="side-drawer-content">
+      <!-- Hızlı Erişim Linkleri (Mobilde Eksik Olan Bölümler) -->
+      <div class="drawer-nav-group">
+        <h4>Hızlı Erişim</h4>
+        <ul class="drawer-nav-links">
+          <li><a href="index.html" class="active"><i class="fa-solid fa-house"></i> Ana Sayfa</a></li>
+          <li><a href="urunler.html"><i class="fa-solid fa-box-open"></i> Tüm Ürünler</a></li>
+          <li><a href="marketler.html"><i class="fa-solid fa-store"></i> Marketler</a></li>
+          <li><a href="firsatlar.html"><i class="fa-solid fa-bolt"></i> Aktüel & Fırsatlar</a></li>
+        </ul>
+      </div>
+
+      <!-- Kategoriler -->
+      <div class="drawer-nav-group" style="border-bottom: none; background: #fff; padding-bottom: 0;">
+        <h4>Kategoriler</h4>
+      </div>
+      <ul class="side-category-list">
+        <li onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i> Meyve & Sebze</li>
+        <li onclick="window.goToCategoryPage('Et, Balık & Şarküteri')"><i class="fa-solid fa-drumstick-bite"></i> Et, Balık & Şarküteri</li>
+        <li onclick="window.goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i> Süt & Kahvaltılık</li>
+        <li onclick="window.goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i> Temel Gıda</li>
+        <li onclick="window.goToCategoryPage('Atıştırmalıklar')"><i class="fa-solid fa-cookie-bite"></i> Atıştırmalıklar</li>
+        <li onclick="window.goToCategoryPage('İçecekler')"><i class="fa-solid fa-bottle-droplet"></i> İçecekler</li>
+        <li onclick="window.goToCategoryPage('Fırın & Pastane')"><i class="fa-solid fa-bread-slice"></i> Fırın & Pastane</li>
+        <li onclick="window.goToCategoryPage('Dondurulmuş Gıdalar')"><i class="fa-solid fa-snowflake"></i> Dondurulmuş Gıdalar</li>
+        <li onclick="window.goToCategoryPage('Deterjan & Ev Temizliği')"><i class="fa-solid fa-pump-soap"></i> Deterjan & Ev Temizliği</li>
+        <li onclick="window.goToCategoryPage('Kişisel Bakım & Hijyen')"><i class="fa-solid fa-sparkles"></i> Kişisel Bakım & Hijyen</li>
+        <li onclick="window.goToCategoryPage('Kağıt Ürünleri')"><i class="fa-solid fa-toilet-paper"></i> Kağıt Ürünleri</li>
+        <li onclick="window.goToCategoryPage('Bebek Dünyası')"><i class="fa-solid fa-baby"></i> Bebek Dünyası</li>
+        <li onclick="window.goToCategoryPage('Evcil Dostlar')"><i class="fa-solid fa-paw"></i> Evcil Dostlar</li>
+        <li onclick="window.goToCategoryPage('Ev & Yaşam')"><i class="fa-solid fa-house"></i> Ev & Yaşam</li>
+      </ul>
+    </div>
   </div>
 
   <!-- CART DRAWER -->

@@ -10,159 +10,43 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --primary: #0b4d3c; --primary-light: #52e396; --primary-hover: #07382b;
-      --text-dark: #191919; --text-muted: #666666; --border-color: #e5e5e5;
-      --bg-soft: #f9fbf9; --reward-color: #f59e0b; --font-main: 'Sora', sans-serif;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
-    body { background-color: #ffffff; color: var(--text-dark); -webkit-tap-highlight-color: transparent; }
-
-    #header { background: #ffffff; padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; gap: 15px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.03); width: 100%; }
-    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.5rem; font-weight: 800; color: var(--primary); white-space: nowrap; flex-shrink: 0; }
-    .logo i { color: var(--primary-light); }
-
-    .search-box-desktop { flex: 0 1 520px; display: flex; align-items: center; border: 2px solid var(--primary); border-radius: 30px; overflow: visible; height: 42px; background: #fff; box-shadow: 0 2px 8px rgba(11, 77, 60, 0.05); padding-left: 4px; position: relative; }
-    .search-category-dropdown { position: relative; display: flex; align-items: center; border-right: 1px solid var(--border-color); padding-right: 4px; flex-shrink: 0; height: 100%; }
-    .search-menu-btn { background: transparent; border: none; padding: 0 8px; font-size: 0.9rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; height: 100%; }
-    .category-dropdown-menu { position: absolute; top: 46px; left: 0; background: #ffffff; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 12px; width: 210px; max-height: 250px; overflow-y: auto; z-index: 1050; display: none; padding: 6px 0; }
-    .category-dropdown-menu.active { display: block; }
-    .category-dropdown-menu div { padding: 10px 16px; font-size: 0.85rem; font-weight: 600; color: var(--text-dark); cursor: pointer; }
-    .category-dropdown-menu div:hover { background: var(--bg-soft); color: var(--primary); }
-    .search-input { flex: 1; border: none; padding: 0 10px; font-size: 0.85rem; outline: none; background: transparent; }
-    .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; width: 42px; height: 42px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-top-right-radius: 26px; border-bottom-right-radius: 26px; }
-
-    .header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .action-item { display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; color: var(--text-dark); background: none; border: none; font-size: 1.1rem; width: 38px; height: 38px; border-radius: 50%; }
-    .action-item:hover { background: var(--bg-soft); color: var(--primary); }
-    .action-item i { color: var(--primary); }
-    .badge-icon { position: relative; }
-    .badge { position: absolute; top: 1px; right: 1px; background: var(--primary-light); color: var(--primary); font-size: 0.6rem; font-weight: 800; width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-
-    nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 30px; display: flex; align-items: center; justify-content: space-between; height: 44px; }
-    .nav-left { display: flex; align-items: center; gap: 15px; height: 100%; }
-    .desktop-quick-search-btn { background: var(--bg-soft); border: 1px solid var(--border-color); border-radius: 20px; padding: 4px 12px; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; cursor: pointer; color: var(--text-dark); }
-    .nav-links { display: flex; gap: 18px; list-style: none; }
-    .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.82rem; font-weight: 600; }
-    .nav-links a:hover, .nav-links a.active { color: var(--primary); font-weight: 700; }
-
-    .main-container { padding: 30px 30px 60px; max-width: 1400px; margin: 0 auto; }
-    .page-title { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
-
-    .drawer-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-    .drawer-overlay.active { opacity: 1; visibility: visible; }
-    .side-drawer { position: fixed; top: 0; left: -360px; width: 340px; max-width: 85vw; height: 100vh; background: #ffffff; z-index: 1005; box-shadow: 0 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .side-drawer.active { left: 0; }
-    .drawer-header { padding: 20px; background: var(--primary); color: #ffffff; display: flex; align-items: center; justify-content: space-between; }
-    .drawer-header h3 { font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-    .drawer-close-btn { background: transparent; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
-    .side-category-list { list-style: none; padding: 10px 0; overflow-y: auto; flex: 1; }
-    .side-category-list li { padding: 14px 20px; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 600; color: var(--text-dark); cursor: pointer; border-bottom: 1px solid var(--border-color); }
-
-    footer { background: #072e24; color: #ffffff; padding: 40px; margin-top: 60px; text-align: center; font-size: 0.85rem; opacity: 0.9; }
-    .mobile-floating-header { display: none; }
-
-    @media (max-width: 900px) {
-      .desktop-only, nav { display: none !important; }
-      .mobile-floating-header { display: flex; position: fixed; top: 12px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 480px; background: #ffffff; border-radius: 40px; padding: 8px 16px; align-items: center; justify-content: space-between; box-shadow: 0 8px 25px rgba(0,0,0,0.12); z-index: 1000; }
-      .mf-default-content { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-      .mf-menu-btn { background: none; border: none; font-size: 1.1rem; color: var(--primary); cursor: pointer; }
-      .mf-logo { font-size: 1.2rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 5px; }
-      .mf-right { display: flex; align-items: center; gap: 8px; }
-      .mf-search-btn { background: none; border: none; font-size: 1rem; color: var(--primary); cursor: pointer; padding: 4px; }
-      .mf-account { color: var(--primary); font-size: 1rem; text-decoration: none; }
-      .mf-cart { background: none; border: none; cursor: pointer; position: relative; font-size: 1rem; color: var(--primary); padding: 4px; }
-      .mobile-floating-header.search-active { padding: 4px 10px; border: 2px solid var(--primary); }
-      .mf-search-container { display: none; width: 100%; align-items: center; height: 36px; position: relative; }
-      .mobile-floating-header.search-active .mf-default-content { display: none; }
-      .mobile-floating-header.search-active .mf-search-container { display: flex; }
-      .mf-search-category { position: relative; display: flex; align-items: center; border-right: 1px solid var(--border-color); padding-right: 6px; height: 100%; }
-      .mf-search-cat-btn { background: transparent; border: none; font-size: 0.8rem; color: var(--primary); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 3px; height: 100%; padding: 0 4px; }
-      .mf-category-dropdown { position: absolute; top: 42px; left: 0; background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; width: 200px; max-height: 220px; overflow-y: auto; z-index: 1050; display: none; padding: 6px 0; }
-      .mf-category-dropdown.active { display: block; }
-      .mf-category-dropdown div { padding: 10px 14px; font-size: 0.82rem; font-weight: 600; color: var(--text-dark); cursor: pointer; }
-      .mf-search-input { flex: 1; border: none; padding: 0 10px; font-size: 0.82rem; outline: none; background: transparent; }
-      .mf-search-submit { background: var(--primary); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.8rem; }
-      .mf-search-close { background: none; border: none; font-size: 1rem; color: var(--text-muted); cursor: pointer; padding: 0 6px; margin-left: 4px; }
-      .main-container { padding: 80px 16px 40px; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css"> 
 </head>
 <body>
-  <header id="header" class="desktop-only">
-    <a href="index.html" class="logo"><i class="fa-solid fa-leaf"></i>Birimçek</a>
-    <div class="search-box-desktop">
-      <div class="search-category-dropdown">
-        <button class="search-menu-btn" onclick="window.toggleSearchCategoryDropdown()"><i class="fa-solid fa-bars"></i><span id="selectedCategoryText" style="font-size:0.75rem; font-weight:700; margin-left:3px;">Tümü</span><i class="fa-solid fa-chevron-down" style="font-size:0.6rem; margin-left:3px;"></i></button>
-        <div class="category-dropdown-menu" id="searchCategoryDropdownMenu">
-          <div onclick="window.selectSearchCategory('Tümü', 'Tümü')">Tüm Kategoriler</div>
-        </div>
-      </div>
-      <input type="text" class="search-input" placeholder="Market ara...">
-      <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
-    <div class="header-actions">
-      <a href="hesabim.html" class="action-item"><i class="fa-regular fa-user"></i></a>
-      <button class="action-item badge-icon"><i class="fa-solid fa-basket-shopping"></i><span class="badge">0</span></button>
-    </div>
-  </header>
 
-  <div class="mobile-floating-header" id="mobileFloatingHeader">
-    <div class="mf-default-content">
-      <button class="mf-menu-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-bars"></i></button>
-      <a href="index.html" class="mf-logo"><i class="fa-solid fa-leaf"></i>Birimçek</a>
-      <div class="mf-right">
-        <button class="mf-search-btn" onclick="window.openMobileSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
-        <a href="hesabim.html" class="mf-account"><i class="fa-regular fa-user"></i></a>
-        <button class="mf-cart"><i class="fa-solid fa-basket-shopping"></i><span class="badge" style="top:-5px; right:-5px;">0</span></button>
-      </div>
-    </div>
-    <div class="mf-search-container" id="mfSearchContainer">
-      <div class="mf-search-category">
-        <button class="mf-search-cat-btn" onclick="window.toggleMfCatDropdown()"><span id="mfSelectedCatText">Tümü</span><i class="fa-solid fa-chevron-down"></i></button>
-        <div class="mf-category-dropdown" id="mfCatDropdownMenu"><div onclick="window.selectMfCategory('Tümü', 'Tümü')">Tümü</div></div>
-      </div>
-      <input type="text" class="mf-search-input" id="searchInputMobile" placeholder="Market ara...">
-      <button class="mf-search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-      <button class="mf-search-close" onclick="window.closeMobileSearch()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-  </div>
-
-  <nav class="desktop-only">
-    <div class="nav-left">
-      <button class="desktop-quick-search-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-bars"></i> Tüm Kategoriler</button>
-      <ul class="nav-links">
-        <li><a href="index.html">Ana Sayfa</a></li>
-        <li><a href="urunler.html">Tüm Ürünler</a></li>
-        <li><a href="marketler.html" class="active">Marketler</a></li>
-        <li><a href="firsatlar.html">Aktüel & Fırsatlar</a></li>
-      </ul>
-    </div>
-  </nav>
+  <div id="header-container"></div>
 
   <div class="main-container">
-    <h1 class="page-title">Marketler</h1>
-    <p>Zincir marketlerin şube ve fiyat listelerine göz atın.</p>
+    <div class="section-title-wrap">
+      <h3 class="section-title"><i class="fa-solid fa-store" style="color: var(--primary);"></i> Anlaşmalı Marketler Ağı</h3>
+      <span style="font-size: 0.82rem; color: var(--text-muted);">Güncel Fiyat Veri Kaynakları</span>
+    </div>
+
+    <div class="product-grid">
+      <div class="card-product" style="text-align: center; padding: 25px;">
+        <i class="fa-solid fa-shop" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 12px;"></i>
+        <h4 class="product-title" style="height: auto; margin-bottom: 5px;">Migros</h4>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Aktif Ürün: 1,420 • Güncel</p>
+        <button class="add-to-cart-btn" onclick="alert('Migros ürünlerine yönlendiriliyorsunuz.')">Ürünleri Gör</button>
+      </div>
+      <div class="card-product" style="text-align: center; padding: 25px;">
+        <i class="fa-solid fa-shop" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 12px;"></i>
+        <h4 class="product-title" style="height: auto; margin-bottom: 5px;">A101</h4>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Aktif Ürün: 1,150 • Güncel</p>
+        <button class="add-to-cart-btn" onclick="alert('A101 ürünlerine yönlendiriliyorsunuz.')">Ürünleri Gör</button>
+      </div>
+      <div class="card-product" style="text-align: center; padding: 25px;">
+        <i class="fa-solid fa-shop" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 12px;"></i>
+        <h4 class="product-title" style="height: auto; margin-bottom: 5px;">BİM</h4>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Aktif Ürün: 980 • Güncel</p>
+        <button class="add-to-cart-btn" onclick="alert('BİM ürünlerine yönlendiriliyorsunuz.')">Ürünleri Gör</button>
+      </div>
+    </div>
   </div>
 
-  <div id="categoryOverlay" class="drawer-overlay" onclick="window.toggleCategoryMenu()"></div>
-  <div id="categoryDrawer" class="side-drawer">
-    <div class="drawer-header"><h3><i class="fa-solid fa-list"></i> Tüm Kategoriler</h3><button class="drawer-close-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-xmark"></i></button></div>
-    <ul class="side-category-list"><li onclick="window.toggleCategoryMenu()">Market Kategorileri</li></ul>
-  </div>
+  <div id="drawers-container"></div>
+  <div id="footer-container"></div>
 
-  <footer><p>&copy; 2026 Birimçek</p></footer>
-
-  <script>
-    window.toggleSearchCategoryDropdown = () => document.getElementById("searchCategoryDropdownMenu")?.classList.toggle("active");
-    window.selectSearchCategory = (k, l) => { document.getElementById("selectedCategoryText").innerText = l; window.toggleSearchCategoryDropdown(); };
-    window.openMobileSearch = () => { document.getElementById("mobileFloatingHeader")?.classList.add("search-active"); setTimeout(() => document.getElementById("searchInputMobile")?.focus(), 100); };
-    window.closeMobileSearch = () => { document.getElementById("mobileFloatingHeader")?.classList.remove("search-active"); document.getElementById("mfCatDropdownMenu")?.classList.remove("active"); };
-    window.toggleMfCatDropdown = () => document.getElementById("mfCatDropdownMenu")?.classList.toggle("active");
-    window.selectMfCategory = (k, l) => { document.getElementById("mfSelectedCatText").innerText = l; window.toggleMfCatDropdown(); };
-    window.toggleCategoryMenu = () => { document.getElementById("categoryDrawer")?.classList.toggle("active"); document.getElementById("categoryOverlay")?.classList.toggle("active"); };
-  </script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

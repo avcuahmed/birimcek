@@ -50,9 +50,9 @@
     /* Kategori Açılır Menüsü */
     .category-dropdown { position: relative; height: 100%; display: flex; align-items: center; }
     .category-btn { background: #ffffff; border: none; font-weight: 700; font-size: 0.9rem; color: var(--text-dark); display: flex; align-items: center; gap: 10px; cursor: pointer; height: 100%; }
-    .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; width: 240px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 0 0 8px 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); z-index: 100; list-style: none; padding: 10px 0; }
+    .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; width: 260px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 0 0 8px 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); z-index: 100; list-style: none; padding: 10px 0; max-height: 420px; overflow-y: auto; }
     .category-dropdown:hover .dropdown-menu { display: block; }
-    .dropdown-menu li a { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; text-decoration: none; color: #334155; font-size: 0.85rem; font-weight: 500; transition: background 0.2s; }
+    .dropdown-menu li a { display: flex; justify-content: space-between; align-items: center; padding: 9px 20px; text-decoration: none; color: #334155; font-size: 0.85rem; font-weight: 500; transition: background 0.2s; }
     .dropdown-menu li a:hover { background: var(--bg-soft); color: var(--primary); }
 
     .nav-links { display: flex; gap: 25px; list-style: none; }
@@ -75,18 +75,11 @@
     .section-title { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
 
     /* Öne Çıkan Kategoriler Kartları */
-    .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; margin-bottom: 50px; }
-    .cat-card { border-radius: 12px; padding: 20px 15px; text-align: center; cursor: pointer; transition: transform 0.2s; }
-    .cat-card:hover { transform: translateY(-4px); }
-    .cat-card.veg { background: #fde2e4; }
-    .cat-card.fruit { background: #fff3bf; }
-    .cat-card.egg { background: #e2f0d9; }
-    .cat-card.dairy { background: #e0f2fe; }
-    .cat-card.grain { background: #f3e8ff; }
-    .cat-card.juice { background: #ffedd5; }
-    .cat-card img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 10px; }
-    .cat-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
-    .cat-card span { font-size: 0.75rem; color: var(--text-muted); }
+    .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-bottom: 50px; }
+    .cat-card { border-radius: 12px; padding: 18px 12px; text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; background: #f8fafc; border: 1px solid var(--border-color); }
+    .cat-card:hover { transform: translateY(-4px); box-shadow: 0 6px 15px rgba(0,0,0,0.05); border-color: var(--primary-light); }
+    .cat-card i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; display: block; }
+    .cat-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
 
     /* Ürün Izgarası */
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
@@ -115,7 +108,7 @@
     <div class="top-bar-info">
       <span>📞 +90 850 123 45 67</span>
       <span>✉️ destek@birimcek.com</span>
-      <span>🚚 500 TL Üzeri Ücretsiz Kargo</span>
+      <span>🚚 Tüm Market Fiyatları Birimçek'te</span>
     </div>
     <div class="top-bar-options">
       <span>TRY ₺</span>
@@ -132,11 +125,20 @@
     <div class="search-box">
       <select class="search-category" id="categorySelect" onchange="filterProducts()">
         <option value="Tümü">Tüm Kategoriler</option>
+        <option value="Meyve & Sebze">Meyve & Sebze</option>
+        <option value="Et, Balık & Şarküteri">Et, Balık & Şarküteri</option>
         <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
         <option value="Temel Gıda">Temel Gıda</option>
-        <option value="Sebze & Meyve">Sebze & Meyve</option>
+        <option value="Atıştırmalıklar">Atıştırmalıklar</option>
         <option value="İçecekler">İçecekler</option>
-        <option value="Deterjan & Ev Temizliği">Deterjan & Temizlik</option>
+        <option value="Fırın & Pastane">Fırın & Pastane</option>
+        <option value="Dondurulmuş Gıdalar">Dondurulmuş Gıdalar</option>
+        <option value="Deterjan & Ev Temizliği">Deterjan & Ev Temizliği</option>
+        <option value="Kişisel Bakım & Hijyen">Kişisel Bakım & Hijyen</option>
+        <option value="Kağıt Ürünleri">Kağıt Ürünleri</option>
+        <option value="Bebek Dünyası">Bebek Dünyası</option>
+        <option value="Evcil Dostlar">Evcil Dostlar</option>
+        <option value="Ev & Yaşam">Ev & Yaşam</option>
       </select>
       <input type="text" class="search-input" id="searchInput" placeholder="Ürün veya marka ara..." oninput="filterProducts()">
       <button class="search-btn">Ara</button>
@@ -155,12 +157,20 @@
       <div class="category-dropdown">
         <button class="category-btn"><i class="fa-solid fa-bars"></i> Tüm Kategoriler <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></button>
         <ul class="dropdown-menu">
-          <li><a href="#" onclick="selectCategory('Sebze & Meyve')">Taze Sebzeler <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i></a></li>
-          <li><a href="#" onclick="selectCategory('Sebze & Meyve')">Mevsim Meyveleri <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i></a></li>
-          <li><a href="#" onclick="selectCategory('Süt & Kahvaltılık')">Taze Çiftlik Yumurtası</a></li>
-          <li><a href="#" onclick="selectCategory('Süt & Kahvaltılık')">Doğal Süt Ürünleri</a></li>
-          <li><a href="#" onclick="selectCategory('Temel Gıda')">Organik Tahıllar <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i></a></li>
-          <li><a href="#" onclick="selectCategory('İçecekler')">Taze Meyve Suları</a></li>
+          <li><a href="#" onclick="selectCategory('Meyve & Sebze')">Meyve & Sebze <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i></a></li>
+          <li><a href="#" onclick="selectCategory('Et, Balık & Şarküteri')">Et, Balık & Şarküteri <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i></a></li>
+          <li><a href="#" onclick="selectCategory('Süt & Kahvaltılık')">Süt & Kahvaltılık</a></li>
+          <li><a href="#" onclick="selectCategory('Temel Gıda')">Temel Gıda <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i></a></li>
+          <li><a href="#" onclick="selectCategory('Atıştırmalıklar')">Atıştırmalıklar</a></li>
+          <li><a href="#" onclick="selectCategory('İçecekler')">İçecekler</a></li>
+          <li><a href="#" onclick="selectCategory('Fırın & Pastane')">Fırın & Pastane</a></li>
+          <li><a href="#" onclick="selectCategory('Dondurulmuş Gıdalar')">Dondurulmuş Gıdalar</a></li>
+          <li><a href="#" onclick="selectCategory('Deterjan & Ev Temizliği')">Deterjan & Ev Temizliği <i class="fa-solid fa-chevron-right" style="font-size:0.6rem;"></i></a></li>
+          <li><a href="#" onclick="selectCategory('Kişisel Bakım & Hijyen')">Kişisel Bakım & Hijyen</a></li>
+          <li><a href="#" onclick="selectCategory('Kağıt Ürünleri')">Kağıt Ürünleri</a></li>
+          <li><a href="#" onclick="selectCategory('Bebek Dünyası')">Bebek Dünyası</a></li>
+          <li><a href="#" onclick="selectCategory('Evcil Dostlar')">Evcil Dostlar</a></li>
+          <li><a href="#" onclick="selectCategory('Ev & Yaşam')">Ev & Yaşam</a></li>
         </ul>
       </div>
 
@@ -194,37 +204,63 @@
   <div class="main-container">
 
     <!-- Öne Çıkan Kategoriler -->
-    <h3 class="section-title">Öne Çıkan Kategoriler</h3>
+    <h3 class="section-title">Kategoriler</h3>
     <div class="categories-grid">
-      <div class="cat-card veg" onclick="selectCategory('Sebze & Meyve')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2153/2153788.png" alt="Sebzeler">
-        <h4>Sebzeler</h4>
-        <span>Taze Ürünler</span>
+      <div class="cat-card" onclick="selectCategory('Meyve & Sebze')">
+        <i class="fa-solid fa-apple-whole"></i>
+        <h4>Meyve & Sebze</h4>
       </div>
-      <div class="cat-card fruit" onclick="selectCategory('Sebze & Meyve')">
-        <img src="https://cdn-icons-png.flaticon.com/512/3194/3194766.png" alt="Meyveler">
-        <h4>Meyveler</h4>
-        <span>Mevsim Meyveleri</span>
+      <div class="cat-card" onclick="selectCategory('Et, Balık & Şarküteri')">
+        <i class="fa-solid fa-drumstick-bite"></i>
+        <h4>Et, Balık & Şarküteri</h4>
       </div>
-      <div class="cat-card egg" onclick="selectCategory('Süt & Kahvaltılık')">
-        <img src="https://cdn-icons-png.flaticon.com/512/833/833316.png" alt="Yumurtalar">
-        <h4>Yumurtalar</h4>
-        <span>Çiftlik Ürünleri</span>
+      <div class="cat-card" onclick="selectCategory('Süt & Kahvaltılık')">
+        <i class="fa-solid fa-cheese"></i>
+        <h4>Süt & Kahvaltılık</h4>
       </div>
-      <div class="cat-card dairy" onclick="selectCategory('Süt & Kahvaltılık')">
-        <img src="https://cdn-icons-png.flaticon.com/512/3050/3050158.png" alt="Süt Ürünleri">
-        <h4>Süt Ürünleri</h4>
-        <span>Peynir & Süt</span>
+      <div class="cat-card" onclick="selectCategory('Temel Gıda')">
+        <i class="fa-solid fa-wheat-awn"></i>
+        <h4>Temel Gıda</h4>
       </div>
-      <div class="cat-card grain" onclick="selectCategory('Temel Gıda')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2713/2713563.png" alt="Tahıllar">
-        <h4>Tahıllar & Bakliyat</h4>
-        <span>Organik Gıda</span>
+      <div class="cat-card" onclick="selectCategory('Atıştırmalıklar')">
+        <i class="fa-solid fa-cookie"></i>
+        <h4>Atıştırmalıklar</h4>
       </div>
-      <div class="cat-card juice" onclick="selectCategory('İçecekler')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2405/2405479.png" alt="Meyve Suları">
-        <h4>Meyve Suları</h4>
-        <span>Doğal İçecekler</span>
+      <div class="cat-card" onclick="selectCategory('İçecekler')">
+        <i class="fa-solid fa-bottle-water"></i>
+        <h4>İçecekler</h4>
+      </div>
+      <div class="cat-card" onclick="selectCategory('Fırın & Pastane')">
+        <i class="fa-solid fa-bread-slice"></i>
+        <h4>Fırın & Pastane</h4>
+      </div>
+      <div class="cat-card" onclick="selectCategory('Dondurulmuş Gıdalar')">
+        <i class="fa-solid fa-snowflake"></i>
+        <h4>Dondurulmuş Gıdalar</h4>
+      </div>
+      <div class="cat-card" onclick="selectCategory('Deterjan & Ev Temizliği')">
+        <i class="fa-solid fa-broom"></i>
+        <h4>Deterjan & Temizlik</h4>
+      </div>
+      <div class="cat-card" onclick="selectCategory('Kişisel Bakım & Hijyen')">
+        <i class="fa-solid fa-pump-soap"></i>
+        <h4>Kişisel Bakım</h4>
+      </div>
+      <div class="cat-card" onclick="selectCategory('Kağıt Ürünleri')">
+        <i class="fa-solid fa-toilet-paper"></i>
+        <h4>Kağıt Ürünleri</h4>
+      </div>
+      <div class="cat-card" onclick="selectCategory('Bebek Dünyası')">
+        <i class="fa-solid fa-baby"></i>
+        <h4>Bebek Dünyası</h4>
+      </div>
+      <div class="cat-card" onclick="selectCategory('Evcil Dostlar')">
+        <i class="fa-solid fa-paw"></i>
+        <h4>Evcil Dostlar</h4>
+      </div>
+      <div class="cat-card" onclick="selectCategory('Ev & Yaşam')">
+        <i class="fa-solid fa-house"></i>
+        <h4>Ev & Yaşam</h4>
       </div>
     </div>
 

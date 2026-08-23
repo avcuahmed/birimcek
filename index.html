@@ -90,8 +90,8 @@
     .hero-text h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; }
     .hero-text p { font-size: 1rem; opacity: 0.9; margin-bottom: 20px; max-width: 600px; line-height: 1.5; }
     .hero-btns { display: flex; gap: 15px; }
-    .hero-btn { background: var(--primary-light); color: var(--primary); border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; }
-    .hero-btn-alt { background: transparent; color: white; border: 2px solid white; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; }
+    .hero-btn { background: var(--primary-light); color: var(--primary); border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+    .hero-btn-alt { background: transparent; color: white; border: 2px solid white; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
 
     /* BİRİM FİYAT BİLGİLENDİRME POP-UP */
     .unit-info-popup { 
@@ -419,8 +419,12 @@
         <h2>Akıllı Sepet, Gerçek Tasarruf</h2>
         <p>Reyon videoları veya alışveriş fişlerini yükle, yapay zeka denetimiyle anında puan kazan. Listeni oluşturup en az market gezerek en ucuz fiyata alışveriş yap.</p>
         <div class="hero-btns">
-          <button class="hero-btn" onclick="window.toggleVideoModal()">Reyon Videosu Çek</button>
-          <button class="hero-btn-alt" onclick="window.toggleReceiptModal()">Fiş Yükle & Puan Kazan</button>
+          <button class="hero-btn" onclick="window.toggleVideoModal()">
+            <i class="fa-solid fa-video"></i> Reyon Videosu Çek
+          </button>
+          <button class="hero-btn-alt" onclick="window.toggleReceiptModal()">
+            <i class="fa-solid fa-receipt"></i> Fiş Yükle & Puan Kazan
+          </button>
         </div>
       </div>
     </div>

@@ -2,51 +2,216 @@
 <html lang="tr">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Marketler | Birimçek</title>
-  
+  <title>Birimçek | Marketler</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css"> 
+  <style>
+    :root { --primary: #0b4d3c; --primary-light: #52e396; --primary-hover: #07382b; --text-dark: #191919; --text-muted: #666666; --border-color: #e5e5e5; --bg-soft: #f9fbf9; --font-main: 'Sora', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
+    body { background-color: #ffffff; color: var(--text-dark); }
+    #header { background: #ffffff; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; border-bottom: 1px solid var(--border-color); }
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+    .logo i { color: var(--primary-light); }
+    .search-box-desktop { flex: 1; max-width: 600px; display: flex; border: 2px solid var(--primary); border-radius: 30px; overflow: hidden; height: 44px; }
+    .search-category { background: #f8fafc; border: none; border-right: 1px solid var(--border-color); padding: 0 15px; font-size: 0.82rem; color: #475569; outline: none; cursor: pointer; }
+    .search-input { flex: 1; border: none; padding: 0 15px; font-size: 0.88rem; outline: none; }
+    .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; padding: 0 25px; cursor: pointer; }
+    .header-actions { display: flex; align-items: center; gap: 25px; }
+    .action-item { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-dark); background: none; border: none; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .action-item i { font-size: 1.2rem; color: var(--primary); }
+    .badge-icon { position: relative; }
+    .badge { position: absolute; top: -6px; right: -8px; background: var(--primary-light); color: var(--primary); font-size: 0.65rem; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 50px; }
+    .nav-left { display: flex; align-items: center; gap: 30px; height: 100%; }
+    .category-btn { background: var(--primary); color: #ffffff; border: none; border-radius: 6px; padding: 8px 16px; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .nav-links { display: flex; gap: 25px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.88rem; font-weight: 600; }
+    .nav-links a.active { color: var(--primary); font-weight: 700; }
+    .main-container { padding: 40px; max-width: 1200px; margin: 0 auto; }
+    .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; margin-top: 30px; }
+    .market-card { border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; text-align: center; background: #fff; transition: transform 0.2s ease; }
+    .market-card:hover { transform: translateY(-4px); border-color: var(--primary-light); }
+    .market-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; }
+    .market-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .market-count { font-size: 0.8rem; color: var(--text-muted); }
+    .mobile-only { display: none !important; }
+    .drawer-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+    .drawer-overlay.active { opacity: 1; visibility: visible; }
+    .side-drawer { position: fixed; top: 0; width: 340px; height: 100vh; background: #ffffff; z-index: 1000; box-shadow: 0 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; transition: all 0.3s ease; }
+    #categoryDrawer { left: -360px; } #categoryDrawer.active { left: 0; }
+    #cartDrawer { right: -360px; } #cartDrawer.active { right: 0; }
+    .drawer-header { padding: 20px; background: var(--primary); color: #ffffff; display: flex; align-items: center; justify-content: space-between; }
+    .drawer-close-btn { background: transparent; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
+    .side-category-list { list-style: none; padding: 10px 0; }
+    .side-category-list li { padding: 14px 20px; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border-bottom: 1px solid var(--border-color); }
+    .cart-body { flex: 1; padding: 20px; overflow-y: auto; }
+    .cart-empty-state { text-align: center; color: var(--text-muted); margin-top: 60px; }
+    .cart-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
+    .cart-item-img { width: 48px; height: 48px; object-fit: contain; }
+    .cart-item-details { flex: 1; }
+    .cart-item-title { font-size: 0.85rem; font-weight: 700; }
+    .cart-item-price { font-size: 0.85rem; color: var(--primary); font-weight: 800; }
+    .cart-item-remove { background: transparent; border: none; color: #ef4444; cursor: pointer; }
+    .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: #f8faf9; }
+    .cart-total-row { display: flex; justify-content: space-between; margin-bottom: 15px; }
+    .cart-checkout-btn { width: 100%; padding: 12px; background: var(--primary-light); color: var(--primary); border: none; border-radius: 8px; font-weight: 800; cursor: pointer; }
+    .toolbar-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 10px 0; z-index: 900; }
+    .toolbar-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--text-dark); font-size: 0.7rem; font-weight: 600; gap: 4px; background: none; border: none; cursor: pointer; }
+    .toolbar-item i { font-size: 1.2rem; color: var(--primary); }
+    footer { background: #072e24; color: #ffffff; padding: 40px; margin-top: 60px; text-align: center; font-size: 0.85rem; }
+    @media (max-width: 900px) {
+      .desktop-only, nav { display: none !important; }
+      .mobile-only { display: flex !important; }
+      #header { padding: 12px 16px; flex-direction: column; gap: 10px; }
+      .main-container { padding: 20px 16px 80px; }
+    }
+  </style>
 </head>
 <body>
+  <header id="header">
+    <a href="index.html" class="logo desktop-only"><i class="fa-solid fa-leaf"></i>Birimçek</a>
+    <div class="search-box-desktop desktop-only">
+      <select class="search-category" id="categorySelectDesktop">
+        <option value="Tümü">Tüm Kategoriler</option>
+      </select>
+      <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') window.executeSearch('desktop')">
+      <button class="search-btn" onclick="window.executeSearch('desktop')">Ara</button>
+    </div>
+    <div class="header-actions desktop-only">
+      <a href="hesabim.html" class="action-item"><i class="fa-regular fa-user"></i> HESABIM</a>
+      <button class="action-item badge-icon" onclick="window.toggleCart()">
+        <i class="fa-solid fa-basket-shopping"></i> SEPETİM <span class="badge" id="cartBadgeDesktop">0</span>
+      </button>
+    </div>
+  </header>
 
-  <div id="header-container"></div>
+  <nav class="desktop-only">
+    <div class="nav-left">
+      <button class="category-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-bars"></i> Tüm Kategoriler</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="urunler.html">Tüm Ürünler</a></li>
+        <li><a href="marketler.html" class="active">Marketler</a></li>
+        <li><a href="firsatlar.html">Fırsatlar</a></li>
+      </ul>
+    </div>
+  </nav>
 
   <div class="main-container">
-    <div class="section-title-wrap">
-      <h3 class="section-title"><i class="fa-solid fa-store" style="color: var(--primary);"></i> Anlaşmalı Marketler Ağı</h3>
-      <span style="font-size: 0.82rem; color: var(--text-muted);">Güncel Fiyat Veri Kaynakları</span>
-    </div>
+    <h2 style="font-size: 1.5rem; font-weight: 800;">Takip Edilen Marketler</h2>
+    <p style="color: var(--text-muted); font-size: 0.85rem;">Birimçek altyapısı üzerinden fiyat karşılaştırması yapılan zincir marketler.</p>
 
-    <div class="product-grid">
-      <div class="card-product" style="text-align: center; padding: 25px;">
-        <i class="fa-solid fa-shop" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 12px;"></i>
-        <h4 class="product-title" style="height: auto; margin-bottom: 5px;">Migros</h4>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Aktif Ürün: 1,420 • Güncel</p>
-        <button class="add-to-cart-btn" onclick="alert('Migros ürünlerine yönlendiriliyorsunuz.')">Ürünleri Gör</button>
+    <div class="market-grid">
+      <div class="market-card">
+        <i class="fa-solid fa-store"></i>
+        <div class="market-title">A101</div>
+        <div class="market-count">Fiyatlar Güncel</div>
       </div>
-      <div class="card-product" style="text-align: center; padding: 25px;">
-        <i class="fa-solid fa-shop" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 12px;"></i>
-        <h4 class="product-title" style="height: auto; margin-bottom: 5px;">A101</h4>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Aktif Ürün: 1,150 • Güncel</p>
-        <button class="add-to-cart-btn" onclick="alert('A101 ürünlerine yönlendiriliyorsunuz.')">Ürünleri Gör</button>
+      <div class="market-card">
+        <i class="fa-solid fa-shop"></i>
+        <div class="market-title">BİM</div>
+        <div class="market-count">Fiyatlar Güncel</div>
       </div>
-      <div class="card-product" style="text-align: center; padding: 25px;">
-        <i class="fa-solid fa-shop" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 12px;"></i>
-        <h4 class="product-title" style="height: auto; margin-bottom: 5px;">BİM</h4>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Aktif Ürün: 980 • Güncel</p>
-        <button class="add-to-cart-btn" onclick="alert('BİM ürünlerine yönlendiriliyorsunuz.')">Ürünleri Gör</button>
+      <div class="market-card">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <div class="market-title">ŞOK</div>
+        <div class="market-count">Fiyatlar Güncel</div>
+      </div>
+      <div class="market-card">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <div class="market-title">Migros</div>
+        <div class="market-count">Fiyatlar Güncel</div>
+      </div>
+      <div class="market-card">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <div class="market-title">CarrefourSA</div>
+        <div class="market-count">Fiyatlar Güncel</div>
       </div>
     </div>
   </div>
 
-  <div id="drawers-container"></div>
-  <div id="footer-container"></div>
+  <div class="toolbar-bottom mobile-only">
+    <a href="index.html" class="toolbar-item"><i class="fa-solid fa-house"></i><span>Ana Sayfa</span></a>
+    <button class="toolbar-item" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-list"></i><span>Kategoriler</span></button>
+    <button class="toolbar-item" onclick="window.toggleCart()"><i class="fa-solid fa-basket-shopping"></i><span>Sepetim</span></button>
+    <a href="hesabim.html" class="toolbar-item"><i class="fa-solid fa-user"></i><span>Hesabım</span></a>
+  </div>
 
-  <script type="module" src="js/main.js"></script>
+  <div id="categoryOverlay" class="drawer-overlay" onclick="window.toggleCategoryMenu()"></div>
+  <div id="categoryDrawer" class="side-drawer">
+    <div class="drawer-header">
+      <h3><i class="fa-solid fa-list"></i> Kategoriler</h3>
+      <button class="drawer-close-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <ul class="side-category-list">
+      <li onclick="window.goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i> Meyve & Sebze</li>
+    </ul>
+  </div>
+
+  <div id="cartOverlay" class="drawer-overlay" onclick="window.toggleCart()"></div>
+  <div id="cartDrawer" class="side-drawer">
+    <div class="drawer-header">
+      <h3><i class="fa-solid fa-basket-shopping"></i> Sepetim</h3>
+      <button class="drawer-close-btn" onclick="window.toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty-state"><i class="fa-solid fa-basket-shopping"></i><p>Sepetiniz henüz boş.</p></div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row"><span>Tahmini Toplam:</span><strong id="cartTotalPrice">0.00 ₺</strong></div>
+      <button class="cart-checkout-btn" onclick="alert('Listeniz hazırlandı!')">Market Karşılaştırması Yap</button>
+    </div>
+  </div>
+
+  <footer><p>&copy; 2026 Birimçek - Tüm hakları saklıdır.</p></footer>
+
+  <script type="module">
+    window.cart = [];
+    window.toggleCategoryMenu = () => {
+      document.getElementById("categoryDrawer")?.classList.toggle("active");
+      document.getElementById("categoryOverlay")?.classList.toggle("active");
+    };
+    window.toggleCart = () => {
+      document.getElementById("cartDrawer")?.classList.toggle("active");
+      document.getElementById("cartOverlay")?.classList.toggle("active");
+    };
+    window.removeFromCart = (index) => {
+      window.cart.splice(index, 1);
+      window.renderCart();
+    };
+    window.renderCart = () => {
+      const cartBody = document.getElementById("cartBody");
+      const cartTotalPrice = document.getElementById("cartTotalPrice");
+      const badgeDesk = document.getElementById("cartBadgeDesktop");
+      if (badgeDesk) badgeDesk.innerText = window.cart.length;
+      if (window.cart.length === 0) {
+        cartBody.innerHTML = `<div class="cart-empty-state"><i class="fa-solid fa-basket-shopping"></i><p>Sepetiniz henüz boş.</p></div>`;
+        cartTotalPrice.innerText = "0.00 ₺";
+        return;
+      }
+      let total = 0;
+      cartBody.innerHTML = window.cart.map((item, index) => {
+        total += item.price;
+        return `
+          <div class="cart-item">
+            <img src="${item.imgUrl}" class="cart-item-img" alt="${item.title}">
+            <div class="cart-item-details">
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-price">${item.price.toFixed(2)} ₺</div>
+            </div>
+            <button class="cart-item-remove" onclick="window.removeFromCart(${index})"><i class="fa-solid fa-trash-can"></i></button>
+          </div>`;
+      }).join('');
+      cartTotalPrice.innerText = total.toFixed(2) + " ₺";
+    };
+    window.goToCategoryPage = (catName) => {
+      window.location.href = `urunler.html?kategori=${encodeURIComponent(catName)}`;
+    };
+    window.executeSearch = () => {
+      const query = document.getElementById("searchInputDesktop")?.value.trim();
+      if (query) window.location.href = `urunler.html?q=${encodeURIComponent(query)}`;
+    };
+  </script>
 </body>
 </html>

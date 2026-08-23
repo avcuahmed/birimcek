@@ -71,7 +71,7 @@
     .hero-btn { background: var(--primary-light); color: var(--primary); border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; }
     .hero-btn-alt { background: transparent; color: white; border: 2px solid white; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; }
 
-    /* 8. MADDE: BİRİM FİYAT BİLGİLENDİRME POP-UP */
+    /* BİRİM FİYAT BİLGİLENDİRME POP-UP */
     .unit-info-popup { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 16px 20px; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; animation: fadeIn 0.4s ease; }
     .unit-info-content { display: flex; align-items: center; gap: 15px; }
     .unit-info-content i { font-size: 1.5rem; color: var(--primary); }
@@ -79,7 +79,7 @@
     .unit-info-content p { font-size: 0.85rem; color: var(--text-muted); }
     .unit-info-close { background: none; border: none; font-size: 1.1rem; color: var(--text-muted); cursor: pointer; padding: 5px; }
 
-    /* 5. MADDE: İNDİRİME GİREN ÜRÜN BOARDLARI */
+    /* İNDİRİME GİREN ÜRÜN BOARDLARI */
     .discount-board-section { margin-bottom: 40px; }
     .board-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory; }
     .board-card { min-width: 280px; background: linear-gradient(135deg, #fff5f5 0%, #fff 100%); border: 1px solid #fed7d7; border-radius: 12px; padding: 16px; display: flex; align-items: center; gap: 15px; scroll-snap-align: start; position: relative; }
@@ -179,7 +179,7 @@
     /* FOOTER */
     footer { background: #072e24; color: #ffffff; padding: 40px; margin-top: 60px; text-align: center; font-size: 0.85rem; opacity: 0.9; }
 
-    /* MOBILE HEADER STYLES (Sol: Kategori, Orta: Logo/Başlık, Sağ: Sepet) */
+    /* MOBILE HEADER STYLES (Sol: Kategori, Orta: Başlık, Sağ: Puan) */
     .mobile-header-left, .mobile-header-right { display: none; }
 
     @media (max-width: 900px) {
@@ -191,9 +191,8 @@
       .mobile-header-right { display: flex; align-items: center; }
       
       .mobile-menu-trigger { background: none; border: none; font-size: 1.3rem; color: var(--primary); cursor: pointer; padding: 5px; }
-      .mobile-logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; }
-      .mobile-cart-trigger { background: none; border: none; font-size: 1.3rem; color: var(--primary); cursor: pointer; position: relative; padding: 5px; }
-
+      .mobile-logo { font-size: 1.3rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+      
       .main-container { padding: 20px 16px 80px; }
       .product-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; }
       .hero-banner { padding: 25px; flex-direction: column; text-align: center; gap: 15px; }
@@ -211,7 +210,7 @@
       <i class="fa-solid fa-leaf"></i>Birimçek
     </a>
 
-    <!-- Mobile Header Layout: Sol (Kategori), Orta (Başlık), Sağ (Sepet) -->
+    <!-- Mobile Header Layout: Sol (Kategori), Orta (Başlık), Sağ (Puan) -->
     <div class="mobile-header-left mobile-only">
       <button class="mobile-menu-trigger" onclick="window.toggleCategoryMenu()">
         <i class="fa-solid fa-bars"></i>
@@ -223,10 +222,9 @@
     </a>
 
     <div class="mobile-header-right mobile-only">
-      <button class="mobile-cart-trigger badge-icon" onclick="window.toggleCart()">
-        <i class="fa-solid fa-basket-shopping"></i>
-        <span class="badge" style="top: -2px; right: -2px;" id="cartBadgeHeaderMobile">0</span>
-      </button>
+      <div class="points-badge" onclick="alert('Ödül Havuzu: Onaylanan video ve fişlerinizden 12 Puan kazandınız!')" title="Krediler / Puanlar" style="font-size:0.75rem; padding: 4px 10px;">
+        <i class="fa-solid fa-star"></i> 12 Puan
+      </div>
     </div>
 
     <!-- Desktop Search Box -->
@@ -277,7 +275,7 @@
   <!-- MAIN CONTENT -->
   <div class="main-container">
     
-    <!-- 8. MADDE: BİRİM FİYAT BİLGİLENDİRME POP-UP -->
+    <!-- BİRİM FİYAT BİLGİLENDİRME POP-UP -->
     <div class="unit-info-popup" id="unitInfoPopup">
       <div class="unit-info-content">
         <i class="fa-solid fa-circle-info"></i>
@@ -301,7 +299,7 @@
       </div>
     </div>
 
-    <!-- 5. MADDE: İNDİRİME GİREN ÜRÜN BOARDLARI -->
+    <!-- İNDİRİME GİREN ÜRÜN BOARDLARI -->
     <div class="discount-board-section">
       <div class="section-title-wrap">
         <h3 class="section-title"><i class="fa-solid fa-bolt" style="color: #ef4444;"></i> Güncellenen Fiyatlar & İndirim Boardu</h3>
@@ -548,11 +546,9 @@
       const totalEl = document.getElementById("cartTotalPrice");
       const bDesktop = document.getElementById("cartBadgeDesktop");
       const bMobile = document.getElementById("cartBadgeMobile");
-      const bHeaderMobile = document.getElementById("cartBadgeHeaderMobile");
 
       if (bDesktop) bDesktop.innerText = window.cart.length;
       if (bMobile) bMobile.innerText = window.cart.length;
-      if (bHeaderMobile) bHeaderMobile.innerText = window.cart.length;
 
       if (window.cart.length === 0) {
         cartBody.innerHTML = `<div class="cart-empty-state"><i class="fa-solid fa-basket-shopping"></i><p>Sepetiniz henüz boş.</p></div>`;
@@ -578,4 +574,3 @@
   </script>
 </body>
 </html>
-

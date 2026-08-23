@@ -28,8 +28,8 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
     body { background-color: #ffffff; color: var(--text-dark); -webkit-tap-highlight-color: transparent; }
 
-    /* HEADER */
-    #header { background: #ffffff; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; border-bottom: 1px solid var(--border-color); }
+    /* HEADER - Sticky (Aşağı kaydıkça takip eder) */
+    #header { background: #ffffff; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
     .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: var(--primary); }
     .logo i { color: var(--primary-light); }
 
@@ -71,7 +71,7 @@
     .hero-btn { background: var(--primary-light); color: var(--primary); border: none; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; }
     .hero-btn-alt { background: transparent; color: white; border: 2px solid white; padding: 12px 28px; border-radius: 30px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block; }
 
-    /* 8. MADDE: BİRİM FİYAT BİLGİLENDİRME POP-UP (BANNER/MODAL) */
+    /* 8. MADDE: BİRİM FİYAT BİLGİLENDİRME POP-UP */
     .unit-info-popup { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 16px 20px; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; animation: fadeIn 0.4s ease; }
     .unit-info-content { display: flex; align-items: center; gap: 15px; }
     .unit-info-content i { font-size: 1.5rem; color: var(--primary); }
@@ -119,7 +119,7 @@
     .drawer-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
     .drawer-overlay.active { opacity: 1; visibility: visible; }
 
-    .side-drawer { position: fixed; top: 0; width: 340px; max-width: 85vw; height: 100vh; background: #ffffff; z-index: 1000; box-shadow: 0 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .side-drawer { position: fixed; top: 0; width: 340px; max-width: 85vw; height: 100vh; background: #ffffff; z-index: 1005; box-shadow: 0 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     #categoryDrawer { left: -360px; }
     #categoryDrawer.active { left: 0; }
     #cartDrawer { right: -360px; }
@@ -146,15 +146,14 @@
     .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.95rem; }
     .cart-total-row strong { font-size: 1.2rem; color: var(--primary); }
     
-    /* 16. Madde Seçenek Alanı */
     .market-limit-box { margin-bottom: 15px; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); }
     .market-limit-box label { font-size: 0.78rem; font-weight: 700; display: block; margin-bottom: 5px; color: var(--text-muted); }
     .market-limit-select { width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; outline: none; }
     
     .cart-checkout-btn { width: 100%; padding: 12px; background: var(--primary-light); color: var(--primary); border: none; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
 
-    /* VIDEO / FİŞ UPLOAD MODAL */
-    .custom-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: #fff; width: 90%; max-width: 500px; border-radius: 16px; z-index: 1001; opacity: 0; visibility: hidden; transition: all 0.3s ease; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+    /* MODALS */
+    .custom-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: #fff; width: 90%; max-width: 500px; border-radius: 16px; z-index: 1006; opacity: 0; visibility: hidden; transition: all 0.3s ease; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
     .custom-modal.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
     .modal-header { padding: 20px 25px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
     .modal-header h3 { font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
@@ -180,13 +179,25 @@
     /* FOOTER */
     footer { background: #072e24; color: #ffffff; padding: 40px; margin-top: 60px; text-align: center; font-size: 0.85rem; opacity: 0.9; }
 
+    /* MOBILE HEADER STYLES (Sol: Kategori, Orta: Logo/Başlık, Sağ: Sepet) */
+    .mobile-header-left, .mobile-header-right { display: none; }
+
     @media (max-width: 900px) {
       .desktop-only, nav { display: none !important; }
       .mobile-only { display: flex !important; }
-      #header { padding: 12px 16px; flex-direction: column; gap: 10px; }
+      
+      #header { padding: 12px 16px; flex-direction: row; justify-content: space-between; align-items: center; gap: 0; }
+      .mobile-header-left { display: flex; align-items: center; }
+      .mobile-header-right { display: flex; align-items: center; }
+      
+      .mobile-menu-trigger { background: none; border: none; font-size: 1.3rem; color: var(--primary); cursor: pointer; padding: 5px; }
+      .mobile-logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+      .mobile-cart-trigger { background: none; border: none; font-size: 1.3rem; color: var(--primary); cursor: pointer; position: relative; padding: 5px; }
+
       .main-container { padding: 20px 16px 80px; }
       .product-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; }
-      .hero-banner { padding: 25px; }
+      .hero-banner { padding: 25px; flex-direction: column; text-align: center; gap: 15px; }
+      .hero-btns { justify-content: center; flex-wrap: wrap; }
       .hero-text h2 { font-size: 1.5rem; }
     }
   </style>
@@ -195,10 +206,30 @@
 
   <!-- HEADER -->
   <header id="header">
+    <!-- Desktop Logo -->
     <a href="index.html" class="logo desktop-only">
       <i class="fa-solid fa-leaf"></i>Birimçek
     </a>
 
+    <!-- Mobile Header Layout: Sol (Kategori), Orta (Başlık), Sağ (Sepet) -->
+    <div class="mobile-header-left mobile-only">
+      <button class="mobile-menu-trigger" onclick="window.toggleCategoryMenu()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <a href="index.html" class="mobile-logo mobile-only">
+      <i class="fa-solid fa-leaf"></i>Birimçek
+    </a>
+
+    <div class="mobile-header-right mobile-only">
+      <button class="mobile-cart-trigger badge-icon" onclick="window.toggleCart()">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span class="badge" style="top: -2px; right: -2px;" id="cartBadgeHeaderMobile">0</span>
+      </button>
+    </div>
+
+    <!-- Desktop Search Box -->
     <div class="search-box-desktop desktop-only">
       <select class="search-category" id="categorySelectDesktop">
         <option value="Tümü">Tüm Kategoriler</option>
@@ -209,6 +240,7 @@
       <button class="search-btn" onclick="window.executeSearch('desktop')">Ara</button>
     </div>
 
+    <!-- Desktop Actions -->
     <div class="header-actions desktop-only">
       <div class="points-badge" onclick="alert('Ödül Havuzu: Onaylanan video ve fişlerinizden 12 Puan kazandınız!')" title="Krediler / Puanlar">
         <i class="fa-solid fa-star"></i> 12 Puan
@@ -227,7 +259,7 @@
     </div>
   </header>
 
-  <!-- NAV -->
+  <!-- NAV (Desktop) -->
   <nav class="desktop-only">
     <div class="nav-left">
       <button class="category-btn" onclick="window.toggleCategoryMenu()">
@@ -245,7 +277,7 @@
   <!-- MAIN CONTENT -->
   <div class="main-container">
     
-    <!-- 8. MADDE: BİRİM FİYAT BİLGİLENDİRME POP-UP (OTOMATİK / KAPATILABİLİR) -->
+    <!-- 8. MADDE: BİRİM FİYAT BİLGİLENDİRME POP-UP -->
     <div class="unit-info-popup" id="unitInfoPopup">
       <div class="unit-info-content">
         <i class="fa-solid fa-circle-info"></i>
@@ -276,7 +308,6 @@
         <span style="font-size: 0.82rem; color: var(--text-muted);">Yapay Zeka Afiş & Aktüel Taraması</span>
       </div>
       <div class="board-scroll" id="discountBoardList">
-        <!-- Örnek Board Kartları -->
         <div class="board-card">
           <span class="board-badge">%25 İndirim</span>
           <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&q=80" class="board-img" alt="Ürün">
@@ -315,7 +346,7 @@
     </div>
   </div>
 
-  <!-- MOBILE TOOLBAR -->
+  <!-- MOBILE TOOLBAR BOTTOM -->
   <div class="toolbar-bottom mobile-only">
     <a href="index.html" class="toolbar-item active">
       <i class="fa-solid fa-house"></i>
@@ -365,7 +396,7 @@
     </div>
   </div>
 
-  <!-- RECEIPT (FİŞ) UPLOAD MODAL -->
+  <!-- RECEIPT UPLOAD MODAL -->
   <div id="receiptOverlay" class="drawer-overlay" onclick="window.toggleReceiptModal()"></div>
   <div id="receiptModal" class="custom-modal">
     <div class="modal-header">
@@ -401,7 +432,7 @@
     </ul>
   </div>
 
-  <!-- CART & OPTIMIZATION DRAWER -->
+  <!-- CART DRAWER -->
   <div id="cartOverlay" class="drawer-overlay" onclick="window.toggleCart()"></div>
   <div id="cartDrawer" class="side-drawer">
     <div class="drawer-header">
@@ -415,7 +446,6 @@
       </div>
     </div>
     <div class="cart-footer">
-      <!-- 16. Madde: Kaç markete gidebileceğini seçme -->
       <div class="market-limit-box">
         <label for="marketLimitSelect"><i class="fa-solid fa-store"></i> En Fazla Kaç Markete Gidebilirsin?</label>
         <select id="marketLimitSelect" class="market-limit-select">
@@ -440,7 +470,7 @@
     <p>&copy; 2026 Birimçek - Yapay Zeka Destekli Fiyat Karşılaştırma Ağı.</p>
   </footer>
 
-  <!-- JAVASCRIPT & SUPABASE -->
+  <!-- SCRIPT -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
@@ -450,7 +480,6 @@
 
     window.cart = [];
 
-    // 8. Madde: Pop-up otomatik kapanma süresi (15 saniye)
     setTimeout(() => {
       window.closeUnitPopup();
     }, 15000);
@@ -460,7 +489,6 @@
       if(popup) popup.style.display = "none";
     };
 
-    // Modals & Drawers
     window.toggleCategoryMenu = () => {
       document.getElementById("categoryDrawer")?.classList.toggle("active");
       document.getElementById("categoryOverlay")?.classList.toggle("active");
@@ -504,7 +532,6 @@
       else window.toggleReceiptModal();
     };
 
-    // Cart & Render Functions
     window.addToCart = (title, price, imgUrl) => {
       window.cart.push({ title, price: parseFloat(price) || 0, imgUrl });
       window.renderCart();
@@ -521,9 +548,11 @@
       const totalEl = document.getElementById("cartTotalPrice");
       const bDesktop = document.getElementById("cartBadgeDesktop");
       const bMobile = document.getElementById("cartBadgeMobile");
+      const bHeaderMobile = document.getElementById("cartBadgeHeaderMobile");
 
       if (bDesktop) bDesktop.innerText = window.cart.length;
       if (bMobile) bMobile.innerText = window.cart.length;
+      if (bHeaderMobile) bHeaderMobile.innerText = window.cart.length;
 
       if (window.cart.length === 0) {
         cartBody.innerHTML = `<div class="cart-empty-state"><i class="fa-solid fa-basket-shopping"></i><p>Sepetiniz henüz boş.</p></div>`;
@@ -549,3 +578,4 @@
   </script>
 </body>
 </html>
+

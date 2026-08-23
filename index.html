@@ -33,10 +33,11 @@
     .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: var(--primary); }
     .logo i { color: var(--primary-light); }
 
-    .search-box-desktop { flex: 1; max-width: 600px; display: flex; border: 2px solid var(--primary); border-radius: 30px; overflow: hidden; height: 44px; }
-    .search-category { background: #f8fafc; border: none; border-right: 1px solid var(--border-color); padding: 0 15px; font-size: 0.82rem; color: #475569; outline: none; cursor: pointer; }
-    .search-input { flex: 1; border: none; padding: 0 15px; font-size: 0.88rem; outline: none; }
-    .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; padding: 0 25px; cursor: pointer; transition: background 0.2s; }
+    /* DESKTOP SEARCH BOX - Daha büyük ve dengeli hale getirildi */
+    .search-box-desktop { flex: 1; max-width: 650px; display: flex; border: 2.5px solid var(--primary); border-radius: 36px; overflow: hidden; height: 50px; background: #fff; box-shadow: 0 2px 8px rgba(11, 77, 60, 0.05); }
+    .search-category { background: #f8fafc; border: none; border-right: 1px solid var(--border-color); padding: 0 18px; font-size: 0.88rem; color: #475569; outline: none; cursor: pointer; font-weight: 600; }
+    .search-input { flex: 1; border: none; padding: 0 18px; font-size: 0.95rem; outline: none; background: transparent; }
+    .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; font-size: 0.95rem; padding: 0 32px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; gap: 8px; }
     .search-btn:hover { background: var(--primary-hover); }
 
     .header-actions { display: flex; align-items: center; gap: 18px; }
@@ -179,7 +180,7 @@
     /* FOOTER */
     footer { background: #072e24; color: #ffffff; padding: 40px; margin-top: 60px; text-align: center; font-size: 0.85rem; opacity: 0.9; }
 
-    /* MOBILE HEADER STYLES (Sol: Kategori, Orta: Başlık, Sağ: Puan) */
+    /* MOBILE HEADER STYLES */
     .mobile-header-left, .mobile-header-right { display: none; }
 
     @media (max-width: 900px) {
@@ -210,7 +211,7 @@
       <i class="fa-solid fa-leaf"></i>Birimçek
     </a>
 
-    <!-- Mobile Header Layout: Sol (Kategori), Orta (Başlık), Sağ (Puan) -->
+    <!-- Mobile Header Layout -->
     <div class="mobile-header-left mobile-only">
       <button class="mobile-menu-trigger" onclick="window.toggleCategoryMenu()">
         <i class="fa-solid fa-bars"></i>
@@ -227,7 +228,7 @@
       </div>
     </div>
 
-    <!-- Desktop Search Box -->
+    <!-- Desktop Search Box (Genişletilmiş ve İyileştirilmiş Arama Alanı) -->
     <div class="search-box-desktop desktop-only">
       <select class="search-category" id="categorySelectDesktop">
         <option value="Tümü">Tüm Kategoriler</option>
@@ -235,7 +236,9 @@
         <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
       </select>
       <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün, marka veya kilogram/adet ara..." onkeypress="if(event.key==='Enter') window.executeSearch('desktop')">
-      <button class="search-btn" onclick="window.executeSearch('desktop')">Ara</button>
+      <button class="search-btn" onclick="window.executeSearch('desktop')">
+        <i class="fa-solid fa-magnifying-glass"></i> Ara
+      </button>
     </div>
 
     <!-- Desktop Actions -->

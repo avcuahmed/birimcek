@@ -1,124 +1,28 @@
-<!-- BİRİM FİYAT BİLGİLENDİRME POP-UP -->
-<div class="unit-info-popup" id="unitInfoPopup">
-  <div class="unit-info-content">
-    <i class="fa-solid fa-circle-info"></i>
-    <div>
-      <h4>Birim Fiyat Sıralaması Aktif!</h4>
-      <p>Ürünler paket büyüklüklerine aldanmamanız için doğrudan <strong>Kilogram / Adet Birim Fiyatına</strong> göre sıralanmıştır.</p>
-    </div>
+<header id="header">
+  <a href="index.html" class="logo desktop-only"><i class="fa-solid fa-leaf"></i>Birimçek</a>
+  <div class="search-box-desktop desktop-only">
+    <select class="search-category" id="categorySelectDesktop">
+      <option value="Tümü">Tüm Kategoriler</option>
+    </select>
+    <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') window.executeSearch()">
+    <button class="search-btn" onclick="window.executeSearch()">Ara</button>
   </div>
-  <button class="unit-info-close" onclick="window.closeUnitPopup()"><i class="fa-solid fa-xmark"></i></button>
-</div>
-
-<!-- DESKTOP HEADER -->
-<header id="header" class="desktop-only">
-  <a href="index.html" class="logo">
-    <i class="fa-solid fa-leaf"></i>Birimçek
-  </a>
-
-  <div class="search-box-desktop">
-    <div class="search-category-dropdown">
-      <button class="search-menu-btn" onclick="window.toggleSearchCategoryDropdown()" title="Kategori Seç">
-        <i class="fa-solid fa-bars"></i>
-        <span id="selectedCategoryText" style="font-size: 0.75rem; font-weight: 700; margin-left: 3px;">Tümü</span>
-        <i class="fa-solid fa-chevron-down" style="font-size: 0.6rem; margin-left: 3px;"></i>
-      </button>
-      <div class="category-dropdown-menu" id="searchCategoryDropdownMenu">
-        <div onclick="window.selectSearchCategory('Tümü', 'Tümü')">Tüm Kategoriler</div>
-        <div onclick="window.selectSearchCategory('Meyve & Sebze', 'Meyve & Sebze')">Meyve & Sebze</div>
-        <div onclick="window.selectSearchCategory('Et & Şarküteri', 'Et & Şarküteri')">Et & Şarküteri</div>
-        <div onclick="window.selectSearchCategory('Süt & Kahvaltı', 'Süt & Kahvaltı')">Süt & Kahvaltı</div>
-        <div onclick="window.selectSearchCategory('Temel Gıda', 'Temel Gıda')">Temel Gıda</div>
-        <div onclick="window.selectSearchCategory('Atıştırmalık', 'Atıştırmalık')">Atıştırmalık</div>
-        <div onclick="window.selectSearchCategory('İçecekler', 'İçecekler')">İçecekler</div>
-        <div onclick="window.selectSearchCategory('Temizlik', 'Temizlik')">Temizlik</div>
-      </div>
-    </div>
-    
-    <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün, marka veya kilogram/adet ara..." onkeypress="if(event.key==='Enter') window.executeSearch('desktop')">
-    <button class="search-btn" onclick="window.executeSearch('desktop')" title="Ara">
-      <i class="fa-solid fa-magnifying-glass"></i>
-    </button>
-  </div>
-
-  <div class="header-actions">
-    <button class="video-upload-btn" onclick="window.toggleVideoModal()">
-      <i class="fa-solid fa-video"></i> VİDEO
-    </button>
-    <button class="video-upload-btn" style="background:var(--primary);" onclick="window.toggleReceiptModal()">
-      <i class="fa-solid fa-receipt"></i> FİŞ
-    </button>
-    <div class="points-badge" onclick="alert('Ödül Havuzu: Onaylanan video ve fişlerinizden 12 Puan kazandınız!')" title="Krediler / Puanlar">
-      <i class="fa-solid fa-star"></i> 12 Puan
-    </div>
-    <a href="hesabim.html" class="action-item" title="Hesabım"><i class="fa-regular fa-user"></i></a>
-    <button class="action-item badge-icon" onclick="window.toggleCart()" title="Sepetim">
-      <i class="fa-solid fa-basket-shopping"></i> 
-      <span class="badge" id="cartBadgeDesktop">0</span>
+  <div class="header-actions desktop-only">
+    <a href="hesabim.html" class="action-item"><i class="fa-regular fa-user"></i> HESABIM</a>
+    <button class="action-item badge-icon" onclick="window.toggleCart()">
+      <i class="fa-solid fa-basket-shopping"></i> SEPETİM <span class="badge" id="cartBadgeDesktop">0</span>
     </button>
   </div>
 </header>
 
-<!-- MOBILE FLOATING HEADER -->
-<div class="mobile-floating-header" id="mobileFloatingHeader">
-  <div class="mf-default-content">
-    <div class="mf-left">
-      <button class="mf-menu-btn" onclick="window.toggleCategoryMenu()">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-    </div>
-
-    <a href="index.html" class="mf-logo">
-      <i class="fa-solid fa-leaf"></i>Birimçek
-    </a>
-
-    <div class="mf-right">
-      <div class="points-badge" onclick="alert('Ödül Havuzu: 12 Puan')" style="font-size:0.65rem; padding: 3px 6px;">
-        <i class="fa-solid fa-star"></i> 12 P
-      </div>
-      <button class="mf-search-btn" onclick="window.openMobileSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
-      <a href="hesabim.html" class="mf-account"><i class="fa-regular fa-user"></i></a>
-      <button class="mf-cart" onclick="window.toggleCart()">
-        <i class="fa-solid fa-basket-shopping"></i>
-        <span class="badge" style="top:-5px; right:-5px;" id="cartBadgeMobile">0</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="mf-search-container" id="mfSearchContainer">
-    <div class="mf-search-category">
-      <button class="mf-search-cat-btn" onclick="window.toggleMfCatDropdown()">
-        <span id="mfSelectedCatText">Tümü</span>
-        <i class="fa-solid fa-chevron-down" style="font-size: 0.6rem;"></i>
-      </button>
-      <div class="mf-category-dropdown" id="mfCatDropdownMenu">
-        <div onclick="window.selectMfCategory('Tümü', 'Tümü')">Tüm Kategoriler</div>
-        <div onclick="window.selectMfCategory('Meyve & Sebze', 'Meyve & Sebze')">Meyve & Sebze</div>
-        <div onclick="window.selectMfCategory('Et & Şarküteri', 'Et & Şarküteri')">Et & Şarküteri</div>
-        <div onclick="window.selectMfCategory('Süt & Kahvaltı', 'Süt & Kahvaltı')">Süt & Kahvaltı</div>
-        <div onclick="window.selectMfCategory('Temel Gıda', 'Temel Gıda')">Temel Gıda</div>
-        <div onclick="window.selectMfCategory('Atıştırmalık', 'Atıştırmalık')">Atıştırmalık</div>
-        <div onclick="window.selectMfCategory('İçecekler', 'İçecekler')">İçecekler</div>
-        <div onclick="window.selectMfCategory('Temizlik', 'Temizlik')">Temizlik</div>
-      </div>
-    </div>
-    <input type="text" class="mf-search-input" id="searchInputMobile" placeholder="Ürün, marka ara..." onkeypress="if(event.key==='Enter') window.executeSearch('mobile')">
-    <button class="mf-search-submit" onclick="window.executeSearch('mobile')"><i class="fa-solid fa-magnifying-glass"></i></button>
-    <button class="mf-search-close" onclick="window.closeMobileSearch()"><i class="fa-solid fa-xmark"></i></button>
-  </div>
-</div>
-
-<!-- NAV (Desktop) -->
 <nav class="desktop-only">
   <div class="nav-left">
-    <button class="desktop-quick-search-btn" onclick="window.toggleCategoryMenu()">
-      <i class="fa-solid fa-bars"></i> Tüm Kategoriler
-    </button>
+    <button class="category-btn" onclick="window.toggleCategoryMenu()"><i class="fa-solid fa-bars"></i> Tüm Kategoriler</button>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Ana Sayfa</a></li>
+      <li><a href="index.html">Ana Sayfa</a></li>
       <li><a href="urunler.html">Tüm Ürünler</a></li>
       <li><a href="marketler.html">Marketler</a></li>
-      <li><a href="firsatlar.html">Aktüel & Fırsatlar</a></li>
+      <li><a href="firsatlar.html">Fırsatlar</a></li>
     </ul>
   </div>
 </nav>

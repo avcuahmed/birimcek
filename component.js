@@ -20,20 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.5rem; font-weight: 800; color: var(--primary); white-space: nowrap; flex-shrink: 0; }
     .logo i { color: var(--primary-light); }
 
-    /* DESKTOP SEARCH BOX & CATEGORY DROPDOWN */
+    /* DESKTOP SEARCH BOX */
     .search-box-desktop { flex: 0 1 520px; display: flex; align-items: center; border: 2px solid var(--primary); border-radius: 30px; overflow: visible; height: 42px; background: #fff; box-shadow: 0 2px 8px rgba(11, 77, 60, 0.05); padding-left: 4px; position: relative; cursor: pointer; }
     .search-category-dropdown { position: relative; display: flex; align-items: center; border-right: 1px solid var(--border-color); padding-right: 4px; flex-shrink: 0; height: 100%; }
     .search-menu-btn { background: transparent; border: none; padding: 0 8px; font-size: 0.9rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s; white-space: nowrap; height: 100%; }
     
-    .category-dropdown-menu {
-      position: absolute; top: 46px; left: 0; background: #ffffff; border: 1px solid var(--border-color);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 12px; width: 210px; max-height: 250px;
-      overflow-y: auto; z-index: 1050; display: none; padding: 6px 0;
-    }
-    .category-dropdown-menu.active { display: block; }
-    .category-dropdown-menu div { padding: 10px 16px; font-size: 0.85rem; font-weight: 600; color: var(--text-dark); cursor: pointer; transition: background 0.2s; white-space: nowrap; }
-    .category-dropdown-menu div:hover { background: var(--bg-soft); color: var(--primary); }
-
     .search-input-fake { flex: 1; padding: 0 10px; font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; font-size: 0.9rem; width: 42px; height: 42px; cursor: pointer; display: flex; align-items: center; justify-content: center; border-top-right-radius: 26px; border-bottom-right-radius: 26px; flex-shrink: 0; }
 
@@ -155,7 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
   styleEl.innerHTML = styles;
   document.head.appendChild(styleEl);
 
-  // Ortak Header, Modaller ve Arama Popup HTML Yapısı
   const componentHTML = `
     <!-- ARAMA POP-UP / MODAL -->
     <div class="search-modal-overlay" id="searchModalOverlay" onclick="window.closeSearchModal()"></div>
@@ -306,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.insertAdjacentHTML("afterbegin", componentHTML);
 });
 
-// Global Etkileşim Fonksiyonları
+// Arama Pop-Up İşlevleri
 window.openSearchModal = () => {
   document.getElementById("searchModalOverlay")?.classList.add("active");
   document.getElementById("searchModalBox")?.classList.add("active");

@@ -1,10 +1,12 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
+Main · JS
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+ 
 // --- GLOBAL DEĞİŞKENLER VE SEPET ---
 window.cart = [];
 window.currentSearchCategory = "Tümü";
 window.currentMfCategory = "Tümü";
-
+ 
 // Header, Footer ve Drawer HTML parçalarını yükleyen fonksiyon
 window.loadComponents = async () => {
     const parts = [
@@ -12,7 +14,7 @@ window.loadComponents = async () => {
         { url: "./components/drawer.html", target: "drawers-container" },
         { url: "./components/footer.html", target: "footer-container" }
     ];
-
+ 
     for (const part of parts) {
         try {
             const res = await fetch(part.url);
@@ -25,25 +27,25 @@ window.loadComponents = async () => {
         }
     }
 };
-
+ 
 // Sayfa açıldığında önce component'leri, sonra sepeti yükle
 document.addEventListener("DOMContentLoaded", async () => {
     await window.loadComponents();
     window.renderCart();
 });
-
+ 
 // Arama Kategori Dropdown Fonksiyonları
 window.toggleSearchCategoryDropdown = () => {
     document.getElementById("searchCategoryDropdownMenu")?.classList.toggle("active");
 };
-
+ 
 window.selectSearchCategory = (catKey, catLabel) => {
     window.currentSearchCategory = catKey;
     const textEl = document.getElementById("selectedCategoryText");
     if(textEl) textEl.innerText = catLabel;
     window.toggleSearchCategoryDropdown();
 };
-
+ 
 // Mobil Arama Paneli Fonksiyonları
 window.openMobileSearch = () => {
     const header = document.getElementById("mobileFloatingHeader");
@@ -52,23 +54,23 @@ window.openMobileSearch = () => {
         setTimeout(() => document.getElementById("searchInputMobile")?.focus(), 100);
     }
 };
-
+ 
 window.closeMobileSearch = () => {
     document.getElementById("mobileFloatingHeader")?.classList.remove("search-active");
     document.getElementById("mfCatDropdownMenu")?.classList.remove("active");
 };
-
+ 
 window.toggleMfCatDropdown = () => {
     document.getElementById("mfCatDropdownMenu")?.classList.toggle("active");
 };
-
+ 
 window.selectMfCategory = (catKey, catLabel) => {
     window.currentMfCategory = catKey;
     const textEl = document.getElementById("mfSelectedCatText");
     if(textEl) textEl.innerText = catLabel;
     window.toggleMfCatDropdown();
 };
-
+ 
 window.executeSearch = (type) => {
     const input = document.getElementById(type === 'desktop' ? 'searchInputDesktop' : 'searchInputMobile');
     const query = input?.value || '';
@@ -76,12 +78,12 @@ window.executeSearch = (type) => {
     alert(`Seçilen Kategori: "${category}"\nAranan Kelime: "${query}"`);
     if(type === 'mobile') window.closeMobileSearch();
 };
-
+ 
 window.goToCategoryPage = (catName) => {
     alert(`"${catName}" kategorisine ait ürünler listeleniyor...`);
     window.toggleCategoryMenu();
 };
-
+ 
 window.handleProductSort = (sortValue) => {
     const popup = document.getElementById("unitInfoPopup");
     if (sortValue && sortValue.includes("unit")) {
@@ -90,11 +92,11 @@ window.handleProductSort = (sortValue) => {
         popup?.classList.remove("active");
     }
 };
-
+ 
 window.closeUnitPopup = () => {
     document.getElementById("unitInfoPopup")?.classList.remove("active");
 };
-
+ 
 // Drawer (Menü ve Sepet Çekmeceleri) Kontrolleri
 window.toggleCategoryMenu = () => {
     const drawer = document.getElementById("categoryDrawer");
@@ -102,25 +104,25 @@ window.toggleCategoryMenu = () => {
     drawer?.classList.toggle("active");
     overlay?.classList.toggle("active");
 };
-
+ 
 window.toggleCart = () => {
     const drawer = document.getElementById("cartDrawer");
     const overlay = document.getElementById("cartOverlay");
     drawer?.classList.toggle("active");
     overlay?.classList.toggle("active");
 };
-
+ 
 // Video ve Fiş Modal Kontrolleri
 window.toggleVideoModal = () => {
     document.getElementById("videoModal")?.classList.toggle("active");
     document.getElementById("videoOverlay")?.classList.toggle("active");
 };
-
+ 
 window.toggleReceiptModal = () => {
     document.getElementById("receiptModal")?.classList.toggle("active");
     document.getElementById("receiptOverlay")?.classList.toggle("active");
 };
-
+ 
 window.handleFileSelect = (event, type) => {
     const file = event.target.files[0];
     if(file) {
@@ -135,42 +137,42 @@ window.handleFileSelect = (event, type) => {
         }
     }
 };
-
+ 
 window.submitUpload = (type) => {
     alert(type === 'video' ? "Video yüklendi! Yapay zeka denetimi sonrasında kredileriniz hesabınıza yansıtılacaktır." : "Fiş yüklendi! Değerlendirme haklarınız tanımlandı.");
     if(type === 'video') window.toggleVideoModal();
     else window.toggleReceiptModal();
 };
-
+ 
 // Sepet Yönetim Fonksiyonları
 window.addToCart = (title, price, imgUrl) => {
     window.cart.push({ title, price: parseFloat(price) || 0, imgUrl });
     window.renderCart();
     window.toggleCart();
 };
-
+ 
 window.removeFromCart = (index) => {
     window.cart.splice(index, 1);
     window.renderCart();
 };
-
+ 
 window.renderCart = () => {
     const cartBody = document.getElementById("cartBody");
     const totalEl = document.getElementById("cartTotalPrice");
     const bDesktop = document.getElementById("cartBadgeDesktop");
     const bMobile = document.getElementById("cartBadgeMobile");
-
+ 
     if (bDesktop) bDesktop.innerText = window.cart.length;
     if (bMobile) bMobile.innerText = window.cart.length;
-
+ 
     if (!cartBody) return;
-
+ 
     if (window.cart.length === 0) {
         cartBody.innerHTML = `<div class="cart-empty-state"><i class="fa-solid fa-basket-shopping"></i><p>Sepetiniz henüz boş.</p></div>`;
         if(totalEl) totalEl.innerText = "0.00 ₺";
         return;
     }
-
+ 
     let total = 0;
     cartBody.innerHTML = window.cart.map((item, index) => {
         total += item.price;
@@ -186,8 +188,9 @@ window.renderCart = () => {
     }).join('');
     if(totalEl) totalEl.innerText = total.toFixed(2) + " ₺";
 };
-
+ 
 // Supabase Bağlantısı
 const SUPABASE_URL = "https://lejkdyhensjyauburrxk.supabase.co";
 const SUPABASE_KEY = "YOUR_KEY_HERE";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+ 

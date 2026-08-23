@@ -19,9 +19,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: #ffffff; color: var(--text-dark); -webkit-tap-highlight-color: transparent; }
 
-    /* ==========================================
-       1. MASAÜSTÜ TASARIMI
-       ========================================== */
+    /* MASAÜSTÜ TASARIMI */
     .top-bar { background: var(--primary); color: #ffffff; font-size: 0.78rem; padding: 6px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .top-bar-info { display: flex; gap: 20px; }
     .top-bar-options { display: flex; gap: 15px; }
@@ -34,10 +32,9 @@
     .search-category { background: #f8fafc; border: none; border-right: 1px solid var(--border-color); padding: 0 15px; font-size: 0.85rem; color: #475569; outline: none; cursor: pointer; }
     .search-input { flex: 1; border: none; padding: 0 15px; font-size: 0.88rem; outline: none; }
     .search-btn { background: var(--primary-light); border: none; color: var(--primary); font-weight: 700; padding: 0 25px; cursor: pointer; transition: background 0.2s; }
-    .search-btn:hover { background: #3bd683; }
 
     .header-actions { display: flex; align-items: center; gap: 25px; color: #ffffff; font-size: 0.85rem; font-weight: 600; }
-    .action-item { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; color: #ffffff; }
+    .action-item { display: flex; align-items: center; gap: 8px; cursor: pointer; text-decoration: none; color: #ffffff; background: none; border: none; font-size: 0.85rem; font-weight: 600; }
     .action-item i { font-size: 1.1rem; }
     .badge-icon { position: relative; }
     .badge { position: absolute; top: -6px; right: -8px; background: var(--primary-light); color: var(--primary); font-size: 0.65rem; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
@@ -49,101 +46,87 @@
     .category-btn { background: #ffffff; border: none; font-weight: 700; font-size: 0.9rem; color: var(--text-dark); display: flex; align-items: center; gap: 10px; cursor: pointer; height: 100%; }
     .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; width: 260px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 0 0 8px 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); z-index: 100; list-style: none; padding: 10px 0; max-height: 420px; overflow-y: auto; }
     .category-dropdown:hover .dropdown-menu { display: block; }
-    .dropdown-menu li a { display: flex; justify-content: space-between; align-items: center; padding: 9px 20px; text-decoration: none; color: #334155; font-size: 0.85rem; font-weight: 500; transition: background 0.2s; }
-    .dropdown-menu li a:hover { background: var(--bg-soft); color: var(--primary); }
+    .dropdown-menu li a { display: flex; justify-content: space-between; align-items: center; padding: 9px 20px; text-decoration: none; color: #334155; font-size: 0.85rem; font-weight: 500; }
 
     .nav-links { display: flex; gap: 25px; list-style: none; }
-    .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.88rem; font-weight: 600; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--primary); }
+    .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.88rem; font-weight: 600; }
     .special-offer-link { background: var(--primary-light); color: var(--primary) !important; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem !important; font-weight: 700; text-decoration: none; }
 
-    .hero-section { background: linear-gradient(135deg, #f3fbf6 0%, #e8f7ee 100%); padding: 50px 40px; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+    .hero-section { background: linear-gradient(135deg, #f3fbf6 0%, #e8f7ee 100%); padding: 50px 40px; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; }
     .hero-content { max-width: 500px; }
-    .hero-subtitle { color: var(--primary); font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
     .hero-title { font-size: 2.8rem; font-weight: 800; color: var(--primary); line-height: 1.2; margin-bottom: 15px; }
-    .hero-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px; }
-    .hero-btn { background: var(--primary-light); color: var(--primary); border: none; padding: 12px 28px; font-size: 0.9rem; font-weight: 700; border-radius: 6px; cursor: pointer; transition: transform 0.2s; }
-    .hero-btn:hover { transform: translateY(-2px); }
+    .hero-btn { background: var(--primary-light); color: var(--primary); border: none; padding: 12px 28px; font-size: 0.9rem; font-weight: 700; border-radius: 6px; cursor: pointer; }
     .hero-image { max-width: 480px; height: auto; border-radius: 12px; }
 
     .main-container { padding: 0 40px 60px; max-width: 1400px; margin: 0 auto; }
     .section-title { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
 
     .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-bottom: 50px; }
-    .cat-card { border-radius: 12px; padding: 18px 12px; text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; background: #f8fafc; border: 1px solid var(--border-color); }
-    .cat-card:hover { transform: translateY(-4px); box-shadow: 0 6px 15px rgba(0,0,0,0.05); border-color: var(--primary-light); }
+    .cat-card { border-radius: 12px; padding: 18px 12px; text-align: center; cursor: pointer; background: #f8fafc; border: 1px solid var(--border-color); }
     .cat-card i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; display: block; }
-    .cat-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+    .cat-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); }
 
     .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-    .product-card { border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; background: #ffffff; transition: box-shadow 0.2s, transform 0.2s; position: relative; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
-    .product-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.06); transform: translateY(-2px); }
-    .best-badge { position: absolute; top: 12px; left: 12px; background: #10b981; color: white; font-size: 0.65rem; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
-    .product-img { width: 100%; height: 140px; object-fit: contain; margin-bottom: 12px; }
+    .product-card { border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; background: #ffffff; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
+    .product-img { width: 100%; height: 130px; object-fit: contain; margin-bottom: 12px; cursor: pointer; }
     .product-vendor { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
-    .product-title { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); margin-bottom: 10px; line-height: 1.3; height: 36px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .product-title { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); margin-bottom: 10px; line-height: 1.3; height: 36px; overflow: hidden; cursor: pointer; }
 
-    .unit-price-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 8px; border-radius: 6px; }
-    .unit-price-val { color: var(--primary); font-weight: 800; font-size: 1.05rem; }
-    .net-price-val { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+    .unit-price-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 8px; border-radius: 6px; margin-bottom: 10px; }
+    .unit-price-val { color: var(--primary); font-weight: 800; font-size: 1rem; }
+    
+    .add-to-cart-btn { width: 100%; background: var(--primary); color: #ffffff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: background 0.2s; }
+    .add-to-cart-btn:hover { background: var(--primary-hover); }
 
     .mobile-only { display: none !important; }
 
-    /* ==========================================
-       2. MOBİL TASARIM
-       ========================================== */
+    /* YANDAN AÇILIR SEPET CSS STİLLERİ */
+    .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+    .cart-overlay.active { opacity: 1; visibility: visible; }
+
+    .cart-drawer { position: fixed; top: 0; right: -400px; width: 380px; max-width: 90vw; height: 100vh; background: #ffffff; z-index: 1000; box-shadow: -5px 0 25px rgba(0,0,0,0.15); display: flex; flex-direction: column; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .cart-drawer.active { right: 0; }
+
+    .cart-header { padding: 20px; background: var(--primary); color: #ffffff; display: flex; align-items: center; justify-content: space-between; }
+    .cart-header h3 { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .cart-close-btn { background: transparent; border: none; color: white; font-size: 1.3rem; cursor: pointer; }
+
+    .cart-body { flex: 1; padding: 20px; overflow-y: auto; }
+    .cart-empty-state { text-align: center; color: #94a3b8; margin-top: 60px; }
+    .cart-empty-state i { font-size: 3rem; margin-bottom: 10px; display: block; }
+
+    .cart-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
+    .cart-item-img { width: 48px; height: 48px; object-fit: contain; border-radius: 6px; border: 1px solid var(--border-color); }
+    .cart-item-details { flex: 1; }
+    .cart-item-title { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+    .cart-item-price { font-size: 0.85rem; color: var(--primary); font-weight: 800; }
+    .cart-item-remove { background: transparent; border: none; color: #ef4444; cursor: pointer; font-size: 0.9rem; padding: 5px; }
+
+    .cart-footer { padding: 20px; border-top: 1px solid var(--border-color); background: #f8faf9; }
+    .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 0.95rem; }
+    .cart-total-row strong { font-size: 1.2rem; color: var(--primary); }
+    .cart-checkout-btn { width: 100%; padding: 12px; background: var(--primary-light); color: var(--primary); border: none; border-radius: 8px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
+
     @media (max-width: 900px) {
       .desktop-only, .top-bar, nav, .hero-section { display: none !important; }
       .mobile-only { display: flex !important; }
-
-      body { background-color: #f8faf9; }
-
-      header { background: transparent; padding: 12px 16px 0; flex-direction: column; gap: 10px; position: relative; z-index: 20; }
-      .mobile-top-nav { width: 100%; background: #ffffff; border-radius: 30px; padding: 8px 18px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
-      .mobile-logo { font-size: 1.3rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; }
-      .mobile-logo i { color: var(--primary-light); }
-      .mobile-actions { display: flex; align-items: center; gap: 15px; }
-
+      header { background: transparent; padding: 12px 16px 0; flex-direction: column; gap: 10px; }
+      .mobile-top-nav { width: 100%; background: #ffffff; border-radius: 30px; padding: 8px 18px; display: flex; align-items: center; justify-content: space-between; }
       .mobile-search-box { width: 100%; display: flex; background: #ffffff; border-radius: 25px; border: 1px solid var(--border-color); overflow: hidden; padding: 4px 6px; align-items: center; }
-      .mobile-search-category { background: transparent; border: none; border-right: 1px solid var(--border-color); padding: 0 6px; font-size: 0.75rem; color: #475569; outline: none; max-width: 95px; text-overflow: ellipsis; white-space: nowrap; }
-      .mobile-search-input { flex: 1; border: none; padding: 8px; font-size: 0.85rem; outline: none; width: 50%; }
-      .mobile-search-btn { background: var(--primary); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
-
-      .mobile-hero-banner { background: #262626; color: #ffffff; padding: 25px 20px; border-radius: 20px; margin: 12px 16px 0; position: relative; overflow: hidden; display: block !important; }
-      .mobile-hero-content { max-width: 60%; position: relative; z-index: 2; }
-      .mobile-hero-title { font-size: 1.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
-      .mobile-hero-btn { background: var(--primary-light); color: #0f2d24; border: none; padding: 8px 18px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
-      .mobile-hero-bg { position: absolute; right: -15px; bottom: -10px; width: 50%; max-width: 200px; pointer-events: none; }
-      
-      .dots { display: flex; gap: 6px; margin-top: 15px; }
-      .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); }
-      .dot.active { width: 10px; height: 10px; background: #ffffff; border: 2px solid #333; }
-
-      .main-container { padding: 20px 16px 50px; }
-      .section-title { font-size: 1.2rem; margin-bottom: 15px; }
-
-      .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 30px; }
-      .cat-card { background: #ffffff; border-radius: 20px; padding: 18px 10px; border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.03); display: flex; flex-direction: column; align-items: center; }
-      .cat-card i { font-size: 2.2rem; margin-bottom: 8px; }
-      .cat-card h4 { font-size: 0.95rem; font-weight: 800; color: var(--primary); }
-
-      .product-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; }
-      .product-card { border: none; border-radius: 16px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-      .product-img { height: 100px; }
-      .product-title { font-size: 0.8rem; height: 32px; }
-      .unit-price-box { padding: 6px; }
-      .unit-price-val { font-size: 0.9rem; }
+      .mobile-search-input { flex: 1; border: none; padding: 8px; font-size: 0.85rem; outline: none; }
+      .mobile-search-btn { background: var(--primary); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Masaüstü Üst Bar -->
+  <!-- MASAÜSTÜ TOP BAR -->
   <div class="top-bar desktop-only">
     <div class="top-bar-info">
       <span>📞 +90 850 123 45 67</span>
       <span>✉️ destek@birimcek.com</span>
-      <span>🚚 Tüm Market Fiyatları Birimçek'te</span>
     </div>
     <div class="top-bar-options">
       <span>TRY ₺</span>
@@ -151,152 +134,57 @@
     </div>
   </div>
 
-  <!-- Header Alanı -->
+  <!-- HEADER -->
   <header>
     <a href="index.html" class="logo desktop-only">
       <i class="fa-solid fa-leaf"></i>Birimçek
     </a>
 
-    <!-- Masaüstü Arama Barı -->
     <div class="search-box-desktop desktop-only">
       <select class="search-category" id="categorySelectDesktop">
         <option value="Tümü">Tüm Kategoriler</option>
         <option value="Meyve & Sebze">Meyve & Sebze</option>
-        <option value="Et, Balık & Şarküteri">Et, Balık & Şarküteri</option>
         <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
         <option value="Temel Gıda">Temel Gıda</option>
-        <option value="Atıştırmalıklar">Atıştırmalıklar</option>
-        <option value="İçecekler">İçecekler</option>
-        <option value="Fırın & Pastane">Fırın & Pastane</option>
-        <option value="Dondurulmuş Gıdalar">Dondurulmuş Gıdalar</option>
-        <option value="Deterjan & Ev Temizliği">Deterjan & Ev Temizliği</option>
-        <option value="Kişisel Bakım & Hijyen">Kişisel Bakım & Hijyen</option>
-        <option value="Kağıt Ürünleri">Kağıt Ürünleri</option>
-        <option value="Bebek Dünyası">Bebek Dünyası</option>
-        <option value="Evcil Dostlar">Evcil Dostlar</option>
-        <option value="Ev & Yaşam">Ev & Yaşam</option>
+        <option value="Deterjan & Ev Temizliği">Deterjan & Temizlik</option>
       </select>
       <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') executeSearch('desktop')">
       <button class="search-btn" onclick="executeSearch('desktop')">Ara</button>
     </div>
 
-    <!-- Masaüstü Sağ Linkler -->
     <div class="header-actions desktop-only">
       <a href="hesabim.html" class="action-item"><i class="fa-regular fa-user"></i> HESABIM</a>
-      <a href="hesabim.html?tab=favoriler" class="action-item"><i class="fa-regular fa-heart"></i> FAVORİLERİM</a>
-      <a href="sepet.html" class="action-item badge-icon"><i class="fa-solid fa-basket-shopping"></i><span class="badge">0</span></a>
+      <!-- Sepet Butonu (Drawer Tetikleyici) -->
+      <button class="action-item badge-icon" onclick="toggleCart()">
+        <i class="fa-solid fa-basket-shopping"></i> SEPETİM 
+        <span class="badge" id="cartBadgeDesktop">0</span>
+      </button>
     </div>
 
-    <!-- Mobil Header -->
+    <!-- MOBİL HEADER -->
     <div class="mobile-top-nav mobile-only">
-      <button style="background:none; border:none; font-size:1.1rem;"><i class="fa-solid fa-bars"></i></button>
-      <a href="index.html" class="mobile-logo"><i class="fa-solid fa-leaf"></i> Birimçek</a>
-      <div class="mobile-actions">
-        <a href="hesabim.html" style="color:#1e293b;"><i class="fa-regular fa-user"></i></a>
-        <a href="sepet.html" style="color:#1e293b; position:relative;"><i class="fa-solid fa-basket-shopping"></i><span class="badge" style="background:var(--primary); color:#fff;">0</span></a>
-      </div>
+      <a href="index.html" class="logo" style="color:var(--primary); font-size:1.3rem;"><i class="fa-solid fa-leaf" style="color:var(--primary-light);"></i> Birimçek</a>
+      <button class="action-item badge-icon" onclick="toggleCart()" style="color:var(--text-dark);">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span class="badge" id="cartBadgeMobile" style="background:var(--primary); color:#fff;">0</span>
+      </button>
     </div>
 
-    <!-- Mobil Arama Barı -->
     <div class="mobile-search-box mobile-only">
-      <select class="mobile-search-category" id="categorySelectMobile">
-        <option value="Tümü">Tümü</option>
-        <option value="Meyve & Sebze">Meyve & Sebze</option>
-        <option value="Et, Balık & Şarküteri">Et, Balık & Şarküteri</option>
-        <option value="Süt & Kahvaltılık">Süt & Kahvaltılık</option>
-        <option value="Temel Gıda">Temel Gıda</option>
-        <option value="Atıştırmalıklar">Atıştırmalıklar</option>
-        <option value="İçecekler">İçecekler</option>
-        <option value="Fırın & Pastane">Fırın & Pastane</option>
-        <option value="Dondurulmuş Gıdalar">Dondurulmuş Gıdalar</option>
-        <option value="Deterjan & Ev Temizliği">Deterjan & Temizlik</option>
-        <option value="Kişisel Bakım & Hijyen">Kişisel Bakım</option>
-        <option value="Kağıt Ürünleri">Kağıt Ürünleri</option>
-        <option value="Bebek Dünyası">Bebek Dünyası</option>
-        <option value="Evcil Dostlar">Evcil Dostlar</option>
-        <option value="Ev & Yaşam">Ev & Yaşam</option>
-      </select>
       <input type="text" class="mobile-search-input" id="searchInputMobile" placeholder="Ürün veya marka ara..." onkeypress="if(event.key==='Enter') executeSearch('mobile')">
       <button class="mobile-search-btn" onclick="executeSearch('mobile')"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
   </header>
 
-  <!-- Yandan Açılır Sepet Drawer Yapısı -->
-<div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
-
-<div id="cartDrawer" class="cart-drawer">
-  <div class="cart-header">
-    <h3><i class="fa-solid fa-basket-shopping"></i> Sepetim & Kıyaslama</h3>
-    <button class="cart-close-btn" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
-  </div>
-
-  <div class="cart-body" id="cartBody">
-    <!-- Ürünler buraya dinamik dolacak -->
-    <div class="cart-empty-state">
-      <i class="fa-solid fa-basket-shopping"></i>
-      <p>Sepetiniz henüz boş.</p>
-    </div>
-  </div>
-
-  <div class="cart-footer">
-    <div class="cart-total-row">
-      <span>Tahmini Toplam Tutar:</span>
-      <strong id="cartTotalPrice">0.00 ₺</strong>
-    </div>
-    <button class="cart-checkout-btn" onclick="alert('En uygun markete göre listeniz tamamlandı!')">
-      Market Kıyaslamasını Gör
-    </button>
-  </div>
-</div>
-  
-  <!-- Yandan Açılır Sepet Drawer Yapısı -->
-<div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
-
-<div id="cartDrawer" class="cart-drawer">
-  <div class="cart-header">
-    <h3><i class="fa-solid fa-basket-shopping"></i> Sepetim & Kıyaslama</h3>
-    <button class="cart-close-btn" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
-  </div>
-
-  <div class="cart-body" id="cartBody">
-    <!-- Ürünler buraya dinamik dolacak -->
-    <div class="cart-empty-state">
-      <i class="fa-solid fa-basket-shopping"></i>
-      <p>Sepetiniz henüz boş.</p>
-    </div>
-  </div>
-
-  <div class="cart-footer">
-    <div class="cart-total-row">
-      <span>Tahmini Toplam Tutar:</span>
-      <strong id="cartTotalPrice">0.00 ₺</strong>
-    </div>
-    <button class="cart-checkout-btn" onclick="alert('En uygun markete göre listeniz tamamlandı!')">
-      Market Kıyaslamasını Gör
-    </button>
-  </div>
-</div>
-
-  <!-- Navigasyon Menüsü -->
+  <!-- NAV -->
   <nav class="desktop-only">
     <div class="nav-left">
       <div class="category-dropdown">
         <button class="category-btn"><i class="fa-solid fa-bars"></i> Tüm Kategoriler <i class="fa-solid fa-chevron-down" style="font-size:0.7rem;"></i></button>
         <ul class="dropdown-menu">
           <li><a href="#" onclick="goToCategoryPage('Meyve & Sebze')">Meyve & Sebze</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Et, Balık & Şarküteri')">Et, Balık & Şarküteri</a></li>
           <li><a href="#" onclick="goToCategoryPage('Süt & Kahvaltılık')">Süt & Kahvaltılık</a></li>
           <li><a href="#" onclick="goToCategoryPage('Temel Gıda')">Temel Gıda</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Atıştırmalıklar')">Atıştırmalıklar</a></li>
-          <li><a href="#" onclick="goToCategoryPage('İçecekler')">İçecekler</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Fırın & Pastane')">Fırın & Pastane</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Dondurulmuş Gıdalar')">Dondurulmuş Gıdalar</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Deterjan & Ev Temizliği')">Deterjan & Ev Temizliği</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Kişisel Bakım & Hijyen')">Kişisel Bakım & Hijyen</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Kağıt Ürünleri')">Kağıt Ürünleri</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Bebek Dünyası')">Bebek Dünyası</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Evcil Dostlar')">Evcil Dostlar</a></li>
-          <li><a href="#" onclick="goToCategoryPage('Ev & Yaşam')">Ev & Yaşam</a></li>
         </ul>
       </div>
       <ul class="nav-links">
@@ -304,159 +192,155 @@
         <li><a href="firsatlar.html">Fırsatlar</a></li>
         <li><a href="marketler.html">Marketler</a></li>
         <li><a href="urunler.html">Tüm Ürünler</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="iletisim.html">İletişim</a></li>
       </ul>
-    </div>
-    <div>
-      <a href="firsatlar.html" class="special-offer-link"><i class="fa-solid fa-percent"></i> Özel Fırsatlar!</a>
     </div>
   </nav>
 
-  <!-- Masaüstü Hero Section -->
+  <!-- HERO SECTION -->
   <div class="hero-section desktop-only">
     <div class="hero-content">
-      <div class="hero-subtitle">%100 Akıllı Birim Fiyat Hesabı</div>
       <h1 class="hero-title">En Uygun Fiyat.<br>Maksimum Tasarruf.</h1>
-      <p class="hero-desc">Tüm marketlerdeki gramaj ve fiyat farklarını tek birim üzerinden anında kıyaslayın.</p>
-      <button class="hero-btn" onclick="window.location.href='urunler.html'">Detaylı İncele</button>
+      <p style="color:var(--text-muted); margin-bottom:20px;">Fiyat farklarını tek birim üzerinden kıyaslayın.</p>
+      <button class="hero-btn" onclick="window.location.href='urunler.html'">İncele</button>
     </div>
-    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" class="hero-image" alt="Birimçek Ürünler">
+    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80" class="hero-image">
   </div>
 
-  <!-- Mobil Hero Banner -->
-  <div class="mobile-hero-banner mobile-only">
-    <div class="mobile-hero-content">
-      <h1 class="mobile-hero-title">Organik Meyve & Sebze</h1>
-      <button class="mobile-hero-btn" onclick="goToCategoryPage('Meyve & Sebze')">İncele</button>
-      <div class="dots">
-        <div class="dot active"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-    </div>
-    <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=500&q=80" class="mobile-hero-bg" alt="Organik Meyve">
-  </div>
-
-  <!-- İçerik Alanı -->
+  <!-- İÇERİK -->
   <div class="main-container">
     <h3 class="section-title">Öne Çıkan Kategoriler</h3>
-
     <div class="categories-grid">
-      <div class="cat-card" onclick="goToCategoryPage('Meyve & Sebze')">
-        <i class="fa-solid fa-apple-whole"></i>
-        <h4>Meyve & Sebze</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Et, Balık & Şarküteri')">
-        <i class="fa-solid fa-drumstick-bite"></i>
-        <h4>Et & Şarküteri</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Süt & Kahvaltılık')">
-        <i class="fa-solid fa-cheese"></i>
-        <h4>Süt & Kahvaltı</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Temel Gıda')">
-        <i class="fa-solid fa-wheat-awn"></i>
-        <h4>Temel Gıda</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Atıştırmalıklar')">
-        <i class="fa-solid fa-cookie"></i>
-        <h4>Atıştırmalık</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('İçecekler')">
-        <i class="fa-solid fa-bottle-water"></i>
-        <h4>İçecekler</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Fırın & Pastane')">
-        <i class="fa-solid fa-bread-slice"></i>
-        <h4>Fırın & Pastane</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Dondurulmuş Gıdalar')">
-        <i class="fa-solid fa-snowflake"></i>
-        <h4>Dondurulmuş</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Deterjan & Ev Temizliği')">
-        <i class="fa-solid fa-broom"></i>
-        <h4>Deterjan & Temizlik</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Kişisel Bakım & Hijyen')">
-        <i class="fa-solid fa-pump-soap"></i>
-        <h4>Kişisel Bakım</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Kağıt Ürünleri')">
-        <i class="fa-solid fa-toilet-paper"></i>
-        <h4>Kağıt Ürünleri</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Bebek Dünyası')">
-        <i class="fa-solid fa-baby"></i>
-        <h4>Bebek Dünyası</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Evcil Dostlar')">
-        <i class="fa-solid fa-paw"></i>
-        <h4>Evcil Dostlar</h4>
-      </div>
-      <div class="cat-card" onclick="goToCategoryPage('Ev & Yaşam')">
-        <i class="fa-solid fa-house"></i>
-        <h4>Ev & Yaşam</h4>
-      </div>
+      <div class="cat-card" onclick="goToCategoryPage('Meyve & Sebze')"><i class="fa-solid fa-apple-whole"></i><h4>Meyve & Sebze</h4></div>
+      <div class="cat-card" onclick="goToCategoryPage('Süt & Kahvaltılık')"><i class="fa-solid fa-cheese"></i><h4>Süt & Kahvaltı</h4></div>
+      <div class="cat-card" onclick="goToCategoryPage('Temel Gıda')"><i class="fa-solid fa-wheat-awn"></i><h4>Temel Gıda</h4></div>
+      <div class="cat-card" onclick="goToCategoryPage('Deterjan & Ev Temizliği')"><i class="fa-solid fa-broom"></i><h4>Deterjan</h4></div>
     </div>
 
-    <!-- Ürün Listesi (Vitrin) -->
-    <h3 class="section-title">
-      En Uygun Birim Fiyatlı Ürünler
-      <a href="urunler.html" style="font-size: 0.85rem; color: var(--primary); text-decoration: none;">Tümünü Gör <i class="fa-solid fa-chevron-right"></i></a>
-    </h3>
+    <h3 class="section-title">En Uygun Birim Fiyatlı Ürünler</h3>
     <div class="product-grid" id="productList">
-      <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Veriler yükleniyor...</p>
+      <p style="grid-column: 1/-1; text-align: center; padding: 40px;">Yükleniyor...</p>
     </div>
   </div>
 
-  <!-- Supabase Script ve Yönlendirme Mantığı -->
+  <!-- YANDAN AÇILIR SEPET PANELERİ (DRAWER) -->
+  <div id="cartOverlay" class="cart-overlay"></div>
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h3><i class="fa-solid fa-basket-shopping"></i> Sepetim</h3>
+      <button class="cart-close-btn" id="btnCloseCart"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty-state">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <p>Sepetiniz henüz boş.</p>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Tahmini Toplam Tutar:</span>
+        <strong id="cartTotalPrice">0.00 ₺</strong>
+      </div>
+      <button class="cart-checkout-btn" onclick="alert('Listeniz hazırlandı!')">Market Kıyaslamasını Gör</button>
+    </div>
+  </div>
+
+  <!-- SUPABASE VE SEPET SCRIPT BLOĞU -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
     const SUPABASE_URL = "https://lejkdyhensjyauburrxk.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxlamtkeWhlbnNqeWF1YnVycnhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MjE1MDQsImV4cCI6MjE0Mjk5NzUwNH0.7aVdxtM-1BFVmwVcc0eqLZospU2XkfDhLHr77HMI_2Y";
-
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Kategori Sayfasına Yönlendirme Fonksiyonu
-    window.goToCategoryPage = function(catName) {
-      const encoded = encodeURIComponent(catName);
-      window.location.href = `urunler.html?kategori=${encoded}`;
+    // SEPET DEĞİŞKENİ VE FONKSİYONLARI (Window Objesine Bağlama)
+    window.cart = [];
+
+    window.toggleCart = function() {
+      document.getElementById("cartDrawer").classList.toggle("active");
+      document.getElementById("cartOverlay").classList.toggle("active");
     };
 
-    // Arama Butonuna Veya Enter'a Basıldığında urunler.html Sayfasına Yönlendirme
+    document.getElementById("cartOverlay").addEventListener("click", window.toggleCart);
+    document.getElementById("btnCloseCart").addEventListener("click", window.toggleCart);
+
+    window.addToCart = function(title, price, imgUrl) {
+      window.cart.push({ title, price: parseFloat(price), imgUrl });
+      window.renderCart();
+      window.toggleCart();
+    };
+
+    window.removeFromCart = function(index) {
+      window.cart.splice(index, 1);
+      window.renderCart();
+    };
+
+    window.renderCart = function() {
+      const cartBody = document.getElementById("cartBody");
+      const cartTotalPrice = document.getElementById("cartTotalPrice");
+      const badgeDesk = document.getElementById("cartBadgeDesktop");
+      const badgeMob = document.getElementById("cartBadgeMobile");
+
+      if (badgeDesk) badgeDesk.innerText = window.cart.length;
+      if (badgeMob) badgeMob.innerText = window.cart.length;
+
+      if (window.cart.length === 0) {
+        cartBody.innerHTML = `
+          <div class="cart-empty-state">
+            <i class="fa-solid fa-basket-shopping"></i>
+            <p>Sepetiniz henüz boş.</p>
+          </div>`;
+        cartTotalPrice.innerText = "0.00 ₺";
+        return;
+      }
+
+      let total = 0;
+      cartBody.innerHTML = window.cart.map((item, index) => {
+        total += item.price;
+        return `
+          <div class="cart-item">
+            <img src="${item.imgUrl}" class="cart-item-img">
+            <div class="cart-item-details">
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-price">${item.price.toFixed(2)} ₺</div>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart(${index})">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      cartTotalPrice.innerText = total.toFixed(2) + " ₺";
+    };
+
+    // YÖNLENDİRME FONKSİYONLARI
+    window.goToCategoryPage = function(catName) {
+      window.location.href = `urunler.html?kategori=${encodeURIComponent(catName)}`;
+    };
+
     window.executeSearch = function(source) {
       const searchInput = source === 'desktop' 
         ? document.getElementById("searchInputDesktop").value 
         : document.getElementById("searchInputMobile").value;
-        
-      const catSelect = source === 'desktop' 
-        ? document.getElementById("categorySelectDesktop").value 
-        : document.getElementById("categorySelectMobile").value;
-
-      const params = new URLSearchParams();
-      if (searchInput && searchInput.trim() !== "") params.set("q", searchInput.trim());
-      if (catSelect && catSelect !== "Tümü") params.set("kategori", catSelect);
-
-      window.location.href = `urunler.html?${params.toString()}`;
+      
+      if (searchInput.trim() !== "") {
+        window.location.href = `urunler.html?q=${encodeURIComponent(searchInput.trim())}`;
+      }
     };
 
-    // Detay Sayfasına Yönlendirme
     window.goToProductDetail = function(productId) {
       window.location.href = `urun-detay.html?id=${productId}`;
     };
 
-    // Ana Sayfa İçin Vitrin Ürünlerini Çekme
+    // SUPABASE VERİ ÇEKME
     async function loadFeaturedProducts() {
       try {
-        const { data: prices, error: pErr } = await supabase.from('prices').select('*');
-        const { data: products, error: prErr } = await supabase.from('products').select('*');
-        const { data: markets, error: mErr } = await supabase.from('markets').select('*');
+        const { data: prices } = await supabase.from('prices').select('*');
+        const { data: products } = await supabase.from('products').select('*');
+        const { data: markets } = await supabase.from('markets').select('*');
 
-        if (pErr || !prices || prices.length === 0) {
-          document.getElementById("productList").innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Henüz ürün bulunmuyor.</p>`;
+        if (!prices || prices.length === 0) {
+          document.getElementById("productList").innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Henüz ürün bulunmuyor.</p>`;
           return;
         }
 
@@ -465,15 +349,11 @@
           const market = (markets || []).find(m => m.id === price.market_id) || {};
           const qty = prod.net_quantity || 1;
           const unitPrice = price.net_price ? (price.net_price / qty) : 0;
-
           return { ...price, product: prod, market: market, unitPrice };
         });
 
-        // Birim fiyata göre en ucuz ilk 8 ürünü vitrine ekle
         combined.sort((a, b) => a.unitPrice - b.unitPrice);
-        const featuredItems = combined.slice(0, 8);
-
-        renderGrid(featuredItems);
+        renderGrid(combined.slice(0, 8));
       } catch (err) {
         console.error("Hata:", err);
       }
@@ -483,23 +363,25 @@
       const container = document.getElementById("productList");
       const defaultImg = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80";
 
-      container.innerHTML = items.map((item, index) => {
+      container.innerHTML = items.map(item => {
         const prod = item.product || {};
         const market = item.market || {};
-        const isBest = index === 0;
+        const img = prod.image_url || defaultImg;
+        const title = (prod.title || 'İsimsiz Ürün').replace(/'/g, "\\'");
 
         return `
-          <div class="product-card" onclick="goToProductDetail(${prod.id || item.product_id})">
-            ${isBest ? `<div class="best-badge">🏆 En Uygun</div>` : ''}
-            <img src="${prod.image_url || defaultImg}" class="product-img" alt="${prod.title}">
+          <div class="product-card">
+            <img src="${img}" class="product-img" onclick="goToProductDetail(${prod.id || item.product_id})">
             <div>
               <div class="product-vendor">${prod.brand || 'Genel'} • ${market.name || ''}</div>
-              <div class="product-title">${prod.title || 'İsimsiz Ürün'}</div>
+              <div class="product-title" onclick="goToProductDetail(${prod.id || item.product_id})">${prod.title || 'İsimsiz Ürün'}</div>
             </div>
             <div class="unit-price-box">
               <div class="unit-price-val">${(item.unitPrice || 0).toFixed(2)} ₺ <span style="font-size:0.7rem; color:#666;">/ ${prod.unit_type || 'birim'}</span></div>
-              <div class="net-price-val">Paket: <strong>${Number(item.net_price || 0).toFixed(2)} ₺</strong></div>
             </div>
+            <button class="add-to-cart-btn" onclick="addToCart('${title}', '${item.net_price || 0}', '${img}')">
+              <i class="fa-solid fa-basket-shopping"></i> Sepete Ekle
+            </button>
           </div>
         `;
       }).join('');

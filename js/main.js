@@ -1,38 +1,13 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-// --- GLOBAL DEĞİŞKENLER VE SEPET ---
 window.cart = [];
 window.currentSearchCategory = "Tümü";
 window.currentMfCategory = "Tümü";
 
-// Header, Footer ve Drawer HTML parçalarını yükleyen fonksiyon
-window.loadComponents = async () => {
-    const parts = [
-        { url: "./components/header.html", target: "header-container" },
-        { url: "./components/drawer.html", target: "drawers-container" },
-        { url: "./components/footer.html", target: "footer-container" }
-    ];
-
-    for (const part of parts) {
-        try {
-            const res = await fetch(part.url);
-            if (!res.ok) throw new Error(`${part.url} yüklenemedi (${res.status})`);
-            const html = await res.text();
-            const container = document.getElementById(part.target);
-            if (container) container.innerHTML = html;
-        } catch (err) {
-            console.error("Component yükleme hatası:", err);
-        }
-    }
-};
-
-// Sayfa açıldığında önce component'leri, sonra sepeti yükle
-document.addEventListener("DOMContentLoaded", async () => {
-    await window.loadComponents();
+document.addEventListener("DOMContentLoaded", () => {
     window.renderCart();
 });
 
-// Arama Kategori Dropdown Fonksiyonları
 window.toggleSearchCategoryDropdown = () => {
     document.getElementById("searchCategoryDropdownMenu")?.classList.toggle("active");
 };
@@ -44,7 +19,6 @@ window.selectSearchCategory = (catKey, catLabel) => {
     window.toggleSearchCategoryDropdown();
 };
 
-// Mobil Arama Paneli Fonksiyonları
 window.openMobileSearch = () => {
     const header = document.getElementById("mobileFloatingHeader");
     if(header) {
@@ -95,7 +69,6 @@ window.closeUnitPopup = () => {
     document.getElementById("unitInfoPopup")?.classList.remove("active");
 };
 
-// Drawer (Menü ve Sepet Çekmeceleri) Kontrolleri
 window.toggleCategoryMenu = () => {
     const drawer = document.getElementById("categoryDrawer");
     const overlay = document.getElementById("categoryOverlay");
@@ -110,7 +83,6 @@ window.toggleCart = () => {
     overlay?.classList.toggle("active");
 };
 
-// Video ve Fiş Modal Kontrolleri
 window.toggleVideoModal = () => {
     document.getElementById("videoModal")?.classList.toggle("active");
     document.getElementById("videoOverlay")?.classList.toggle("active");
@@ -137,12 +109,11 @@ window.handleFileSelect = (event, type) => {
 };
 
 window.submitUpload = (type) => {
-    alert(type === 'video' ? "Video yüklendi! Yapay zeka denetimi sonrasında kredileriniz hesabınıza yansıtılacaktır." : "Fiş yüklendi! Değerlendirme haklarınız tanımlandı.");
+    alert(type === 'video' ? "Video yüklendi!" : "Fiş yüklendi!");
     if(type === 'video') window.toggleVideoModal();
     else window.toggleReceiptModal();
 };
 
-// Sepet Yönetim Fonksiyonları
 window.addToCart = (title, price, imgUrl) => {
     window.cart.push({ title, price: parseFloat(price) || 0, imgUrl });
     window.renderCart();
@@ -187,7 +158,6 @@ window.renderCart = () => {
     if(totalEl) totalEl.innerText = total.toFixed(2) + " ₺";
 };
 
-// Supabase Bağlantısı
 const SUPABASE_URL = "https://lejkdyhensjyauburrxk.supabase.co";
 const SUPABASE_KEY = "YOUR_KEY_HERE";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);

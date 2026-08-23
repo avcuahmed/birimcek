@@ -5,8 +5,30 @@ window.cart = [];
 window.currentSearchCategory = "Tümü";
 window.currentMfCategory = "Tümü";
 
-// Sayfa açıldığında sepeti ve rozetleri güncelle
-document.addEventListener("DOMContentLoaded", () => {
+// Header, Footer ve Drawer HTML parçalarını yükleyen fonksiyon
+window.loadComponents = async () => {
+    const parts = [
+        { url: "./components/header.html", target: "header-container" },
+        { url: "./components/drawer.html", target: "drawers-container" },
+        { url: "./components/footer.html", target: "footer-container" }
+    ];
+
+    for (const part of parts) {
+        try {
+            const res = await fetch(part.url);
+            if (!res.ok) throw new Error(`${part.url} yüklenemedi (${res.status})`);
+            const html = await res.text();
+            const container = document.getElementById(part.target);
+            if (container) container.innerHTML = html;
+        } catch (err) {
+            console.error("Component yükleme hatası:", err);
+        }
+    }
+};
+
+// Sayfa açıldığında önce component'leri, sonra sepeti yükle
+document.addEventListener("DOMContentLoaded", async () => {
+    await window.loadComponents();
     window.renderCart();
 });
 

@@ -28,20 +28,20 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
     body { background-color: #ffffff; color: var(--text-dark); -webkit-tap-highlight-color: transparent; }
 
-    /* HEADER - Sticky (Desktop) */
-    #header { background: #ffffff; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.6rem; font-weight: 800; color: var(--primary); white-space: nowrap; }
+    /* HEADER - Sticky (Desktop) - Kaymaların Önlenmesi İçin Sıkı Yapı */
+    #header { background: #ffffff; padding: 12px 30px; display: flex; align-items: center; justify-content: space-between; gap: 15px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.03); width: 100%; }
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.5rem; font-weight: 800; color: var(--primary); white-space: nowrap; flex-shrink: 0; }
     .logo i { color: var(--primary-light); }
 
-    /* DESKTOP SEARCH BOX & CATEGORY DROPDOWN (Görsel Kararlılık Sağlandı) */
-    .search-box-desktop { flex: 1; max-width: 580px; display: flex; align-items: center; border: 2px solid var(--primary); border-radius: 30px; overflow: visible; height: 44px; background: #fff; box-shadow: 0 2px 8px rgba(11, 77, 60, 0.05); padding-left: 6px; position: relative; }
-    .search-category-dropdown { position: relative; display: flex; align-items: center; border-right: 1px solid var(--border-color); padding-right: 6px; flex-shrink: 0; }
-    .search-menu-btn { background: transparent; border: none; padding: 0 6px; font-size: 1rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s; white-space: nowrap; height: 100%; }
+    /* DESKTOP SEARCH BOX & CATEGORY DROPDOWN (Tam Sabit Esnemez Yapı) */
+    .search-box-desktop { flex: 0 1 520px; display: flex; align-items: center; border: 2px solid var(--primary); border-radius: 30px; overflow: visible; height: 42px; background: #fff; box-shadow: 0 2px 8px rgba(11, 77, 60, 0.05); padding-left: 4px; position: relative; }
+    .search-category-dropdown { position: relative; display: flex; align-items: center; border-right: 1px solid var(--border-color); padding-right: 4px; flex-shrink: 0; height: 100%; }
+    .search-menu-btn { background: transparent; border: none; padding: 0 8px; font-size: 0.9rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s; white-space: nowrap; height: 100%; }
     .search-menu-btn:hover { color: var(--primary-hover); }
 
     /* Açılır Kategori Seçim Kutusu */
     .category-dropdown-menu {
-      position: absolute; top: 50px; left: 0; background: #ffffff; border: 1px solid var(--border-color);
+      position: absolute; top: 46px; left: 0; background: #ffffff; border: 1px solid var(--border-color);
       box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 12px; width: 210px; max-height: 250px;
       overflow-y: auto; z-index: 1050; display: none; padding: 6px 0;
     }
@@ -51,38 +51,39 @@
     }
     .category-dropdown-menu div:hover { background: var(--bg-soft); color: var(--primary); }
 
-    .search-input { flex: 1; border: none; padding: 0 12px; font-size: 0.9rem; outline: none; background: transparent; min-width: 0; }
-    .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; font-size: 0.9rem; width: 44px; height: 44px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; border-top-right-radius: 28px; border-bottom-right-radius: 28px; flex-shrink: 0; }
+    .search-input { flex: 1; border: none; padding: 0 10px; font-size: 0.85rem; outline: none; background: transparent; min-width: 0; }
+    .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; font-size: 0.9rem; width: 42px; height: 42px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; border-top-right-radius: 26px; border-bottom-right-radius: 26px; flex-shrink: 0; }
     .search-btn:hover { background: var(--primary-hover); }
 
-    .header-actions { display: flex; align-items: center; gap: 12px; }
-    .action-item { display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; color: var(--text-dark); background: none; border: none; font-size: 1.2rem; width: 40px; height: 40px; border-radius: 50%; transition: background 0.2s; }
+    /* Header Sağ Eylemler - Esnemeyi ve Taşmayı Önleyen Sabit Alan */
+    .header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .action-item { display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; color: var(--text-dark); background: none; border: none; font-size: 1.1rem; width: 38px; height: 38px; border-radius: 50%; transition: background 0.2s; flex-shrink: 0; }
     .action-item:hover { background: var(--bg-soft); color: var(--primary); }
     .action-item i { color: var(--primary); }
     .badge-icon { position: relative; }
-    .badge { position: absolute; top: 2px; right: 2px; background: var(--primary-light); color: var(--primary); font-size: 0.65rem; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .badge { position: absolute; top: 1px; right: 1px; background: var(--primary-light); color: var(--primary); font-size: 0.6rem; font-weight: 800; width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
     /* POINTS & UPLOAD BUTTONS */
-    .points-badge { background: #fffbeb; color: var(--reward-color); border: 1px solid #fde68a; padding: 5px 10px; border-radius: 20px; font-weight: 800; display: flex; align-items: center; gap: 6px; font-size: 0.78rem; cursor: pointer; white-space: nowrap; }
-    .video-upload-btn { background: var(--text-dark); color: white; padding: 7px 14px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background 0.2s; white-space: nowrap; }
+    .points-badge { background: #fffbeb; color: var(--reward-color); border: 1px solid #fde68a; padding: 4px 10px; border-radius: 20px; font-weight: 800; display: flex; align-items: center; gap: 5px; font-size: 0.75rem; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+    .video-upload-btn { background: var(--text-dark); color: white; padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 0.78rem; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: background 0.2s; white-space: nowrap; flex-shrink: 0; }
     .video-upload-btn:hover { background: var(--primary); }
     .video-upload-btn i { color: var(--primary-light) !important; }
 
     /* NAV (Desktop) */
-    nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 46px; }
-    .nav-left { display: flex; align-items: center; gap: 20px; height: 100%; }
+    nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 30px; display: flex; align-items: center; justify-content: space-between; height: 44px; }
+    .nav-left { display: flex; align-items: center; gap: 15px; height: 100%; }
     
-    .desktop-quick-search-btn { background: var(--bg-soft); border: 1px solid var(--border-color); border-radius: 20px; padding: 5px 14px; font-weight: 700; font-size: 0.82rem; display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-dark); transition: all 0.2s; }
+    .desktop-quick-search-btn { background: var(--bg-soft); border: 1px solid var(--border-color); border-radius: 20px; padding: 4px 12px; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 5px; cursor: pointer; color: var(--text-dark); transition: all 0.2s; white-space: nowrap; }
     .desktop-quick-search-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
     .desktop-quick-search-btn:hover i { color: var(--primary-light); }
     .desktop-quick-search-btn i { color: var(--primary); }
 
-    .nav-links { display: flex; gap: 20px; list-style: none; }
-    .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.85rem; font-weight: 600; transition: color 0.2s; }
+    .nav-links { display: flex; gap: 18px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.82rem; font-weight: 600; transition: color 0.2s; white-space: nowrap; }
     .nav-links a:hover, .nav-links a.active { color: var(--primary); font-weight: 700; }
 
     /* MAIN CONTAINER */
-    .main-container { padding: 30px 40px 60px; max-width: 1400px; margin: 0 auto; }
+    .main-container { padding: 30px 30px 60px; max-width: 1400px; margin: 0 auto; }
     
     /* HERO BANNER */
     .hero-banner { background: linear-gradient(135deg, #0b4d3c 0%, #15735b 100%); border-radius: 16px; padding: 40px; color: #ffffff; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; }
@@ -225,19 +226,19 @@
       .mobile-only { display: flex !important; }
       
       .mobile-floating-header {
-        display: flex; position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
-        width: 92%; max-width: 480px; background: #ffffff; border-radius: 40px; padding: 10px 18px;
+        display: flex; position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+        width: 92%; max-width: 480px; background: #ffffff; border-radius: 40px; padding: 8px 16px;
         align-items: center; justify-content: space-between; box-shadow: 0 8px 25px rgba(0,0,0,0.12); z-index: 1000;
       }
-      .mf-left { display: flex; align-items: center; gap: 12px; }
-      .mf-menu-btn { background: none; border: none; font-size: 1.2rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; }
-      .mf-logo { font-size: 1.3rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; }
-      .mf-right { display: flex; align-items: center; gap: 10px; }
-      .mf-search-btn { background: none; border: none; font-size: 1.1rem; color: var(--primary); cursor: pointer; padding: 4px; }
-      .mf-account { color: var(--primary); font-size: 1.1rem; text-decoration: none; display: flex; align-items: center; }
-      .mf-cart { background: none; border: none; cursor: pointer; position: relative; font-size: 1.1rem; color: var(--primary); padding: 4px; }
+      .mf-left { display: flex; align-items: center; gap: 10px; }
+      .mf-menu-btn { background: none; border: none; font-size: 1.1rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; }
+      .mf-logo { font-size: 1.2rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 5px; }
+      .mf-right { display: flex; align-items: center; gap: 8px; }
+      .mf-search-btn { background: none; border: none; font-size: 1rem; color: var(--primary); cursor: pointer; padding: 4px; }
+      .mf-account { color: var(--primary); font-size: 1rem; text-decoration: none; display: flex; align-items: center; }
+      .mf-cart { background: none; border: none; cursor: pointer; position: relative; font-size: 1rem; color: var(--primary); padding: 4px; }
 
-      .main-container { padding: 85px 16px 40px; }
+      .main-container { padding: 80px 16px 40px; }
       .product-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; }
       .hero-banner { padding: 25px; flex-direction: column; text-align: center; gap: 15px; }
       .hero-btns { justify-content: center; flex-wrap: wrap; }
@@ -270,8 +271,8 @@
       <div class="search-category-dropdown">
         <button class="search-menu-btn" onclick="window.toggleSearchCategoryDropdown()" title="Kategori Seç">
           <i class="fa-solid fa-bars"></i>
-          <span id="selectedCategoryText" style="font-size: 0.78rem; font-weight: 700; margin-left: 4px;">Tümü</span>
-          <i class="fa-solid fa-chevron-down" style="font-size: 0.65rem; margin-left: 4px;"></i>
+          <span id="selectedCategoryText" style="font-size: 0.75rem; font-weight: 700; margin-left: 3px;">Tümü</span>
+          <i class="fa-solid fa-chevron-down" style="font-size: 0.6rem; margin-left: 3px;"></i>
         </button>
         <div class="category-dropdown-menu" id="searchCategoryDropdownMenu">
           <div onclick="window.selectSearchCategory('Tümü', 'Tümü')">Tüm Kategoriler</div>
@@ -322,14 +323,14 @@
     </a>
 
     <div class="mf-right">
-      <div class="points-badge" onclick="alert('Ödül Havuzu: 12 Puan')" style="font-size:0.68rem; padding: 3px 8px;">
+      <div class="points-badge" onclick="alert('Ödül Havuzu: 12 Puan')" style="font-size:0.65rem; padding: 3px 6px;">
         <i class="fa-solid fa-star"></i> 12 P
       </div>
       <button class="mf-search-btn" onclick="window.toggleMobileSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
       <a href="hesabim.html" class="mf-account"><i class="fa-regular fa-user"></i></a>
       <button class="mf-cart" onclick="window.toggleCart()">
         <i class="fa-solid fa-basket-shopping"></i>
-        <span class="badge" style="top:-6px; right:-6px;" id="cartBadgeMobile">0</span>
+        <span class="badge" style="top:-5px; right:-5px;" id="cartBadgeMobile">0</span>
       </button>
     </div>
   </div>

@@ -4,7 +4,30 @@ window.cart = [];
 window.currentSearchCategory = "Tümü";
 window.currentMfCategory = "Tümü";
 
+// Ortak HTML bileşenlerini sayfalara dinamik olarak yükler
+async function loadComponents() {
+    const loadHTML = async (id, file) => {
+        const el = document.getElementById(id);
+        if (el) {
+            try {
+                const res = await fetch(file);
+                if (res.ok) el.innerHTML = await res.text();
+            } catch (e) {
+                console.error(`${file} yüklenirken hata oluştu:`, e);
+            }
+        }
+    };
+
+    await loadHTML('header-container', 'header.html');
+    await loadHTML('drawers-container', 'drawers.html');
+    await loadHTML('footer-container', 'footer.html');
+
+    // Bileşenler yüklendikten sonra sepet durumunu güncelleyelim
+    if (window.renderCart) window.renderCart();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    loadComponents();
     window.renderCart();
 });
 

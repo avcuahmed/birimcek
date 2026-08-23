@@ -9,7 +9,7 @@ window.currentMfCategory = "Tümü";
 window.loadComponents = async () => {
     const parts = [
         { url: "./components/header.html", target: "header-container" },
-        { url: "./components/drawer.html", target: "drawer-container" },
+        { url: "./components/drawer.html", target: "drawers-container" },
         { url: "./components/footer.html", target: "footer-container" }
     ];
 

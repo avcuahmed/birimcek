@@ -248,6 +248,34 @@
     </button>
   </div>
 </div>
+  
+  <!-- Yandan Açılır Sepet Drawer Yapısı -->
+<div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
+
+<div id="cartDrawer" class="cart-drawer">
+  <div class="cart-header">
+    <h3><i class="fa-solid fa-basket-shopping"></i> Sepetim & Kıyaslama</h3>
+    <button class="cart-close-btn" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+
+  <div class="cart-body" id="cartBody">
+    <!-- Ürünler buraya dinamik dolacak -->
+    <div class="cart-empty-state">
+      <i class="fa-solid fa-basket-shopping"></i>
+      <p>Sepetiniz henüz boş.</p>
+    </div>
+  </div>
+
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span>Tahmini Toplam Tutar:</span>
+      <strong id="cartTotalPrice">0.00 ₺</strong>
+    </div>
+    <button class="cart-checkout-btn" onclick="alert('En uygun markete göre listeniz tamamlandı!')">
+      Market Kıyaslamasını Gör
+    </button>
+  </div>
+</div>
 
   <!-- Navigasyon Menüsü -->
   <nav class="desktop-only">

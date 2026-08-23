@@ -33,12 +33,26 @@
     .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.6rem; font-weight: 800; color: var(--primary); white-space: nowrap; }
     .logo i { color: var(--primary-light); }
 
-    /* DESKTOP SEARCH BOX */
-    .search-box-desktop { flex: 1; max-width: 580px; display: flex; align-items: center; border: 2px solid var(--primary); border-radius: 30px; overflow: hidden; height: 44px; background: #fff; box-shadow: 0 2px 8px rgba(11, 77, 60, 0.05); padding-left: 6px; }
-    .search-menu-btn { background: transparent; border: none; padding: 0 12px; font-size: 1.1rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s; }
+    /* DESKTOP SEARCH BOX & CATEGORY DROPDOWN */
+    .search-box-desktop { flex: 1; max-width: 580px; display: flex; align-items: center; border: 2px solid var(--primary); border-radius: 30px; overflow: visible; height: 44px; background: #fff; box-shadow: 0 2px 8px rgba(11, 77, 60, 0.05); padding-left: 6px; position: relative; }
+    .search-category-dropdown { position: relative; display: flex; align-items: center; border-right: 1px solid var(--border-color); padding-right: 6px; }
+    .search-menu-btn { background: transparent; border: none; padding: 0 8px; font-size: 1rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s; white-space: nowrap; }
     .search-menu-btn:hover { color: var(--primary-hover); }
+
+    /* Açılır Kategori Seçim Kutusu */
+    .category-dropdown-menu {
+      position: absolute; top: 50px; left: 0; background: #ffffff; border: 1px solid var(--border-color);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 12px; width: 210px; max-height: 250px;
+      overflow-y: auto; z-index: 1020; display: none; padding: 6px 0;
+    }
+    .category-dropdown-menu.active { display: block; }
+    .category-dropdown-menu div {
+      padding: 10px 16px; font-size: 0.85rem; font-weight: 600; color: var(--text-dark); cursor: pointer; transition: background 0.2s;
+    }
+    .category-dropdown-menu div:hover { background: var(--bg-soft); color: var(--primary); }
+
     .search-input { flex: 1; border: none; padding: 0 12px; font-size: 0.9rem; outline: none; background: transparent; }
-    .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; font-size: 0.9rem; width: 44px; height: 44px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+    .search-btn { background: var(--primary); border: none; color: #ffffff; font-weight: 700; font-size: 0.9rem; width: 44px; height: 44px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; border-top-right-radius: 28px; border-bottom-right-radius: 28px; }
     .search-btn:hover { background: var(--primary-hover); }
 
     .header-actions { display: flex; align-items: center; gap: 12px; }
@@ -251,11 +265,26 @@
       <i class="fa-solid fa-leaf"></i>Birimçek
     </a>
 
-    <!-- Desktop Search Box (3 Çizgili Menü Butonu + Input + Sağ İçi Arama İkonu) -->
+    <!-- Desktop Search Box with Category Dropdown -->
     <div class="search-box-desktop">
-      <button class="search-menu-btn" onclick="window.toggleCategoryMenu()" title="Kategoriler">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+      <div class="search-category-dropdown">
+        <button class="search-menu-btn" onclick="window.toggleSearchCategoryDropdown()" title="Kategori Seç">
+          <i class="fa-solid fa-bars"></i>
+          <span id="selectedCategoryText" style="font-size: 0.78rem; font-weight: 700; margin-left: 4px;">Tümü</span>
+          <i class="fa-solid fa-chevron-down" style="font-size: 0.65rem; margin-left: 4px;"></i>
+        </button>
+        <div class="category-dropdown-menu" id="searchCategoryDropdownMenu">
+          <div onclick="window.selectSearchCategory('Tümü', 'Tümü')">Tüm Kategoriler</div>
+          <div onclick="window.selectSearchCategory('Meyve & Sebze', 'Meyve & Sebze')">Meyve & Sebze</div>
+          <div onclick="window.selectSearchCategory('Et & Şarküteri', 'Et & Şarküteri')">Et & Şarküteri</div>
+          <div onclick="window.selectSearchCategory('Süt & Kahvaltı', 'Süt & Kahvaltı')">Süt & Kahvaltı</div>
+          <div onclick="window.selectSearchCategory('Temel Gıda', 'Temel Gıda')">Temel Gıda</div>
+          <div onclick="window.selectSearchCategory('Atıştırmalık', 'Atıştırmalık')">Atıştırmalık</div>
+          <div onclick="window.selectSearchCategory('İçecekler', 'İçecekler')">İçecekler</div>
+          <div onclick="window.selectSearchCategory('Temizlik', 'Temizlik')">Temizlik</div>
+        </div>
+      </div>
+      
       <input type="text" class="search-input" id="searchInputDesktop" placeholder="Ürün, marka veya kilogram/adet ara..." onkeypress="if(event.key==='Enter') window.executeSearch('desktop')">
       <button class="search-btn" onclick="window.executeSearch('desktop')" title="Ara">
         <i class="fa-solid fa-magnifying-glass"></i>
@@ -467,7 +496,7 @@
     </div>
   </div>
 
-  <!-- CATEGORY DRAWER -->
+  <!-- CATEGORY DRAWER (Full Page Menu) -->
   <div id="categoryOverlay" class="drawer-overlay" onclick="window.toggleCategoryMenu()"></div>
   <div id="categoryDrawer" class="side-drawer">
     <div class="drawer-header">
@@ -539,10 +568,36 @@
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     window.cart = [];
+    window.currentSearchCategory = "Tümü";
+
+    // Search Category Dropdown Logic
+    window.toggleSearchCategoryDropdown = () => {
+      const menu = document.getElementById("searchCategoryDropdownMenu");
+      if(menu) menu.classList.toggle("active");
+    };
+
+    window.selectSearchCategory = (catKey, catLabel) => {
+      window.currentSearchCategory = catKey;
+      const textEl = document.getElementById("selectedCategoryText");
+      if(textEl) textEl.innerText = catLabel;
+      window.toggleSearchCategoryDropdown();
+    };
+
+    // Close category dropdown when clicking outside
+    window.addEventListener('click', function(e) {
+      const dropdown = document.getElementById("searchCategoryDropdownMenu");
+      const btn = document.querySelector(".search-category-dropdown");
+      if (dropdown && dropdown.classList.contains('active') && btn && !btn.contains(e.target)) {
+        dropdown.classList.remove('active');
+      }
+    });
 
     window.executeSearch = (type) => {
       const input = document.getElementById(type === 'desktop' ? 'searchInputDesktop' : 'searchInputMobile');
-      alert(`Aranan: "${input?.value || ''}"`);
+      const query = input?.value || '';
+      const category = window.currentSearchCategory;
+      
+      alert(`Seçilen Kategori: "${category}"\nAranan Kelime: "${query}"`);
       if(type === 'mobile') window.toggleMobileSearch();
     };
 

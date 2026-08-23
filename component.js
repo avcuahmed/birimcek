@@ -244,6 +244,5 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
   `;
 
-  // Sayfanın en başına bu bileşenleri ekle
   document.body.insertAdjacentHTML('afterbegin', sharedHTML);
 });

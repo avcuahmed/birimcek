@@ -28,8 +28,8 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-main); }
     body { background-color: #ffffff; color: var(--text-dark); -webkit-tap-highlight-color: transparent; }
 
-    /* HEADER - Sticky */
-    #header { background: #ffffff; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    /* HEADER - Sticky (Desktop) */
+    #header { background: #ffffff; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; gap: 30px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: transform 0.3s ease; }
     .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; font-size: 1.8rem; font-weight: 800; color: var(--primary); }
     .logo i { color: var(--primary-light); }
 
@@ -56,7 +56,10 @@
     /* NAV */
     nav { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 50px; }
     .nav-left { display: flex; align-items: center; gap: 30px; height: 100%; }
-    .category-btn { background: var(--primary); color: #ffffff; border: none; border-radius: 6px; padding: 8px 16px; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    
+    /* Masaüstünde "Tüm Kategoriler" yerine hızlı arama butonu tasarımı */
+    .desktop-quick-search-btn { background: var(--bg-soft); border: 1px solid var(--border-color); border-radius: 20px; padding: 6px 16px; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-dark); }
+    .desktop-quick-search-btn i { color: var(--primary); }
 
     .nav-links { display: flex; gap: 25px; list-style: none; }
     .nav-links a { text-decoration: none; color: var(--text-dark); font-size: 0.88rem; font-weight: 600; transition: color 0.2s; }
@@ -170,32 +173,51 @@
     .upload-area input { position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; }
     #fileNameDisplay { font-size: 0.85rem; color: var(--primary); font-weight: 700; margin-top: 10px; display: none; }
 
-    /* MOBILE TOOLBAR */
-    .toolbar-bottom { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; z-index: 900; }
-    .toolbar-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--text-dark); font-size: 0.7rem; font-weight: 600; gap: 4px; background: none; border: none; cursor: pointer; flex: 1; }
-    .toolbar-item i { font-size: 1.2rem; color: var(--text-muted); }
-    .toolbar-item.active i { color: var(--primary); }
-    .toolbar-fab { width: 50px; height: 50px; background: var(--text-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; border: none; transform: translateY(-15px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); margin: 0 10px; cursor: pointer; }
-    .toolbar-fab i { color: var(--primary-light); }
-
     /* FOOTER */
     footer { background: #072e24; color: #ffffff; padding: 40px; margin-top: 60px; text-align: center; font-size: 0.85rem; opacity: 0.9; }
 
-    /* MOBILE HEADER STYLES */
-    .mobile-header-left, .mobile-header-right { display: none; }
+    /* MOBILE FLOATING HEADER STYLES */
+    .mobile-floating-header { display: none; }
 
     @media (max-width: 900px) {
       .desktop-only, nav { display: none !important; }
       .mobile-only { display: flex !important; }
       
-      #header { padding: 12px 16px; flex-direction: row; justify-content: space-between; align-items: center; gap: 0; }
-      .mobile-header-left { display: flex; align-items: center; }
-      .mobile-header-right { display: flex; align-items: center; }
-      
-      .mobile-menu-trigger { background: none; border: none; font-size: 1.3rem; color: var(--primary); cursor: pointer; padding: 5px; }
-      .mobile-logo { font-size: 1.3rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; }
-      
-      .main-container { padding: 20px 16px 80px; }
+      /* Sayfa kaydırıldığında gizleme efekti için sınıf */
+      .mobile-floating-header {
+        display: flex;
+        position: fixed;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 92%;
+        max-width: 480px;
+        background: #ffffff;
+        border-radius: 40px;
+        padding: 10px 18px;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        z-index: 1000;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+
+      .mobile-floating-header.header-hidden {
+        transform: translate(-50%, -120%);
+        opacity: 0;
+      }
+
+      .mf-left { display: flex; align-items: center; gap: 12px; }
+      .mf-menu-btn { background: none; border: none; font-size: 1.2rem; color: var(--primary); cursor: pointer; display: flex; align-items: center; }
+
+      .mf-logo { font-size: 1.3rem; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+
+      .mf-right { display: flex; align-items: center; gap: 10px; }
+      .mf-search-btn { background: none; border: none; font-size: 1.1rem; color: var(--primary); cursor: pointer; padding: 4px; }
+      .mf-account { color: var(--primary); font-size: 1.1rem; text-decoration: none; display: flex; align-items: center; }
+      .mf-cart { background: none; border: none; cursor: pointer; position: relative; font-size: 1.1rem; color: var(--primary); padding: 4px; }
+
+      .main-container { padding: 85px 16px 40px; } /* Mobil üst barın arkasında kalmaması için üstten boşluk */
       .product-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; }
       .hero-banner { padding: 25px; flex-direction: column; text-align: center; gap: 15px; }
       .hero-btns { justify-content: center; flex-wrap: wrap; }
@@ -205,32 +227,14 @@
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header id="header">
-    <!-- Desktop Logo -->
-    <a href="index.html" class="logo desktop-only">
+  <!-- DESKTOP HEADER -->
+  <header id="header" class="desktop-only">
+    <a href="index.html" class="logo">
       <i class="fa-solid fa-leaf"></i>Birimçek
     </a>
-
-    <!-- Mobile Header Layout -->
-    <div class="mobile-header-left mobile-only">
-      <button class="mobile-menu-trigger" onclick="window.toggleCategoryMenu()">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-    </div>
-
-    <a href="index.html" class="mobile-logo mobile-only">
-      <i class="fa-solid fa-leaf"></i>Birimçek
-    </a>
-
-    <div class="mobile-header-right mobile-only">
-      <div class="points-badge" onclick="alert('Ödül Havuzu: Onaylanan video ve fişlerinizden 12 Puan kazandınız!')" title="Krediler / Puanlar" style="font-size:0.75rem; padding: 4px 10px;">
-        <i class="fa-solid fa-star"></i> 12 Puan
-      </div>
-    </div>
 
     <!-- Desktop Search Box -->
-    <div class="search-box-desktop desktop-only">
+    <div class="search-box-desktop">
       <select class="search-category" id="categorySelectDesktop">
         <option value="Tümü">Tüm Kategoriler</option>
         <option value="Temel Gıda">Temel Gıda</option>
@@ -242,8 +246,7 @@
       </button>
     </div>
 
-    <!-- Desktop Actions (Puanlar, Hesap Simgesi solunda; Hesabım ve Sepetim sadece simge) -->
-    <div class="header-actions desktop-only">
+    <div class="header-actions">
       <button class="video-upload-btn" onclick="window.toggleVideoModal()">
         <i class="fa-solid fa-video"></i> VİDEO YÜKLE
       </button>
@@ -261,11 +264,36 @@
     </div>
   </header>
 
-  <!-- NAV (Desktop) -->
+  <!-- MOBILE FLOATING HEADER (Kaybolabilir & Puan, Arama, Sepet, Hesap içerir) -->
+  <div class="mobile-floating-header" id="mobileFloatingHeader">
+    <div class="mf-left">
+      <button class="mf-menu-btn" onclick="window.toggleCategoryMenu()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <a href="index.html" class="mf-logo">
+      <i class="fa-solid fa-leaf"></i>Birimçek
+    </a>
+
+    <div class="mf-right">
+      <div class="points-badge" onclick="alert('Ödül Havuzu: 12 Puan')" style="font-size:0.68rem; padding: 3px 8px;">
+        <i class="fa-solid fa-star"></i> 12 P
+      </div>
+      <button class="mf-search-btn" onclick="alert('Arama ekranı açılıyor...')"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <a href="hesabim.html" class="mf-account"><i class="fa-regular fa-user"></i></a>
+      <button class="mf-cart" onclick="window.toggleCart()">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span class="badge" style="top:-6px; right:-6px;" id="cartBadgeMobile">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- NAV (Desktop) - "Tüm Kategoriler" yerine Hızlı Arama Butonu konuldu -->
   <nav class="desktop-only">
     <div class="nav-left">
-      <button class="category-btn" onclick="window.toggleCategoryMenu()">
-        <i class="fa-solid fa-bars"></i> Tüm Kategoriler
+      <button class="desktop-quick-search-btn" onclick="window.toggleCategoryMenu()">
+        <i class="fa-solid fa-bars"></i> Kategoriler
       </button>
       <ul class="nav-links">
         <li><a href="index.html" class="active">Ana Sayfa</a></li>
@@ -348,34 +376,6 @@
     </div>
   </div>
 
-  <!-- MOBILE TOOLBAR BOTTOM -->
-  <div class="toolbar-bottom mobile-only">
-    <a href="index.html" class="toolbar-item active">
-      <i class="fa-solid fa-house"></i>
-      <span>Ana Sayfa</span>
-    </a>
-    <button class="toolbar-item" onclick="window.toggleCategoryMenu()">
-      <i class="fa-solid fa-list"></i>
-      <span>Kategori</span>
-    </button>
-    
-    <button class="toolbar-fab" onclick="window.toggleVideoModal()" title="Video Yükle">
-      <i class="fa-solid fa-video"></i>
-    </button>
-
-    <button class="toolbar-item" onclick="window.toggleCart()">
-      <div class="badge-icon">
-        <i class="fa-solid fa-basket-shopping"></i>
-        <span class="badge" style="top: -12px; right: 2px;" id="cartBadgeMobile">0</span>
-      </div>
-      <span>Sepet</span>
-    </button>
-    <a href="hesabim.html" class="toolbar-item">
-      <i class="fa-solid fa-user"></i>
-      <span>Hesabım</span>
-    </a>
-  </div>
-
   <!-- VIDEO UPLOAD MODAL -->
   <div id="videoOverlay" class="drawer-overlay" onclick="window.toggleVideoModal()"></div>
   <div id="videoModal" class="custom-modal">
@@ -420,7 +420,7 @@
     </div>
   </div>
 
-  <!-- CATEGORY DRAWER -->
+  <!-- CATEGORY DRAWER (Sol Kategori Bandı) -->
   <div id="categoryOverlay" class="drawer-overlay" onclick="window.toggleCategoryMenu()"></div>
   <div id="categoryDrawer" class="side-drawer">
     <div class="drawer-header">
@@ -481,6 +481,22 @@
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     window.cart = [];
+
+    // Mobil kaydırma (scroll) ile üst barı gizleme/gösterme mantığı
+    let lastScrollTop = 0;
+    const mobileHeader = document.getElementById("mobileFloatingHeader");
+
+    window.addEventListener("scroll", () => {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop && scrollTop > 50) {
+        // Aşağı kaydırırken gizle
+        mobileHeader?.classList.add("header-hidden");
+      } else {
+        // Yukarı kaydırırken göster
+        mobileHeader?.classList.remove("header-hidden");
+      }
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    }, false);
 
     setTimeout(() => {
       window.closeUnitPopup();
